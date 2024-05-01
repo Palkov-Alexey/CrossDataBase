@@ -4,7 +4,7 @@ FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 USER app
 WORKDIR /app
 EXPOSE 8080
-EXPOSE 8081
+EXPOSE 8180
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS with-node
 RUN apt-get update
@@ -29,5 +29,6 @@ RUN dotnet publish "./CrossDataBase.Server.csproj" -c $BUILD_CONFIGURATION -o /a
 
 FROM base AS final
 WORKDIR /app
+ARG ASPNETCORE_HTTPS_PORTS 8180
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "CrossDataBase.Server.dll"]

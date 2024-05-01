@@ -1,6 +1,6 @@
-@CrossDataBase.Server_HostAddress = http://localhost:5123
+# @CrossDataBase.Server_HostAddress = http://localhost:5227
 
-GET {{CrossDataBase.Server_HostAddress}}/weatherforecast/
-Accept: application/json
+# GET {{CrossDataBase.Server_HostAddress}}/weatherforecast
+# Accept: application/json
 
 ###

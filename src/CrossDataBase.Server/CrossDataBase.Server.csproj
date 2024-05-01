@@ -10,6 +10,7 @@
     <SpaRoot>..\crossdatabase.client</SpaRoot>
     <SpaProxyLaunchCommand>npm run dev</SpaProxyLaunchCommand>
     <SpaProxyServerUrl>https://localhost:5173</SpaProxyServerUrl>
+    <DockerfileRunArguments>-p 7291:8080 -p 7290:8180</DockerfileRunArguments>
   </PropertyGroup>
 
   <ItemGroup>
