@@ -16,11 +16,11 @@ RUN apt-get -y install nodejs
 FROM with-node AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["src/CrossDataBase.Server/CrossDataBase.Server.csproj", "src/CrossDataBase.Server/"]
+COPY ["src/server/CrossDataBase.Server/CrossDataBase.Server.csproj", "src/server/CrossDataBase.Server/"]
 COPY ["crossdatabase.client/crossdatabase.client.esproj", "crossdatabase.client/"]
-RUN dotnet restore "./src/CrossDataBase.Server/CrossDataBase.Server.csproj"
+RUN dotnet restore "./src/server/CrossDataBase.Server/CrossDataBase.Server.csproj"
 COPY . .
-WORKDIR "/src/src/CrossDataBase.Server"
+WORKDIR "/src/src/server/CrossDataBase.Server"
 RUN dotnet build "./CrossDataBase.Server.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish

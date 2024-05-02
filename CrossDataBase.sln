@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrossDataBase.Server", "src\CrossDataBase.Server\CrossDataBase.Server.csproj", "{FC74F583-E467-4FE3-960A-7BE45BCE456E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CrossDataBase.Server", "src\server\CrossDataBase.Server\CrossDataBase.Server.csproj", "{FC74F583-E467-4FE3-960A-7BE45BCE456E}"
 EndProject
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "crossdatabase.client", "src\crossdatabase.client\crossdatabase.client.esproj", "{B3F10CD0-A122-45AB-9231-1FB5CF0EF16E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "server", "server", "{51DF1C47-93CE-4F2A-A8DD-1B6910C691F8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,6 +28,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{FC74F583-E467-4FE3-960A-7BE45BCE456E} = {51DF1C47-93CE-4F2A-A8DD-1B6910C691F8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0127F9B7-70D7-4EFD-A3E9-E05F68FE5470}
