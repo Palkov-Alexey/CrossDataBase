@@ -17,10 +17,11 @@ FROM with-node AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["src/server/CrossDataBase.Server/CrossDataBase.Server.csproj", "src/server/CrossDataBase.Server/"]
-COPY ["crossdatabase.client/crossdatabase.client.esproj", "crossdatabase.client/"]
-RUN dotnet restore "./src/server/CrossDataBase.Server/CrossDataBase.Server.csproj"
+COPY ["src/crossdatabase.client/crossdatabase.client.esproj", "src/crossdatabase.client/"]
+RUN dotnet restore "src/server/CrossDataBase.Server/CrossDataBase.Server.csproj"
 COPY . .
 WORKDIR "/src/src/server/CrossDataBase.Server"
+RUN pwd
 RUN dotnet build "./CrossDataBase.Server.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish

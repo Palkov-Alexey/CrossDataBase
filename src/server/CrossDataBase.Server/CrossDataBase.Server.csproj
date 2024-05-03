@@ -6,8 +6,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>f22a45e5-c6ed-482d-8329-eb63ec40665c</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-    <DockerfileContext>..\..</DockerfileContext>
-    <SpaRoot>..\crossdatabase.client</SpaRoot>
+    <DockerfileContext>..\..\..</DockerfileContext>
+    <SpaRoot>..\..\crossdatabase.client</SpaRoot>
     <SpaProxyLaunchCommand>npm run dev</SpaProxyLaunchCommand>
     <SpaProxyServerUrl>https://localhost:5173</SpaProxyServerUrl>
     <DockerfileRunArguments>-p 7291:8080 -p 7290:8180</DockerfileRunArguments>
@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\crossdatabase.client\crossdatabase.client.esproj">
+    <ProjectReference Include="..\..\crossdatabase.client\crossdatabase.client.esproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
   </ItemGroup>
