@@ -14,10 +14,6 @@ RUN apt-get -y install nodejs
 
 
 FROM with-node AS build
-RUN apt-get update
-RUN apt-get install curl
-RUN curl -sL https://deb.nodesource.com/setup_20.x | bash
-RUN apt-get -y install nodejs
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY src/server/CrossDataBase.Server/CrossDataBase.Server.csproj server/CrossDataBase.Server/
@@ -25,7 +21,6 @@ COPY src/crossdatabase.client/crossdatabase.client.esproj crossdatabase.client/
 RUN dotnet restore "server/CrossDataBase.Server/CrossDataBase.Server.csproj"
 COPY . .
 WORKDIR /src/src/server/CrossDataBase.Server
-RUN pwd
 RUN dotnet build "CrossDataBase.Server.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish

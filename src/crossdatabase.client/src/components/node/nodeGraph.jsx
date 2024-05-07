@@ -1,18 +1,8 @@
-import { useState, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { computeOutOffsetByIndex, computeInOffsetByIndex } from './util';
 import Spline from './spline';
-import DragNode from './node';
+import Node from './node';
 import PropTypes from "prop-types";
-
-NodeGraph.propTypes = {
-    data: PropTypes.object,
-    onNodeDeselect: PropTypes.func,
-    onNodeMove: PropTypes.func,
-    onNodeStartMove: PropTypes.func,
-    onNodeSelect: PropTypes.func,
-    onNewConnector: PropTypes.func,
-    onRemoveConnector: PropTypes.func
-}
 
 const NodeGraph = ({
     data,
@@ -161,7 +151,7 @@ const NodeGraph = ({
         >
             {dataS.nodes.map(node => {
                 // console.log(node);
-                return <DragNode
+                return <Node
                             index={i++}
                             nid={node.nid}
                             title={node.type}
@@ -205,5 +195,15 @@ const NodeGraph = ({
         </div>
     );
 }
+
+// NodeGraph.propTypes = {
+//     data: PropTypes.object,
+//     onNodeDeselect: PropTypes.func,
+//     onNodeMove: PropTypes.func,
+//     onNodeStartMove: PropTypes.func,
+//     onNodeSelect: PropTypes.func,
+//     onNewConnector: PropTypes.func,
+//     onRemoveConnector: PropTypes.func
+// }
 
 export default NodeGraph;

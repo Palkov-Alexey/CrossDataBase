@@ -1,13 +1,7 @@
 import { Component } from "react";
 import PropTypes from "prop-types";
 
-NodeInputListItem.propTypes = {
-    onMouseUp: PropTypes.func.isRequired,
-    index: PropTypes.number.isRequired,
-    item: PropTypes.object.isRequired
-}
-
-export default class NodeInputListItem extends Component {
+class NodeInputListItem extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -52,3 +46,11 @@ export default class NodeInputListItem extends Component {
         );
     }
 }
+
+// NodeInputListItem.propTypes = {
+//     onMouseUp: PropTypes.func.isRequired,
+//     index: PropTypes.number.isRequired,
+//     item: PropTypes.object.isRequired
+// }
+
+export default NodeInputListItem

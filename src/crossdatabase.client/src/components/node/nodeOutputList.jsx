@@ -2,12 +2,7 @@ import { Component } from "react";
 import NodeOutputListItem from "./nodeOutputListItem";
 import PropTypes from "prop-types";
 
-NodeOutputList.propTypes = {
-    onStartConnector: PropTypes.func,
-    items: PropTypes.arrayOf(PropTypes.object)
-}
-
-export default class NodeOutputList extends Component {
+class NodeOutputList extends Component {
 
     onMouseDown(i) {
         this.props.onStartConnector(i);
@@ -29,3 +24,10 @@ export default class NodeOutputList extends Component {
         );
     }
 }
+
+// NodeOutputList.propTypes = {
+//     onStartConnector: PropTypes.func,
+//     items: PropTypes.arrayOf(PropTypes.object)
+// }
+
+export default NodeOutputList

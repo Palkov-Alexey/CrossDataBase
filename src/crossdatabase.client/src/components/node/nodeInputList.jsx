@@ -2,12 +2,7 @@ import { Component } from "react";
 import NodeInputListItem from "./nodeInputListItem";
 import PropTypes from "prop-types";
 
-NodeInputList.propTypes = {
-    onCompleteConnector: PropTypes.func.isRequired,
-    items: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired
-}
-
-export default class NodeInputList extends Component {
+class NodeInputList extends Component {
 
 	onMouseUp(i) {
 		this.props.onCompleteConnector(i);
@@ -29,3 +24,10 @@ export default class NodeInputList extends Component {
 		);
 	}
 }
+
+// NodeInputList.propTypes = {
+//     onCompleteConnector: PropTypes.func.isRequired,
+//     items: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired
+// }
+
+export default NodeInputList

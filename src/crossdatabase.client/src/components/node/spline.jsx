@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { TrashIcon } from './trashIcon';
 import onClickOutside from 'react-onclickoutside';
 import PropTypes from "prop-types";
+import TrashIcon from './trashIcon';
 
 const Spline = ({
     mousePos,
@@ -80,16 +80,16 @@ const Spline = ({
 }
 
 const handleClickConfig = {
-    handleClickOutside: () => Spline.handleClickOutside
+    handleClickOutside: (i) => i.handleClickOutside
 }
 
-Spline.propTypes = {
-    mousePos: PropTypes.object,
-    onClick: PropTypes.func,
-    onClickOutside: PropTypes.func,
-    onRemove: PropTypes.func,
-    start: PropTypes.object,
-    end: PropTypes.object
-}
+// Spline.propTypes = {
+//     mousePos: PropTypes.object,
+//     onClick: PropTypes.func,
+//     onClickOutside: PropTypes.func,
+//     onRemove: PropTypes.func,
+//     start: PropTypes.object,
+//     end: PropTypes.object
+// }
 
 export default onClickOutside(Spline, handleClickConfig);

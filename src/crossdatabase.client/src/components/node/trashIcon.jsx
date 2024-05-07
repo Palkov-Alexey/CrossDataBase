@@ -1,11 +1,6 @@
 import PropTypes from "prop-types";
 
-TrashIcon.propTypes = {
-    onClick: PropTypes.func,
-    position: PropTypes.object
-}
-
-export const TrashIcon = ({
+const TrashIcon = ({
     onClick,
     position
 }) => {
@@ -27,3 +22,10 @@ export const TrashIcon = ({
         </g>
     );
 }
+
+// TrashIcon.propTypes = {
+//     onClick: PropTypes.func,
+//     position: PropTypes.object
+// }
+
+export default TrashIcon
