@@ -15,12 +15,7 @@ class Layout extends Component {
         return (
             <>
                 <MenuBar />
-                <div className={style.doc}>
-                    <div className={style.HBox}>
-                        <div className={style.VBox}>{this.store.children}</div>
-                        <div className={style.VBox}></div>
-                    </div>
-                </div>
+                {this.store.children}                       
             </>
         )
     }

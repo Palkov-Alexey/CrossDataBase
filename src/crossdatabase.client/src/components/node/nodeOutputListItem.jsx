@@ -2,7 +2,6 @@ import { Component } from "react";
 import PropTypes from "prop-types";
 
 class NodeOutputListItem extends Component {
-
     onMouseDown(e) {
         e.stopPropagation();
         e.preventDefault();
@@ -24,10 +23,10 @@ class NodeOutputListItem extends Component {
     }
 }
 
-// NodeOutputListItem.propTypes = {
-//     onMouseDown: PropTypes.func,
-//     index: PropTypes.number,
-//     item: PropTypes.object
-// }
+NodeOutputListItem.propTypes = {
+    onMouseDown: PropTypes.func,
+    index: PropTypes.number,
+    item: PropTypes.object
+}
 
 export default NodeOutputListItem

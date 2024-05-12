@@ -1,6 +1,6 @@
-import { Component, Fragment, useState } from 'react';
-import ReactNodeGraph from './components/node/nodeGraph'
-import './App.css';
+import { Component } from 'react';
+import ReactNodeGraph from './components/node/index'
+import './node.css'
 
 const exampleGraph = {
     "nodes": [
@@ -29,66 +29,68 @@ const exampleGraph = {
     ]
 };
 
+class App extends Component {
+    constructor(props) {
+        super(props);
+    }
 
-export const App = () => {
-    const [state, setState] = useState(exampleGraph);
-
-    const onNewConnector = (fromNode, fromPin, toNode, toPin) => {
-        let connections = [...state.connections, {
+    onNewConnector = (fromNode, fromPin, toNode, toPin) => {
+        let connections = [this.state.connections, {
             from_node: fromNode,
             from: fromPin,
             to_node: toNode,
             to: toPin
         }];
+        let state = this.state;
 
-        console.log({ ...state, ...connections });
-        setState(old => {
+        console.log({ state, connections });
+        this.setState(old => {
             return {
-                ...old,
+                old,
                 "connections": connections
             }
         });
     }
 
-    const onRemoveConnector = (connector) => {
-        let connections = [...state.connections];
+    onRemoveConnector = (connector) => {
+        let connections = [this.state.connections];
         connections = connections.filter(connection => {
             return connection !== connector;
         });
 
-        setState(old => {
+        this.setState(old => {
             return {
-                ...old,
+                old,
                 "connections": connections
             }
         });
     }
 
-    const onNodeMove = (nid, pos) => {
+    onNodeMove = (nid, pos) => {
         console.log(`end move:`, nid, pos);
     }
 
-    const onNodeStartMove = nid => {
+    onNodeStartMove = nid => {
         console.log(`start move:`, nid);
     }
 
-    const handleNodeSelect = nid => {
+    handleNodeSelect = nid => {
         console.log(`node selected:`, nid);
     }
 
-    const handleNodeDeselect = nid => {
+    handleNodeDeselect = nid => {
         console.log(`node deselected:`, nid);
     }
 
-    return <ReactNodeGraph
-        data={state}
-        onNodeMove={(nid, pos) => onNodeMove(nid, pos)}
-        onNodeStartMove={nid => onNodeStartMove(nid)}
-        onNewConnector={(n1, o, n2, i) => onNewConnector(n1, o, n2, i)}
-        onRemoveConnector={connector => onRemoveConnector(connector)}
-        onNodeSelect={nid => handleNodeSelect(nid)}
-        onNodeDeselect={nid => handleNodeDeselect(nid)}
-    />;
+    render() {
+        return <ReactNodeGraph
+            data={exampleGraph}
+            onNodeMove={(nid, pos) => this.onNodeMove(nid, pos)}
+            onNodeStartMove={(nid) => this.onNodeStartMove(nid)}
+            onNewConnector={(n1, o, n2, i) => this.onNewConnector(n1, o, n2, i)}
+            onRemoveConnector={(connector) => this.onRemoveConnector(connector)}
+        />;
+    }
 }
 
 // class App extends Component {

@@ -47,10 +47,10 @@ class NodeInputListItem extends Component {
     }
 }
 
-// NodeInputListItem.propTypes = {
-//     onMouseUp: PropTypes.func.isRequired,
-//     index: PropTypes.number.isRequired,
-//     item: PropTypes.object.isRequired
-// }
+NodeInputListItem.propTypes = {
+    onMouseUp: PropTypes.func.isRequired,
+    index: PropTypes.number.isRequired,
+    item: PropTypes.object.isRequired
+}
 
 export default NodeInputListItem

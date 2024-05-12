@@ -3,7 +3,6 @@ import NodeInputListItem from "./nodeInputListItem";
 import PropTypes from "prop-types";
 
 class NodeInputList extends Component {
-
 	onMouseUp(i) {
 		this.props.onCompleteConnector(i);
 	}
@@ -25,9 +24,9 @@ class NodeInputList extends Component {
 	}
 }
 
-// NodeInputList.propTypes = {
-//     onCompleteConnector: PropTypes.func.isRequired,
-//     items: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired
-// }
+NodeInputList.propTypes = {
+    onCompleteConnector: PropTypes.func.isRequired,
+    items: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired
+}
 
 export default NodeInputList
