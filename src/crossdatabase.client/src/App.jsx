@@ -67,6 +67,7 @@ class App extends Component {
     }
 
     onNodeMove = (nid, pos) => {
+        exampleGraph.nodes.find(x=> x.nid === nid).x = pos.x
         console.log(`end move:`, nid, pos);
     }
 

@@ -22,7 +22,8 @@ class Node extends Component {
     }
 
     handleDrag(event, ui) {
-        this.props.onNodeMove(this.props.index, ui.position);
+        const position = {x: ui.deltaX, y: ui.deltaY}
+        this.props.onNodeMove(this.props.index, position);
     }
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -54,14 +55,16 @@ class Node extends Component {
 
     render() {
         let { selected } = this.state;
+        console.log(`x: ${this.props.pos.x}, y: ${this.props.pos.y}`)
 
         let nodeClass = 'node' + (selected ? ' selected' : '');
 
         return (
             <div onDoubleClick={() => { this.handleClick() }}>
                 <Draggable
-                    start={{ x: this.props.pos.x, y: this.props.pos.y }}
+                    position={{ x: this.props.pos.x, y: this.props.pos.y }}
                     handle=".node-header"
+                    scale={1}
                     onStart={(event, ui) => this.handleDragStart(event, ui)}
                     onStop={(event, ui) => this.handleDragStop(event, ui)}
                     onDrag={(event, ui) => this.handleDrag(event, ui)}>

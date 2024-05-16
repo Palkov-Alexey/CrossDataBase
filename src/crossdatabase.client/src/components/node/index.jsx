@@ -64,9 +64,10 @@ class index extends Component {
 
     handleNodeMove(index, pos) {
         let d = this.state.data;
+        console.log(pos)
 
-        d.nodes[index].x = pos.left;
-        d.nodes[index].y = pos.top;
+        d.nodes[index].x += pos.x;
+        d.nodes[index].y += pos.y;
 
         this.setState({ data: d });
     }
