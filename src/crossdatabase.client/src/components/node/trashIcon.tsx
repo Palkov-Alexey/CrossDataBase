@@ -1,7 +1,12 @@
 import PropTypes from "prop-types";
-import { Component } from "react";
+import React, { Component } from "react";
 
-class TrashIcon extends Component {
+type TrashIconProp = {
+  onClick: (...args: any[]) => void,
+  position: Position
+}
+
+class TrashIcon extends Component<TrashIconProp> {
     constructor(props) {
       super(props)
     }
@@ -28,9 +33,6 @@ class TrashIcon extends Component {
     }
 }
 
-TrashIcon.propTypes = {
-    onClick: PropTypes.func,
-    position: PropTypes.object
-}
+
 
 export default TrashIcon

@@ -1,7 +1,17 @@
-import { Component } from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
 
-class NodeInputListItem extends Component {
+type NodeInputListItemProps = {
+    onMouseUp: (...args: any[]) => void,
+    index: number,
+    item: ConnectionPoint
+}
+
+interface IState {
+    hover: boolean;
+}
+
+class NodeInputListItem extends Component<NodeInputListItemProps, IState> {
     constructor(props) {
         super(props);
         this.state = {
@@ -47,10 +57,6 @@ class NodeInputListItem extends Component {
     }
 }
 
-NodeInputListItem.propTypes = {
-    onMouseUp: PropTypes.func.isRequired,
-    index: PropTypes.number.isRequired,
-    item: PropTypes.object.isRequired
-}
+
 
 export default NodeInputListItem

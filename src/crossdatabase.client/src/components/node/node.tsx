@@ -1,40 +1,61 @@
-import { Component } from "react";
-import Draggable from "react-draggable";
+import React, { Component } from "react";
+import Draggable, { DraggableData, DraggableEvent } from "react-draggable";
 import onClickOutside from 'react-onclickoutside';
 import NodeInputList from "./nodeInputList";
 import NodeOutputList from "./nodeOutputList";
-import PropTypes from "prop-types";
 
-class Node extends Component {
-    constructor(props) {
+type NodeProps = {
+    onNodeSelect: (...args: any[]) => void;
+    onNodeDeselect: (...args: any[]) => void,
+    onNodeStart: (...args: any[]) => void,
+    onNodeStop: (...args: any[]) => void,
+    onNodeMove: (...args: any[]) => void,
+    onStartConnector: (...args: any[]) => void,
+    onCompleteConnector: (...args: any[]) => void,
+    nid: number,
+    pos: Position,
+    title: string,
+    index: number,
+    inputs: ConnectionPoint[],
+    outputs: ConnectionPoint[]
+}
+
+interface IState {
+    selected: boolean
+}
+
+class Node extends Component<NodeProps, IState> {
+
+    constructor(props: NodeProps) {
         super(props);
         this.state = {
             selected: false
         }
     }
 
-    handleDragStart(event, ui) {
+    handleDragStart(event: DraggableEvent, ui: DraggableData) {
         this.props.onNodeStart(this.props.nid, ui);
     }
 
-    handleDragStop(event, ui) {
-        this.props.onNodeStop(this.props.nid, ui.position);
+    handleDragStop(event: DraggableEvent, ui: DraggableData) {
+        const position = { x: ui.lastX, y: ui.lastY }
+        this.props.onNodeStop(this.props.index, position);
     }
 
-    handleDrag(event, ui) {
-        const position = {x: ui.deltaX, y: ui.deltaY}
+    handleDrag = (event: DraggableEvent, ui: DraggableData) => {
+        const position = { x: ui.deltaX, y: ui.deltaY }
         this.props.onNodeMove(this.props.index, position);
     }
 
-    shouldComponentUpdate(nextProps, nextState) {
+    shouldComponentUpdate(nextProps, nextState,) {
         return this.state.selected !== nextState.selected;
     }
 
-    onStartConnector(index) {
+    onStartConnector(index: number) {
         this.props.onStartConnector(this.props.nid, index);
     }
 
-    onCompleteConnector(index) {
+    onCompleteConnector(index: number) {
         this.props.onCompleteConnector(this.props.nid, index);
     }
 
@@ -54,18 +75,17 @@ class Node extends Component {
     }
 
     render() {
-        let { selected } = this.state;
-        console.log(`x: ${this.props.pos.x}, y: ${this.props.pos.y}`)
+        let {selected} = this.state;
 
         let nodeClass = 'node' + (selected ? ' selected' : '');
 
         return (
             <div onDoubleClick={() => { this.handleClick() }}>
                 <Draggable
-                    position={{ x: this.props.pos.x, y: this.props.pos.y }}
+                    defaultPosition={{ x: this.props.pos.x, y: this.props.pos.y }}
                     handle=".node-header"
                     scale={1}
-                    onStart={(event, ui) => this.handleDragStart(event, ui)}
+                    //onStart={(event, ui) => this.handleDragStart(event, ui)}
                     onStop={(event, ui) => this.handleDragStop(event, ui)}
                     onDrag={(event, ui) => this.handleDrag(event, ui)}>
                     <section className={nodeClass} style={{ zIndex: 10000 }}>
@@ -73,8 +93,8 @@ class Node extends Component {
                             <span className="node-title">{this.props.title}</span>
                         </header>
                         <div className="node-content">
-                            <NodeInputList items={this.props.inputs} onCompleteConnector={(index) => this.onCompleteConnector(index)} />
-                            <NodeOutputList items={this.props.outputs} onStartConnector={(index) => this.onStartConnector(index)} />
+                            <NodeInputList items={this.props.inputs} onCompleteConnector={(index: number) => this.onCompleteConnector(index)} />
+                            <NodeOutputList items={this.props.outputs} onStartConnector={(index: number) => this.onStartConnector(index)} />
                         </div>
                     </section>
                 </Draggable>
@@ -83,20 +103,6 @@ class Node extends Component {
     }
 }
 
-Node.propTypes = {
-    onNodeSelect: PropTypes.func,
-    onNodeDeselect: PropTypes.func,
-    onNodeStart: PropTypes.func,
-    onNodeStop: PropTypes.func,
-    onNodeMove: PropTypes.func,
-    onStartConnector: PropTypes.func,
-    onCompleteConnector: PropTypes.func,
-    nid: PropTypes.number,
-    pos: PropTypes.object,
-    title: PropTypes.string,
-    index: PropTypes.number,
-    inputs: PropTypes.arrayOf(PropTypes.object),
-    outputs: PropTypes.arrayOf(PropTypes.object)
-}
+
 
 export default onClickOutside(Node);

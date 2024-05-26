@@ -1,7 +1,17 @@
-import { Component } from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
 
-class NodeOutputListItem extends Component {
+type NodeOutputListItemProps = {
+    onMouseDown: (...args: any[]) => void,
+    index: number,
+    item: ConnectionPoint
+}
+
+interface IState {
+    hover: boolean;
+}
+
+class NodeOutputListItem extends Component<NodeOutputListItemProps, IState> {
     onMouseDown(e) {
         e.stopPropagation();
         e.preventDefault();
@@ -21,12 +31,6 @@ class NodeOutputListItem extends Component {
             </li>
         );
     }
-}
-
-NodeOutputListItem.propTypes = {
-    onMouseDown: PropTypes.func,
-    index: PropTypes.number,
-    item: PropTypes.object
 }
 
 export default NodeOutputListItem

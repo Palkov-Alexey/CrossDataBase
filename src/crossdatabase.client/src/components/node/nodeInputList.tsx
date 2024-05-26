@@ -1,8 +1,13 @@
-import { Component } from "react";
+import React, { Component } from "react";
 import NodeInputListItem from "./nodeInputListItem";
 import PropTypes from "prop-types";
 
-class NodeInputList extends Component {
+type NodeInputListProps = {
+    onCompleteConnector: (...args: any[]) => void;
+    items: ConnectionPoint[]
+}
+
+class NodeInputList extends Component<NodeInputListProps> {
 	onMouseUp(i) {
 		this.props.onCompleteConnector(i);
 	}
@@ -24,9 +29,6 @@ class NodeInputList extends Component {
 	}
 }
 
-NodeInputList.propTypes = {
-    onCompleteConnector: PropTypes.func.isRequired,
-    items: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired
-}
+
 
 export default NodeInputList

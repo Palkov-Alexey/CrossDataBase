@@ -1,10 +1,24 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
 import onClickOutside from 'react-onclickoutside';
 import PropTypes from "prop-types";
 import TrashIcon from './trashIcon';
 
-class Spline extends Component{
-    constructor(props) {
+type SplineProps = {
+  mousePos: {x: number, y: number};
+  onClick: (...args: any[]) => any;
+  onClickOutside: (...args: any[]) => any;
+  onRemove: (...args: any[]) => any;
+  start: {x: number, y: number};
+  end: {x: number, y: number};
+}
+
+interface IState {
+  selected: boolean;
+  position: Position;
+}
+
+class Spline extends Component<SplineProps, IState>{
+    constructor(props: SplineProps) {
         super(props)
         this.state = {
           selected: false,
@@ -81,15 +95,6 @@ class Spline extends Component{
       distance(a,b) {
           return Math.sqrt( (b[0] - a[0]) * (b[0] - a[0]) + (b[1] - a[1]) * (b[1] - a[1]) );
       }
-}
-
-Spline.propTypes = {
-    mousePos: PropTypes.object,
-    onClick: PropTypes.func,
-    onClickOutside: PropTypes.func,
-    onRemove: PropTypes.func,
-    start: PropTypes.object,
-    end: PropTypes.object
 }
 
 export default onClickOutside(Spline);
