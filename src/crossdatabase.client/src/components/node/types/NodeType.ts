@@ -1,17 +1,17 @@
-type NodeData = {
+export type NodeData = {
     nodes: NodeElement[];
     connectors: Connectors[];
 }
 
-type NodeElement = {
+export type NodeElement = {
     id: number;
-    Name: string;
+    name: string;
     x: number;
     y: number;
     fields: Fields;
 }
 
-type Connectors = {
+export type Connectors = {
     id: number;
     fromNode: number;
     from: string;
@@ -19,11 +19,11 @@ type Connectors = {
     to: string;
 }
 
-type Fields = {
+export type Fields = {
     inputs: ConnectionPoint[]
     outputs: ConnectionPoint[]
 }
 
-type ConnectionPoint = {
+export type ConnectionPoint = {
     name: string
 }

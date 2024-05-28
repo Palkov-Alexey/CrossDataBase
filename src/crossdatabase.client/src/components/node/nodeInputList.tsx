@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import NodeInputListItem from "./nodeInputListItem";
-import PropTypes from "prop-types";
+import { ConnectionPoint } from "./types/NodeType";
 
 type NodeInputListProps = {
     onCompleteConnector: (...args: any[]) => void;
@@ -14,6 +14,10 @@ class NodeInputList extends Component<NodeInputListProps> {
 	
 	render() {
 		let i = 0;
+
+		if(!this.props.items){
+			return null;
+		}
 
 		return (
 			<div className="nodeInputWrapper">

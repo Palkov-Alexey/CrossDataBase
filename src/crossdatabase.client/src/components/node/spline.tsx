@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import onClickOutside from 'react-onclickoutside';
-import PropTypes from "prop-types";
 import TrashIcon from './trashIcon';
+import { Position } from './types/Position';
 
 type SplineProps = {
   mousePos: {x: number, y: number};

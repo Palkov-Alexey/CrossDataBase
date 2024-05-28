@@ -1,11 +1,13 @@
+import { NodeData } from "../types/NodeType";
+
 const urls = {
     getNode: `api/node`
 }
 
 
 export default {
-    getNode() {
-        const result = fetch(urls.getNode, {
+    async getNode(): Promise<NodeData> {
+        const result = await fetch(urls.getNode, {
             method: `GET`
         }).then(response => response.json());
 

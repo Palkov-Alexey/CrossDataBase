@@ -1,5 +1,5 @@
-import PropTypes from "prop-types";
 import React, { Component } from "react";
+import { Position } from "./types/Position";
 
 type TrashIconProp = {
   onClick: (...args: any[]) => void,

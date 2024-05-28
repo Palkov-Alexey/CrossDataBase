@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import NodeOutputListItem from "./nodeOutputListItem";
-import PropTypes from "prop-types";
+import { ConnectionPoint } from "./types/NodeType";
 
 type NodeOutputListProps = {
     onStartConnector: (...args: any[]) => void;
@@ -14,6 +14,10 @@ class NodeOutputList extends Component<NodeOutputListProps> {
 
     render() {
         let i = 0;
+
+        if(!this.props.items){
+			return null;
+		}
 
         return (
             <div className="nodeOutputWrapper">

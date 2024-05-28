@@ -1,5 +1,7 @@
-import { action, observable } from "mobx";
-import DataSource from "../services/DataService";
+import { action, computed, observable } from "mobx";
+import dataService from "../services/dataService";
+import { NodeData, Connectors } from "../types/NodeType";
+import { Position } from "../types/Position";
 
 class NodeStore {
     // @observable data: NodeData = {
@@ -33,13 +35,13 @@ class NodeStore {
 
     @observable maxValue = 0;
 
-    constructor() {
-        //this.getData();
+    @computed get isLoading() {
+        return !this.data; 
     }
 
-    getData = () => {
-        this.data = Promise.call(DataSource.getNode())
-
+    @action
+    getData = async () => {
+        this.data = await dataService.getNode();
         const connIds = this.data.connectors.map(c => c.id);
         this.maxValue = Math.max(...connIds);
     }
@@ -72,11 +74,13 @@ class NodeStore {
     @action
     getNodebyId = (id: number) => {
         const node = this.data.nodes.filter(n => n.id === id)[0];
-        if (node.Name === `Timer`) {
+        if (node.name === `Timer`) {
             console.log(node);
         }
         return node;
     }
+
+    
 }
 
 export default NodeStore;

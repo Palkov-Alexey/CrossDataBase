@@ -3,6 +3,8 @@ import Draggable, { DraggableData, DraggableEvent } from "react-draggable";
 import onClickOutside from 'react-onclickoutside';
 import NodeInputList from "./nodeInputList";
 import NodeOutputList from "./nodeOutputList";
+import { ConnectionPoint } from "./types/NodeType";
+import { Position } from "./types/Position";
 
 type NodeProps = {
     onNodeSelect: (...args: any[]) => void;

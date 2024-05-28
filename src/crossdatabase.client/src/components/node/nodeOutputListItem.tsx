@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
+import { ConnectionPoint } from "./types/NodeType";
 
 type NodeOutputListItemProps = {
     onMouseDown: (...args: any[]) => void,

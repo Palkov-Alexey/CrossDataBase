@@ -58,8 +58,7 @@ class App extends Component {
     // }
 
     render() {
-        return <ReactNodeGraph
-        />;
+        return <ReactNodeGraph />;
     }
 }
 

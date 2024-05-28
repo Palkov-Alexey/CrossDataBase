@@ -4,7 +4,8 @@ import Spline from './spline';
 import Node from './node';
 import SVGComponent from './SVGComponent';
 import NodeStore from './store/NodeStore';
-import DataService from './services/DataService';
+import { ConnectionPoint } from './types/NodeType';
+import { Position } from './types/Position';
 
 interface IState {
     source: any[];
@@ -19,7 +20,6 @@ class index extends Component<any, IState> {
         super(props);
 
         this.store = new NodeStore();
-        this.store.getData();
 
         this.state = {
             source: [],
@@ -31,7 +31,8 @@ class index extends Component<any, IState> {
         this.onMouseUp = this.onMouseUp.bind(this);
     }
 
-    componentDidMount() {
+    async componentDidMount() {
+        await this.store.getData();
         document.addEventListener('mousemove', this.onMouseMove);
         document.addEventListener('mouseup', this.onMouseUp);
     }
@@ -90,8 +91,12 @@ class index extends Component<any, IState> {
     }
 
     render() {
-        let nodes = this.store.data.nodes;
-        let connectors = this.store.data.connectors;
+        var {isLoading} = this.store;
+        if(isLoading){
+            return <div /*className={style.emptyPage}><Loader width={150} className={style.loader}*/ />;
+        }
+debugger;
+        let { nodes, connectors } = this.store.data;
         let { mousePos, dragging } = this.state;
 
         let i = 0;
@@ -116,7 +121,7 @@ class index extends Component<any, IState> {
                     return <Node
                         index={i++}
                         nid={node.id}
-                        title={node.Name}
+                        title={node.name}
                         inputs={node.fields.inputs}
                         outputs={node.fields.outputs}
                         pos={{ x: node.x, y: node.y }}
