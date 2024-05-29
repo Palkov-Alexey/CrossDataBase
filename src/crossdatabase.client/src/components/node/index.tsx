@@ -4,7 +4,7 @@ import Spline from './spline';
 import Node from './node';
 import SVGComponent from './SVGComponent';
 import NodeStore from './store/NodeStore';
-import { ConnectionPoint } from './types/NodeType';
+import { ConnectionPoint, NodeData } from './types/NodeType';
 import { Position } from './types/Position';
 
 interface IState {
@@ -43,7 +43,7 @@ class index extends Component<any, IState> {
         document.removeEventListener('mouseup', this.onMouseUp);
     }
 
-    componentWillReceiveProps(nextProps) {
+    componentWillReceiveProps(nextProps: NodeStore) {
         this.store.data = nextProps.data;
         //this.setState({ data: nextProps.data });
     }
@@ -96,7 +96,7 @@ class index extends Component<any, IState> {
         if(isLoading){
             return <div /*className={style.emptyPage}><Loader width={150} className={style.loader}*/ />;
         }
-debugger;
+
         let { nodes, connectors } = this.store.data;
         let { mousePos, dragging } = this.state;
 

@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import { Component } from "react";
 import Draggable, { DraggableData, DraggableEvent } from "react-draggable";
 import onClickOutside from 'react-onclickoutside';
 import NodeInputList from "./nodeInputList";
@@ -49,7 +49,7 @@ class Node extends Component<NodeProps, IState> {
         this.props.onNodeMove(this.props.index, position);
     }
 
-    shouldComponentUpdate(nextProps, nextState,) {
+    shouldComponentUpdate(nextProps: NodeProps, nextState: IState,) {
         return this.state.selected !== nextState.selected;
     }
 

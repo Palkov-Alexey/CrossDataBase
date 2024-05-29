@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-        "experimentalDecorators": true,
+        /*"experimentalDecorators": false,*/
         "target": "esnext",
         "useDefineForClassFields": true,
         "lib": [

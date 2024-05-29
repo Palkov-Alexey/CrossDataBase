@@ -18,7 +18,7 @@ public class NodeController(ILogger<NodeController> logger) : ControllerBase
             Nodes =
             [
                 new() {Id = 1, Name = "Server", x = 89, y = 82, Fields = new Fields{ Outputs = [new(){Name = "Server"}] } },
-                new() {Id = 2, Name = "Script", x = 140, y = 92, Fields = new Fields{ Inputs = [new(){Name = "Server"}], Outputs = [new(){Name = "Res"}] }}
+                new() {Id = 2, Name = "Script", x = 452, y = 92, Fields = new Fields{ Inputs = [new(){Name = "Server"}], Outputs = [new(){Name = "Res"}] }}
             ],
             Connectors =
             [

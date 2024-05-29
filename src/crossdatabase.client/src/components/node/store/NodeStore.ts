@@ -50,9 +50,7 @@ class NodeStore {
             console.log(node);
         }
         return node;
-    }
-
-    
+    }    
 }
 
 export default NodeStore;
