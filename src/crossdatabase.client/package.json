@@ -5,11 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
-    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "build": "tsc & vite build",
+    "lint": "eslint . --ext js,jsx,ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
   "dependencies": {
+    "@babel/plugin-proposal-decorators": "^7.24.6",
     "@react-hook/resize-observer": "^1.2.6",
     "prop-types": "^15.8.1",
     "react": "^18.3.1",
@@ -31,6 +32,7 @@
     "less": "^4.2.0",
     "mobx": "^6.12.3",
     "react-bootstrap": "^2.10.2",
+    "typescript": "^5.2.2",
     "vite": "^5.2.0"
   }
 }

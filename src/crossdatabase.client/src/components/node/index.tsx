@@ -35,6 +35,7 @@ class index extends Component<any, IState> {
         await this.store.getData();
         document.addEventListener('mousemove', this.onMouseMove);
         document.addEventListener('mouseup', this.onMouseUp);
+        this.forceUpdate();
     }
 
     componentWillUnmount() {
