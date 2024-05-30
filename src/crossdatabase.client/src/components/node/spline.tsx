@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import onClickOutside from 'react-onclickoutside';
 import TrashIcon from './trashIcon';
 import { Position } from './types/Position';
 
 type SplineProps = {
   mousePos: {x: number, y: number};
-  onClick: (...args: any[]) => any;
-  onClickOutside: (...args: any[]) => any;
+  onClick?: (...args: any[]) => any;
+  onClickOutside?: (...args: any[]) => any;
   onRemove: (...args: any[]) => any;
   start: {x: number, y: number};
   end: {x: number, y: number};
@@ -26,7 +26,7 @@ class Spline extends Component<SplineProps, IState>{
         }
       }
   
-      handleClick(e) {
+      handleClick(e: any) {
         this.setState({
           selected: !this.state.selected,
           position: this.props.mousePos
@@ -37,7 +37,7 @@ class Spline extends Component<SplineProps, IState>{
         }
       }
   
-      handleClickOutside(e) {
+      handleClickOutside(e: any) {
         this.setState({selected: false});
   
         if (this.props.onClickOutside) {
@@ -45,7 +45,7 @@ class Spline extends Component<SplineProps, IState>{
         }
       }
   
-      handleRemove(e) {
+      handleRemove(e: any) {
         this.setState({selected: false});
   
         if (this.props.onRemove) {
@@ -88,11 +88,11 @@ class Spline extends Component<SplineProps, IState>{
           );
       }
   
-      bezierCurve(a,b,cp1x,cp1y,cp2x,cp2y,x,y) {
+      bezierCurve(a: number,b: number,cp1x: number,cp1y: number,cp2x: number,cp2y: number,x: number,y: number) {
           return `M${a},${b} C${cp1x},${cp1y} ${cp2x},${cp2y}  ${x},${y}`;
       }
   
-      distance(a,b) {
+      distance(a: any[],b: any[]) {
           return Math.sqrt( (b[0] - a[0]) * (b[0] - a[0]) + (b[1] - a[1]) * (b[1] - a[1]) );
       }
 }

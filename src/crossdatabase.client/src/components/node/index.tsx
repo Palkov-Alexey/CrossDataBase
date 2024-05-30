@@ -1,11 +1,12 @@
-import React, { Component } from 'react';
+import React, { Component, createRef } from 'react';
 import { computeOutOffsetByIndex, computeInOffsetByIndex } from './util';
 import Spline from './spline';
 import Node from './node';
 import SVGComponent from './SVGComponent';
 import NodeStore from './store/NodeStore';
-import { ConnectionPoint, NodeData } from './types/NodeType';
+import { ConnectionPoint } from './types/NodeType';
 import { Position } from './types/Position';
+import { observer } from 'mobx-react';
 
 interface IState {
     source: any[];
@@ -13,8 +14,10 @@ interface IState {
     mousePos: Position
 }
 
+@observer
 class index extends Component<any, IState> {
     store: NodeStore;
+    ref!: any
 
     constructor(props: any) {
         super(props);
@@ -27,6 +30,8 @@ class index extends Component<any, IState> {
             mousePos: { x: 0, y: 0 }
         }
 
+        this.ref = createRef()
+
         this.onMouseMove = this.onMouseMove.bind(this);
         this.onMouseUp = this.onMouseUp.bind(this);
     }
@@ -35,7 +40,6 @@ class index extends Component<any, IState> {
         await this.store.getData();
         document.addEventListener('mousemove', this.onMouseMove);
         document.addEventListener('mouseup', this.onMouseUp);
-        this.forceUpdate();
     }
 
     componentWillUnmount() {
@@ -43,10 +47,10 @@ class index extends Component<any, IState> {
         document.removeEventListener('mouseup', this.onMouseUp);
     }
 
-    componentWillReceiveProps(nextProps: NodeStore) {
-        this.store.data = nextProps.data;
-        //this.setState({ data: nextProps.data });
-    }
+    // componentWillReceiveProps(nextProps: NodeStore) {
+    //     this.store.data = nextProps.data;
+    //     //this.setState({ data: nextProps.data });
+    // }
 
     onMouseUp(e) {
         this.setState({ dragging: false, });
@@ -55,7 +59,9 @@ class index extends Component<any, IState> {
     onMouseMove(e) {
         e.stopPropagation();
         e.preventDefault();
-        const { svgComponent: { refs: { svg } } } = this.refs;
+        console.log(this.ref.current)
+        const svg= this.ref.current.ref.current;
+        console.log(svg)
 
         //Get svg element position to substract offset top and left 
         const svgRect = svg.getBoundingClientRect();
@@ -76,7 +82,6 @@ class index extends Component<any, IState> {
         if (this.state.dragging) {
             console.log(this.state.source)
 
-            let nodes = this.store.data.nodes;
             let fromNode = this.store.getNodebyId(this.state.source[0]);
             let fromPinName = fromNode.fields.outputs[this.state.source[1]].name;
             let toNode = this.store.getNodebyId(nid);
@@ -101,7 +106,7 @@ class index extends Component<any, IState> {
         let { mousePos, dragging } = this.state;
 
         let i = 0;
-        let newConnector: React.JSX.Element | null = null;
+        let newConnector!: React.JSX.Element;
 
         if (dragging) {
             let sourceNode = this.store.getNodebyId(this.state.source[0]);
@@ -142,7 +147,7 @@ class index extends Component<any, IState> {
 
                 {/* render our connectors */}
 
-                <SVGComponent height="100%" width="100%" ref="svgComponent" >
+                <SVGComponent height="100%" width="100%" ref={this.ref} >
 
                     {connectors.map((connector) => {
                         let fromNode = this.store.getNodebyId(connector.fromNode);

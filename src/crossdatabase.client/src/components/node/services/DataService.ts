@@ -7,10 +7,11 @@ const urls = {
 
 export default {
     async getNode(): Promise<NodeData> {
-        const result = await fetch(urls.getNode, {
+        const response = await fetch(urls.getNode, {
             method: `GET`
-        }).then(response => response.json());
+        });
+        const json = await response.json()
 
-        return result;
+        return json;
     }
 }

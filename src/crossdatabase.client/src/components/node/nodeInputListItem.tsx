@@ -12,14 +12,14 @@ interface IState {
 }
 
 class NodeInputListItem extends Component<NodeInputListItemProps, IState> {
-    constructor(props) {
+    constructor(props: NodeInputListItemProps) {
         super(props);
         this.state = {
             hover: false
         }
     }
 
-    onMouseUp(e) {
+    onMouseUp(e: any) {
         e.stopPropagation();
         e.preventDefault();
 

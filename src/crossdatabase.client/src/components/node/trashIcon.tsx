@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import { Component } from "react";
 import { Position } from "./types/Position";
 
 type TrashIconProp = {
@@ -7,11 +7,11 @@ type TrashIconProp = {
 }
 
 class TrashIcon extends Component<TrashIconProp> {
-    constructor(props) {
+    constructor(props: TrashIconProp) {
       super(props)
     }
 
-    handleClick(e) {
+    handleClick(e: any) {
       if (this.props.onClick) {
         this.props.onClick(e)
       }

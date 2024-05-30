@@ -8,7 +8,7 @@ type NodeOutputListProps = {
 }
 
 class NodeOutputList extends Component<NodeOutputListProps> {
-    onMouseDown(i) {
+    onMouseDown(i: any) {
         this.props.onStartConnector(i);
     }
 

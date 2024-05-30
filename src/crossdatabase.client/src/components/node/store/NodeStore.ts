@@ -4,7 +4,7 @@ import { NodeData, Connectors } from "../types/NodeType";
 import { Position } from "../types/Position";
 
 class NodeStore {
-    @observable accessor data!: NodeData;
+    @observable accessor data;
     @observable accessor maxValue = 0;
 
     @computed get isLoading() {
@@ -38,7 +38,7 @@ class NodeStore {
 
     @action
     onRemoveConnector = async (connector: Connectors) => {
-        let connectors = this.data.connectors.filter(c => c.id !== connector.id)
+        let connectors = this.data.connectors.filter(c => c.id !== connector.id);
 
         this.data.connectors = connectors;
     }
@@ -46,9 +46,11 @@ class NodeStore {
     @action
     getNodebyId = (id: number) => {
         const node = this.data.nodes.filter(n => n.id === id)[0];
+
         if (node.name === `Timer`) {
             console.log(node);
         }
+
         return node;
     }    
 }
