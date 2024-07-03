@@ -4,24 +4,17 @@ FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 USER app
 WORKDIR /app
 EXPOSE 8080
-#EXPOSE 8180
 
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS with-node
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 RUN apt-get update
 RUN apt-get install curl
 RUN curl -sL https://deb.nodesource.com/setup_20.x | bash
 RUN apt-get -y install nodejs
-
-
-FROM with-node AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY src/server/CrossDataBase.Server/CrossDataBase.Server.csproj server/CrossDataBase.Server/
-COPY src/crossdatabase.client/crossdatabase.client.esproj crossdatabase.client/
-RUN dotnet restore "server/CrossDataBase.Server/CrossDataBase.Server.csproj"
-COPY . .
-WORKDIR /src/src/server/CrossDataBase.Server
-RUN dotnet build "CrossDataBase.Server.csproj" -c $BUILD_CONFIGURATION -o /app/build
+COPY /src .
+WORKDIR /src/server/CrossDataBase.Server
+RUN dotnet build "./CrossDataBase.Server.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
@@ -29,6 +22,5 @@ RUN dotnet publish "./CrossDataBase.Server.csproj" -c $BUILD_CONFIGURATION -o /a
 
 FROM base AS final
 WORKDIR /app
-#ARG ASPNETCORE_HTTPS_PORTS 8180
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "CrossDataBase.Server.dll"]
