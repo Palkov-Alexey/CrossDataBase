@@ -2,7 +2,6 @@
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
-    <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>f22a45e5-c6ed-482d-8329-eb63ec40665c</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
@@ -26,6 +25,12 @@
     <ProjectReference Include="..\..\crossdatabase.client\crossdatabase.client.esproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
+    <ProjectReference Include="..\CrossDataBase.Server.Business.Abstraction\CrossDataBase.Server.Business.Abstraction.csproj" />
+    <ProjectReference Include="..\CrossDataBase.Server.DataAccess.Abstraction\CrossDataBase.Server.DataAccess.Abstraction.csproj" />
+    <ProjectReference Include="..\CrossDataBase.Server.Business\CrossDataBase.Server.Business.csproj" />
+    <ProjectReference Include="..\CrossDataBase.Server.DataAccess\CrossDataBase.Server.DataAccess.csproj" />
+    <ProjectReference Include="..\CrossDataBase.Server.Enum\CrossDataBase.Server.Enum.csproj" />
+    <ProjectReference Include="..\CrossDataBase.Server.Infrastructure\CrossDataBase.Server.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
