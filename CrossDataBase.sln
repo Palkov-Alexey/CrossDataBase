@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrossDataBase.Server.Enum",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrossDataBase.Server.Infrastructure", "src\server\CrossDataBase.Server.Infrastructure\CrossDataBase.Server.Infrastructure.csproj", "{B3F1E456-47AF-475D-9E7C-A865D4DDFC09}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrossDataBase.Server.Infrastructure.Abstractions", "src\server\CrossDataBase.Server.Infrastructure.Abstractions\CrossDataBase.Server.Infrastructure.Abstractions.csproj", "{12D6CCC1-6C66-4B11-9748-5F51C52FAE23}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -61,6 +63,10 @@ Global
 		{B3F1E456-47AF-475D-9E7C-A865D4DDFC09}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B3F1E456-47AF-475D-9E7C-A865D4DDFC09}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B3F1E456-47AF-475D-9E7C-A865D4DDFC09}.Release|Any CPU.Build.0 = Release|Any CPU
+		{12D6CCC1-6C66-4B11-9748-5F51C52FAE23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12D6CCC1-6C66-4B11-9748-5F51C52FAE23}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12D6CCC1-6C66-4B11-9748-5F51C52FAE23}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12D6CCC1-6C66-4B11-9748-5F51C52FAE23}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -73,6 +79,7 @@ Global
 		{08EE4117-1410-4A14-91CB-5CEB79E63BC6} = {51DF1C47-93CE-4F2A-A8DD-1B6910C691F8}
 		{A7C01555-853B-4D5C-A6AD-3CCB5D45674C} = {51DF1C47-93CE-4F2A-A8DD-1B6910C691F8}
 		{B3F1E456-47AF-475D-9E7C-A865D4DDFC09} = {51DF1C47-93CE-4F2A-A8DD-1B6910C691F8}
+		{12D6CCC1-6C66-4B11-9748-5F51C52FAE23} = {51DF1C47-93CE-4F2A-A8DD-1B6910C691F8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0127F9B7-70D7-4EFD-A3E9-E05F68FE5470}

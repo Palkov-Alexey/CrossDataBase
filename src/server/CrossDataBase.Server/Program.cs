@@ -1,3 +1,4 @@
+using CrossDataBase.Server.Infrastructure.DependencyInjection;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,6 +18,8 @@ builder.Services.AddSwaggerGen();
 
 //    })
 //});
+
+builder.Services.RegisterByDIAttribute("CrossDataBase.Server.*");
 
 var app = builder.Build();
 
