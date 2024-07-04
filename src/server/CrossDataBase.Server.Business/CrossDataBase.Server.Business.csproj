@@ -12,4 +12,8 @@
         <ProjectReference Include="..\CrossDataBase.Server.Infrastructure\CrossDataBase.Server.Infrastructure.csproj" />
     </ItemGroup>
     
+    <ItemGroup>
+      <Folder Include="Common\" />
+    </ItemGroup>
+    
 </Project>

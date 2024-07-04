@@ -32,6 +32,7 @@
     <ProjectReference Include="..\CrossDataBase.Server.Business\CrossDataBase.Server.Business.csproj" />
     <ProjectReference Include="..\CrossDataBase.Server.DataAccess\CrossDataBase.Server.DataAccess.csproj" />
     <ProjectReference Include="..\CrossDataBase.Server.Enum\CrossDataBase.Server.Enum.csproj" />
+    <ProjectReference Include="..\CrossDataBase.Server.Infrastructure.Abstractions\CrossDataBase.Server.Infrastructure.Abstractions.csproj" />
     <ProjectReference Include="..\CrossDataBase.Server.Infrastructure\CrossDataBase.Server.Infrastructure.csproj" />
   </ItemGroup>
 
