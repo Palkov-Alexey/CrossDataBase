@@ -11,5 +11,5 @@ namespace CrossDataBase.Server.Business.Nodes;
 [Node(NodeType.Script)]
 public class ScriptNode : Node<ServerModel, ScriptDataModel, ScriptOutputModel>
 {
-
+    public override string Key => throw new NotImplementedException();
 }

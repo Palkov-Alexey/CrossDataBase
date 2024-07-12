@@ -10,4 +10,5 @@ namespace CrossDataBase.Server.Business.Nodes;
 [Node(NodeType.Join)]
 public class JoinNode : Node<JoinInputModel, JoinDataModel, JoinOutputModel>
 {
+    public override string Key => throw new NotImplementedException();
 }
