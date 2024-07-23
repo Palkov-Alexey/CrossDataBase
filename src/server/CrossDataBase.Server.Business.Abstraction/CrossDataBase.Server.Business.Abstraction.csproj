@@ -10,8 +10,4 @@
     <ProjectReference Include="..\CrossDataBase.Server.Infrastructure\CrossDataBase.Server.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Core\Events\" />
-  </ItemGroup>
-
 </Project>
