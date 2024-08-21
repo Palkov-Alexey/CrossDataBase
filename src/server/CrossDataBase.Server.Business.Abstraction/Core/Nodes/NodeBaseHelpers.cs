@@ -3,5 +3,5 @@
 internal static class NodeBaseHelpers
 {
 
-    protected static NoopResult Noop() => new();
+    //protected static NoopResult Noop() => new();
 }

@@ -5,6 +5,16 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Core\Memory\Scripts\Init.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Core\Memory\Scripts\Init.sql">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+
     <ItemGroup>
         <ProjectReference Include="..\CrossDataBase.Server.DataAccess.Abstraction\CrossDataBase.Server.DataAccess.Abstraction.csproj" />
         <ProjectReference Include="..\CrossDataBase.Server.Enum\CrossDataBase.Server.Enum.csproj" />
