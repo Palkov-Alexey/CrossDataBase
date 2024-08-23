@@ -1,6 +1,5 @@
-using CrossDataBase.Server.Business.Abstraction.Core.Memory;
+using CrossDataBase.Server.DataAccess.Abstraction.Core.Memory;
 using CrossDataBase.Server.Infrastructure.DependencyInjection;
-using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,5 +35,7 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.MapFallbackToFile("/index.html");
+
+app.Services.GetService<IDbWriter>();
 
 app.Run();

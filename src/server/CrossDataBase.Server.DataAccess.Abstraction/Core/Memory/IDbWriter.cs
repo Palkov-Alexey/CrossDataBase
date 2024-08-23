@@ -1,5 +1,5 @@
 ﻿namespace CrossDataBase.Server.DataAccess.Abstraction.Core.Memory;
 
-public interface IDbWritter
+public interface IDbWriter
 {
 }

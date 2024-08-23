@@ -5,7 +5,7 @@ using CrossDataBase.Server.Infrastructure.Abstractions.DependencyInjection;
 namespace CrossDataBase.Server.Business.Core.Memory;
 
 [InjectAsSingleton(typeof(IMemoryWritter))]
-internal class MemoryWritter(IDbWritter dbWritter) : IMemoryWritter
+internal class MemoryWritter(IDbWriter dbWritter) : IMemoryWritter
 {
-    private readonly IDbWritter dbWritter = dbWritter;
+    private readonly IDbWriter dbWritter = dbWritter;
 }
