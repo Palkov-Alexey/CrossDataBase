@@ -7,10 +7,14 @@
 
   <ItemGroup>
     <None Remove="Core\Memory\Scripts\Init.sql" />
+    <None Remove="Core\SQLite\Scripts\Init.sql" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Core\Memory\Scripts\Init.sql">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Core\Migrations\Scripts\Mg20240828161631_Init.sql">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>
@@ -22,11 +26,14 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Core\SQLite\Scripts\" />
       <Folder Include="MsSQL\" />
       <Folder Include="PostgresSQL\" />
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="FluentMigrator" Version="5.2.0" />
+      <PackageReference Include="FluentMigrator.Runner.SQLite" Version="5.2.0" />
       <PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.0" />
     </ItemGroup>
 

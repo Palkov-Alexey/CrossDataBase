@@ -1,5 +1,9 @@
+using CrossDataBase.Server;
 using CrossDataBase.Server.DataAccess.Abstraction.Core.Memory;
+using CrossDataBase.Server.DataAccess.Core.Migrations;
 using CrossDataBase.Server.Infrastructure.DependencyInjection;
+
+MigrateBuilder.Migration();
 
 var builder = WebApplication.CreateBuilder(args);
 
