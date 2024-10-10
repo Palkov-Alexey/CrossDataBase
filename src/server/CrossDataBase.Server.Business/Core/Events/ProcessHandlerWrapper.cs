@@ -7,8 +7,8 @@ namespace CrossDataBase.Server.Business.Core.Events;
 [InjectAsSingleton(typeof(ProcessHandlerWrapper))]
 internal class ProcessHandlerWrapper(IMemoryReader memoryReader)
 {
-    public async Task HandleAsync(object sender, ResponseEventArgs args, CancellationToken token)
+    public async Task HandleAsync(object sender, ResponseEventData Data, CancellationToken token)
     {
-        var processHistoryList = await memoryReader.GetByProcessIdAsync(args.Guid);
+        var processHistoryList = await memoryReader.GetByProcessIdAsync(Data.Guid);
     }
 }

@@ -3,15 +3,15 @@
 namespace CrossDataBase.Server.Business.Core.Events;
 internal class EventPublisher
 {
-    private readonly ProcessEventWrapper processEventWrapper;
+    private readonly EventWrapper<ResponseEventData> processEventWrapper;
     public EventPublisher(ProcessHandlerWrapper processHandler)
     {
-        processEventWrapper = new ProcessEventWrapper();
+        processEventWrapper = new EventWrapper<ResponseEventData>();
         processEventWrapper.Event += processHandler.HandleAsync;
     }
 
-    public Task PublishProcessEventAsync(ResponseEventArgs args, CancellationToken token)
+    public Task PublishProcessEventAsync(ResponseEventData Data, CancellationToken token)
     {
-        return processEventWrapper.Notify(args, token);
+        return processEventWrapper.Notify(Data, token);
     }
 }
