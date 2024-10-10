@@ -6,11 +6,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Core\Memory\Scripts\GetByProcessId.sql" />
     <None Remove="Core\Memory\Scripts\Init.sql" />
     <None Remove="Core\SQLite\Scripts\Init.sql" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Core\Memory\Scripts\GetByProcessId.sql">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="Core\Memory\Scripts\Init.sql">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
@@ -32,9 +36,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="FluentMigrator" Version="5.2.0" />
-      <PackageReference Include="FluentMigrator.Runner.SQLite" Version="5.2.0" />
-      <PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.0" />
+      <PackageReference Include="FluentMigrator" Version="6.2.0" />
+      <PackageReference Include="FluentMigrator.Runner.SQLite" Version="6.2.0" />
+      <PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.1" />
     </ItemGroup>
 
 </Project>

@@ -9,6 +9,4 @@ namespace CrossDataBase.Server.DataAccess.Core.SQLite;
 internal class DbWriter(ISQLiteExecutor executor,
                 ISqlScriptReader scriptReader) : IDbWriter
 {
-    private readonly ISQLiteExecutor executor = executor;
-    private readonly ISqlScriptReader scriptReader = scriptReader;
 }

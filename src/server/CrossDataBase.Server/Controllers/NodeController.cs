@@ -8,7 +8,6 @@ namespace CrossDataBase.Server.Controllers;
 [Route("api/[controller]")]
 public class NodeController(ILogger<NodeController> logger) : ControllerBase
 {
-    private readonly ILogger<NodeController> _logger = logger;
 
     [HttpGet]
     [ProducesResponseType(200, Type = typeof(NodeData))]
@@ -18,11 +17,46 @@ public class NodeController(ILogger<NodeController> logger) : ControllerBase
         {
             Nodes =
             [
-                new() {Id = 1, Name = "Server", x = 89, y = 82, Fields = new Fields{ Outputs = [new(){Name = "Server"}] } },
-                new() {Id = 2, Name = "Script", x = 452, y = 92, Fields = new Fields{ Inputs = [new(){Name = "Server"}], Outputs = [new(){Name = "Res"}] }},
-                new() {Id = 3, Name = "Server", x = 89, y = 390, Fields = new Fields{ Outputs = [new(){Name = "Server"}] } },
-                new() {Id = 4, Name = "Script", x = 452, y = 390, Fields = new Fields{ Inputs = [new(){Name = "Server"}], Outputs = [new(){Name = "Res"}] }},
-                new() {Id = 5, Name = "Join", x = 1070, y = 250, Fields = new Fields{ Inputs = [new(){Name = "Sql1"}, new() {Name = "Sql2"}], Outputs = [new(){Name = "Res"}] }}
+                new()
+                {
+                    Id = 1,
+                    Name = "Server",
+                    x = 89,
+                    y = 82,
+                    Fields = new Fields{ Outputs = [new(){Name = "Server"}] }
+                },
+                new()
+                {
+                    Id = 2,
+                    Name = "Script",
+                    x = 452,
+                    y = 92,
+                    Fields = new Fields{ Inputs = [new(){Name = "Server"}], Outputs = [new(){Name = "Res"}] }
+                },
+                new()
+                {
+                    Id = 3,
+                    Name = "Server",
+                    x = 89,
+                    y = 390,
+                    Fields = new Fields{ Outputs = [new(){Name = "Server"}] }
+                },
+                new()
+                {
+                    Id = 4,
+                    Name = "Script",
+                    x = 452,
+                    y = 390,
+                    Fields = new Fields{ Inputs = [new(){Name = "Server"}], Outputs = [new(){Name = "Res"}] }
+                },
+                new()
+                {
+                    Id = 5,
+                    Name = "Join",
+                    x = 1070,
+                    y = 250,
+                    Fields = new Fields{ Inputs = [new(){Name = "Sql1"}, new() {Name = "Sql2"}], Outputs = [new(){Name = "Res"}] }
+                }
             ],
             Connectors =
             [
@@ -33,7 +67,7 @@ public class NodeController(ILogger<NodeController> logger) : ControllerBase
             ]
         };
 
-        _logger.LogInformation(message: JsonConvert.SerializeObject(data));
+        logger.LogInformation(message: JsonConvert.SerializeObject(data));
         return Ok(data);
     }
 }
