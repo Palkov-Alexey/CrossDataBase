@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CrossDataBase.Server.Enum\CrossDataBase.Server.Enum.csproj" />
     <ProjectReference Include="..\CrossDataBase.Server.Infrastructure\CrossDataBase.Server.Infrastructure.csproj" />
   </ItemGroup>
 

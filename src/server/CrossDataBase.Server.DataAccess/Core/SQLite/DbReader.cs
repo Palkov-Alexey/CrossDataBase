@@ -5,8 +5,12 @@ using CrossDataBase.Server.Infrastructure.Abstractions.DependencyInjection;
 
 namespace CrossDataBase.Server.DataAccess.Core.SQLite;
 
-[InjectAsSingleton(typeof(IDbWriter))]
-internal class DbWriter(ISQLiteExecutor executor,
-                ISqlScriptReader scriptReader) : IDbWriter
+[InjectAsSingleton(typeof(IDbReader))]
+internal class DbReader(ISQLiteExecutor executor,
+                ISqlScriptReader scriptReader) : IDbReader
 {
+    public Task<IReadOnlyList<object>> GetAsync(Guid processId)
+    {
+        throw new NotImplementedException();
+    }
 }

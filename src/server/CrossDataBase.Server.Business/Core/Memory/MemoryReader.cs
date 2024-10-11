@@ -4,8 +4,8 @@ using CrossDataBase.Server.DataAccess.Abstraction.Core.Memory;
 namespace CrossDataBase.Server.Business.Core.Memory;
 internal class MemoryReader(IDbReader dbReader) : IMemoryReader
 {
-    public Task<IReadOnlyList<object>> GetByProcessIdAsync(Guid processId)
+    public Task<object> GetAsync(long id)
     {
-        return dbReader.GetAsync(processId);
+        return dbReader.GetAsync(id);
     }
 }

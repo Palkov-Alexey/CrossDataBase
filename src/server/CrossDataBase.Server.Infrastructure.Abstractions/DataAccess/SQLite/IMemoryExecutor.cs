@@ -6,4 +6,6 @@ public interface IMemoryExecutor
     Task ExecuteAsync(QueryObject query);
 
     Task<IReadOnlyList<T>> QueryAsync<T>(QueryObject query);
+
+    Task<T> FirstOrDefaultAsync<T>(QueryObject query);
 }

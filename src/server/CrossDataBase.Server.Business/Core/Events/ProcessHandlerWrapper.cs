@@ -9,6 +9,16 @@ internal class ProcessHandlerWrapper(IMemoryReader memoryReader)
 {
     public async Task HandleAsync(object sender, ResponseEventData Data, CancellationToken token)
     {
-        var processHistoryList = await memoryReader.GetByProcessIdAsync(Data.Guid);
+        try
+        {
+            Monitor.Enter(Data.ProcessId);
+            var processHistoryTask = memoryReader.GetAsync(Data.ProcessId);
+
+            await Task.WhenAll(processHistoryTask);
+        }
+        finally
+        {
+            Monitor.Exit(Data.ProcessId);
+        }
     }
 }

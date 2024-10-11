@@ -26,4 +26,15 @@ internal abstract class ExecutorBase
         
         return result.ToList();
     }
+
+    public async Task<T> FirstOrDefaultAsync<T>(QueryObject query)
+    {
+        using var connection = new SqliteConnection(ConnectionString);
+        await connection.OpenAsync();
+        var result = await connection.QueryAsync<T>(query.Sql, query.QueryParams);
+        await connection.CloseAsync();
+        connection.Dispose();
+
+        return result.FirstOrDefault();
+    }
 }
