@@ -8,7 +8,14 @@
   <ItemGroup>
     <None Remove="Core\Memory\Scripts\GetByProcessId.sql" />
     <None Remove="Core\Memory\Scripts\Init.sql" />
-    <None Remove="Core\SQLite\Scripts\Init.sql" />
+    <None Remove="Core\ProcessData\Scripts\Get.sql" />
+    <None Remove="Core\ProcessData\Scripts\Init.sql" />
+    <None Remove="Core\ProcessData\Scripts\Insert.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Core\ProcessData\Scripts\Insert.sql" />
+    <EmbeddedResource Include="Core\ProcessData\Scripts\Get.sql" />
   </ItemGroup>
 
   <ItemGroup>
@@ -30,7 +37,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Core\SQLite\Scripts\" />
       <Folder Include="MsSQL\" />
       <Folder Include="PostgresSQL\" />
     </ItemGroup>

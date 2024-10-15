@@ -17,6 +17,7 @@ internal class DbWriter : IDbWriter
     {
         this.executor = executor;
         this.scriptReader = scriptReader;
+
         _ = Init();
     }
 
@@ -24,6 +25,7 @@ internal class DbWriter : IDbWriter
     {
         var sql = scriptReader.Get(this, Scripts.Init);
         var queryObject = new QueryObject(sql);
+
         await executor.ExecuteAsync(queryObject);
     }
 }
