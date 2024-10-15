@@ -1,24 +1,34 @@
-﻿using CrossDataBase.Server.DataAccess.Abstraction.Core.Memory;
+﻿using CrossDataBase.Server.DataAccess.Abstraction.Core.ProcessHistory;
+using CrossDataBase.Server.DataAccess.Abstraction.Core.ProcessHistory.Models;
 using CrossDataBase.Server.Infrastructure.Abstractions.DataAccess;
 using CrossDataBase.Server.Infrastructure.Abstractions.DataAccess.Models;
 using CrossDataBase.Server.Infrastructure.Abstractions.DataAccess.SQLite;
 using CrossDataBase.Server.Infrastructure.Abstractions.DependencyInjection;
 
-namespace CrossDataBase.Server.DataAccess.Core.Memory;
+namespace CrossDataBase.Server.DataAccess.Core.ProcessHistory;
 
-[InjectAsSingleton(typeof(IDbWriter))]
-internal class DbWriter : IDbWriter
+[InjectAsSingleton(typeof(IProcessHistoryDbWriter))]
+internal class ProcessHistoryDbWriter : IProcessHistoryDbWriter
 {
     private readonly IMemoryExecutor executor;
     private readonly ISqlScriptReader scriptReader;
 
-    public DbWriter(IMemoryExecutor executor,
+    public ProcessHistoryDbWriter(IMemoryExecutor executor,
                     ISqlScriptReader scriptReader)
     {
         this.executor = executor;
         this.scriptReader = scriptReader;
 
         _ = Init();
+    }
+
+    public Task InsertAsync(ProcessHistoryDbModel model)
+    {
+        var sql = scriptReader.Get(this, Scripts.Insert);
+        var queryObject = new QueryObject(sql,
+            new { model.ProcessId, model.Status, model.Data });
+
+        return executor.ExecuteAsync(queryObject);
     }
 
     private async Task Init()

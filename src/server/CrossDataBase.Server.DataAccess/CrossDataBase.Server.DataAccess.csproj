@@ -6,11 +6,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Core\Memory\Scripts\GetByProcessId.sql" />
-    <None Remove="Core\Memory\Scripts\Init.sql" />
+    <None Remove="Core\ProcessHistory\Scripts\GetByProcessId.sql" />
+    <None Remove="Core\ProcessHistory\Scripts\Init.sql" />
     <None Remove="Core\ProcessData\Scripts\Get.sql" />
     <None Remove="Core\ProcessData\Scripts\Init.sql" />
     <None Remove="Core\ProcessData\Scripts\Insert.sql" />
+    <None Remove="Core\ProcessHistory\Scripts\Insert.sql" />
   </ItemGroup>
 
   <ItemGroup>
@@ -19,15 +20,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Core\Memory\Scripts\GetByProcessId.sql">
+    <EmbeddedResource Include="Core\ProcessHistory\Scripts\GetByProcessId.sql">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Core\Memory\Scripts\Init.sql">
+    <EmbeddedResource Include="Core\ProcessHistory\Scripts\Init.sql">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Core\Migrations\Scripts\Mg20240828161631_Init.sql">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
+    <EmbeddedResource Include="Core\ProcessHistory\Scripts\Insert.sql" />
   </ItemGroup>
 
     <ItemGroup>

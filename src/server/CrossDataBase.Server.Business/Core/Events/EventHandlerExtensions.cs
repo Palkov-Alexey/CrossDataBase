@@ -8,8 +8,7 @@ internal static class EventHandlerExtensions
         {
             var tasks = delegates
                 .Cast<AsyncEventHandler<TEventArgs>>()
-                .Select(e =>
-                    Task.Run(async () => await e.Invoke(sender, args, token)));
+                .Select(e => Task.Run(async () => await e.Invoke(sender, args, token)));
             await Task.WhenAll(tasks);
         }
     }

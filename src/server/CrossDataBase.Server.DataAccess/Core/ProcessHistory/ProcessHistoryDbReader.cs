@@ -1,15 +1,15 @@
 ﻿using CrossDataBase.Server.DataAccess.Abstraction.Core.Memory;
-using CrossDataBase.Server.DataAccess.Abstraction.Core.Memory.Models;
+using CrossDataBase.Server.DataAccess.Abstraction.Core.ProcessHistory.Models;
 using CrossDataBase.Server.Infrastructure.Abstractions.DataAccess;
 using CrossDataBase.Server.Infrastructure.Abstractions.DataAccess.Models;
 using CrossDataBase.Server.Infrastructure.Abstractions.DataAccess.SQLite;
 using CrossDataBase.Server.Infrastructure.Abstractions.DependencyInjection;
 
-namespace CrossDataBase.Server.DataAccess.Core.Memory;
+namespace CrossDataBase.Server.DataAccess.Core.ProcessHistory;
 
-[InjectAsSingleton(typeof(IDbReader))]
-internal class DbReader(IMemoryExecutor executor,
-    ISqlScriptReader scriptReader) : IDbReader
+[InjectAsSingleton(typeof(IProcessHistoryDbReader))]
+internal class ProcessHistoryDbReader(IMemoryExecutor executor,
+    ISqlScriptReader scriptReader) : IProcessHistoryDbReader
 {
     public Task<ProcessHistoryDbModel> GetAsync(long id)
     {

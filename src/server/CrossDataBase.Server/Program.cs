@@ -1,5 +1,5 @@
-using CrossDataBase.Server.DataAccess.Abstraction.Core.Memory;
 using CrossDataBase.Server.DataAccess.Abstraction.Core.ProcessData;
+using CrossDataBase.Server.DataAccess.Abstraction.Core.ProcessHistory;
 using CrossDataBase.Server.DataAccess.Core.Migrations;
 using CrossDataBase.Server.Infrastructure.DependencyInjection;
 
@@ -40,6 +40,6 @@ app.MapControllers();
 
 app.MapFallbackToFile("/index.html");
 
-app.Services.GetService<IDbWriter>();
+app.Services.GetService<IProcessHistoryDbWriter>();
 
 app.Run();

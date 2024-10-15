@@ -2,7 +2,7 @@
 
 namespace CrossDataBase.Server.DataAccess.Abstraction.Core.ProcessData;
 
-public interface IDbReader
+public interface IProcessDataDbReader
 {
     Task<ProcessDbModel> GetAsync(long id);
 }

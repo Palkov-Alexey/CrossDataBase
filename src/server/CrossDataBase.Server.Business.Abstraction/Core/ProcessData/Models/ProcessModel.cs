@@ -5,7 +5,5 @@ public class ProcessModel
 
     public string Name { get; set; }
 
-    public IReadOnlyCollection<NodeModel> Nodes { get; set; } = [];
-
-    public IReadOnlyCollection<ConnectorModel> Connectors { get; set; } = [];
+    public ProcessDataModel Data { get; set; }
 }
