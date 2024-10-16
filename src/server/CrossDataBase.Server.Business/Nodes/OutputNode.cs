@@ -5,5 +5,4 @@ using CrossDataBase.Server.Business.Nodes.Models;
 namespace CrossDataBase.Server.Business.Nodes;
 public class OutputNode : Node<OutputInputModel>
 {
-    public override string Key => throw new NotImplementedException();
 }

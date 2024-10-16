@@ -10,5 +10,4 @@ namespace CrossDataBase.Server.Business.Nodes;
 [Node(NodeType.Server)]
 public class ServerNode : Node<ServerModel>
 {
-    public override string Key => throw new NotImplementedException();
 }

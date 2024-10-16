@@ -22,13 +22,13 @@ internal class ProcessHistoryDbWriter : IProcessHistoryDbWriter
         _ = Init();
     }
 
-    public Task InsertAsync(ProcessHistoryDbModel model)
+    public Task<long> InsertAsync(ProcessHistoryDbModel model)
     {
         var sql = scriptReader.Get(this, Scripts.Insert);
         var queryObject = new QueryObject(sql,
             new { model.ProcessId, model.Status, model.Data });
 
-        return executor.ExecuteAsync(queryObject);
+        return executor.FirstOrDefaultAsync<long>(queryObject);
     }
 
     private async Task Init()

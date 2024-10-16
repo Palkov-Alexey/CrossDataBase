@@ -9,8 +9,10 @@ namespace CrossDataBase.Server.Business.Core.ProcessHistory;
 [InjectAsSingleton(typeof(IProcessHistoryWriter))]
 internal class ProcessHistoryWriter(IProcessHistoryDbWriter dbWriter) : IProcessHistoryWriter
 {
-    public async Task InsertAsync(ProcessHistoryModel model)
+    public Task<long> InsertAsync(ProcessHistoryModel model)
     {
         var dbModel = model.Map();
+
+        return dbWriter.InsertAsync(dbModel);
     }
 }

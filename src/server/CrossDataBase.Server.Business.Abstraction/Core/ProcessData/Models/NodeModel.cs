@@ -1,10 +1,14 @@
-﻿namespace CrossDataBase.Server.Business.Abstraction.Core.ProcessData.Models;
+﻿using CrossDataBase.Server.Enum;
+
+namespace CrossDataBase.Server.Business.Abstraction.Core.ProcessData.Models;
 
 public class NodeModel
 {
     public long Id { get; set; }
 
     public string Name { get; set; }
+
+    public NodeType Type { get; set; }
 
     public long PosX { get; set; }
 

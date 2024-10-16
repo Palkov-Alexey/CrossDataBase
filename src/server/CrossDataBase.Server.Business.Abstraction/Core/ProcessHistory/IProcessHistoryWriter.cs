@@ -3,5 +3,5 @@
 namespace CrossDataBase.Server.Business.Abstraction.Core.ProcessHistory;
 public interface IProcessHistoryWriter
 {
-    Task InsertAsync(ProcessHistoryModel model);
+    Task<long> InsertAsync(ProcessHistoryModel model);
 }
