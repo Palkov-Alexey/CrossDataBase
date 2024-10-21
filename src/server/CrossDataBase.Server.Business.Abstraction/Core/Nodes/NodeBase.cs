@@ -3,12 +3,9 @@
 namespace CrossDataBase.Server.Business.Abstraction.Core.Nodes;
 public abstract class NodeBase
 {
-    public async Task<NodeResult> ExecuteAsync() => await OnExecuteAsync();
-
-    public virtual Task<NodeResult> OnExecuteAsync() => Task.FromResult(Execute());
-    public virtual Task<NodeResult> OnPreviewAsync() => Task.FromResult(Preview());
-    public virtual NodeResult Execute() => Noop();
-    public virtual NodeResult Preview() => Noop();
+    public Task<NodeResult> ExecuteAsync() => OnExecuteAsync();
+    public virtual Task<NodeResult> OnExecuteAsync() => Task.FromResult(OnExecute());;
+    public virtual NodeResult OnExecute() => Noop();
 
     protected static NoopResult Noop() => new();
 }

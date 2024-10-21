@@ -1,4 +1,5 @@
-﻿namespace CrossDataBase.Server.Business.Abstraction.Core.ProcessData.Models;
+﻿
+namespace CrossDataBase.Server.Business.Abstraction.Core.ProcessData.Models;
 public class ProcessModel
 {
     public long Id { get; set; }

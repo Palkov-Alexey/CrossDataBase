@@ -1,4 +1,5 @@
-﻿using CrossDataBase.Server.Business.Abstraction.Nodes.Models;
+﻿using CrossDataBase.Server.Business.Abstraction.Core.Results;
+using CrossDataBase.Server.Business.Abstraction.Nodes.Models;
 using CrossDataBase.Server.Business.Core.Attributes;
 using CrossDataBase.Server.Business.Core.Nodes;
 using CrossDataBase.Server.Enum;
@@ -10,4 +11,8 @@ namespace CrossDataBase.Server.Business.Nodes;
 [Node(NodeType.Server)]
 public class ServerNode : Node<ServerModel>
 {
+    public override Task<NodeResult> OnExecuteAsync(ServerModel serverData)
+    {
+        return serverData;
+    }
 }
