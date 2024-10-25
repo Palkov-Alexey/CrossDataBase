@@ -12,11 +12,15 @@
     <None Remove="Core\ProcessData\Scripts\Init.sql" />
     <None Remove="Core\ProcessData\Scripts\Insert.sql" />
     <None Remove="Core\ProcessHistory\Scripts\Insert.sql" />
+    <None Remove="Core\ProcessHistory\Scripts\UpdateData.sql" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Core\ProcessData\Scripts\Insert.sql" />
     <EmbeddedResource Include="Core\ProcessData\Scripts\Get.sql" />
+    <EmbeddedResource Include="Core\ProcessHistory\Scripts\UpdateData.sql">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>

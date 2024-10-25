@@ -31,6 +31,15 @@ internal class ProcessHistoryDbWriter : IProcessHistoryDbWriter
         return executor.FirstOrDefaultAsync<long>(queryObject);
     }
 
+    public Task UpdateDataAsync(long id, string data)
+    {
+        var sql = scriptReader.Get(this, Scripts.UpdateData);
+        var queryObject = new QueryObject(sql,
+            new { Id = id, Data = data });
+
+        return executor.FirstOrDefaultAsync<long>(queryObject);
+    }
+
     private async Task Init()
     {
         var sql = scriptReader.Get(this, Scripts.Init);

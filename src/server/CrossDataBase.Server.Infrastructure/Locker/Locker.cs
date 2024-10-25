@@ -1,16 +1,21 @@
 ﻿using CrossDataBase.Server.Infrastructure.Abstractions.DependencyInjection;
 using CrossDataBase.Server.Infrastructure.Abstractions.Locker;
+using Microsoft.Extensions.Logging;
 
 namespace CrossDataBase.Server.Infrastructure.Locker;
 
 [InjectAsSingleton(typeof(ILocker))]
-internal class Locker : ILocker
+internal class Locker(
+    ILogger<Locker> logger) : ILocker
 {
-    public async Task LockRunAsync(object lockKey, Func<Task> method)
+    public async Task LockRunAsync(string lockKey, Func<Task> method)
     {
         try
         {
             Monitor.Enter(lockKey);
+
+            logger.LogInformation($"log task key = {lockKey}");
+
             await method.Invoke();
         }
         finally
@@ -19,7 +24,7 @@ internal class Locker : ILocker
         }
     }
 
-    public async Task<T> LockRunAsync<T>(object lockKey, Func<Task<T>> method)
+    public async Task<T> LockRunAsync<T>(string lockKey, Func<Task<T>> method)
     {
         try
         {

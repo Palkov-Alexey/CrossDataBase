@@ -1,4 +1,5 @@
-﻿using CrossDataBase.Server.Enum;
+﻿using CrossDataBase.Server.Business.Abstraction.Nodes.Models;
+using CrossDataBase.Server.Enum;
 
 namespace CrossDataBase.Server.Business.Abstraction.Core.ProcessData.Models;
 
@@ -15,4 +16,6 @@ public class NodeModel
     public long PosY { get; set; }
 
     public FieldsModel Fields { get; set; }
+
+    public INodeData Data { get; set; }
 }

@@ -14,7 +14,7 @@ internal class ProcessDataDbReader(ISQLiteExecutor executor,
     public Task<ProcessDbModel> GetAsync(long id)
     {
         var sql = scriptReader.Get(this, Scripts.Get);
-        var queryObject = new QueryObject(sql, new { Id = processId });
+        var queryObject = new QueryObject(sql, new { Id = id });
 
         return executor.FirstOrDefaultAsync<ProcessDbModel>(queryObject);
     }

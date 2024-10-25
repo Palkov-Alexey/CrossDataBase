@@ -26,5 +26,7 @@ public class NodeHistoryModel
 
     public object Data { get; set; }
 
+    public object Result { get; set; }
+
     public object ExceptionData { get; set; }
 }

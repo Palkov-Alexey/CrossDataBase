@@ -9,10 +9,10 @@ namespace CrossDataBase.Server.Business.Nodes;
 
 [InjectAsSingleton(typeof(ServerNode))]
 [Node(NodeType.Server)]
-public class ServerNode : Node<ServerModel>
+public class ServerNode : Node<ServerModel, ServerModel>
 {
-    public override Task<NodeResult> OnExecuteAsync(ServerModel serverData)
+    protected override ExecutionResult OnExecute(ServerModel serverData)
     {
-        return serverData;
+        return Done(serverData);
     }
 }
