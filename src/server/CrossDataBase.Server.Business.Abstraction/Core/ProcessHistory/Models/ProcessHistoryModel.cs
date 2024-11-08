@@ -1,4 +1,5 @@
 ﻿using CrossDataBase.Server.Business.Abstraction.Core.ProcessData.Models;
+using CrossDataBase.Server.Business.Abstraction.Nodes.Models;
 using CrossDataBase.Server.Enum;
 
 namespace CrossDataBase.Server.Business.Abstraction.Core.ProcessHistory.Models;
@@ -26,7 +27,7 @@ public class NodeHistoryModel
 
     public object Data { get; set; }
 
-    public object Result { get; set; }
+    public INodeData Result { get; set; }
 
     public object ExceptionData { get; set; }
 }

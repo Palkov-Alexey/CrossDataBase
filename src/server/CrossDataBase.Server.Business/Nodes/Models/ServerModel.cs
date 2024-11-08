@@ -24,4 +24,7 @@ public class ServerModel : INodeData
 
     [NodeProperty("Password")]
     public string Password { get; set; }
+
+    [NodeProperty("DbName")]
+    public string DbName { get; set; }
 }

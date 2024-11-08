@@ -1,5 +1,6 @@
 ﻿using CrossDataBase.Server.Business.Abstraction.Core.ProcessHistory;
 using CrossDataBase.Server.Business.Abstraction.Core.ProcessHistory.Models;
+using CrossDataBase.Server.Business.Abstraction.Nodes.Models;
 using CrossDataBase.Server.Business.Core.Mappers;
 using CrossDataBase.Server.DataAccess.Abstraction.Core.ProcessHistory;
 using CrossDataBase.Server.Enum;
@@ -21,7 +22,7 @@ internal class ProcessHistoryWriter(IProcessHistoryDbWriter dbWriter,
         return dbWriter.InsertAsync(dbModel);
     }
 
-    public async Task UpdateAsync(long historyId, long nodeId, StatusType status, object result)
+    public async Task UpdateAsync(long historyId, long nodeId, StatusType status, INodeData result)
     {
         await locker.LockRunAsync($"Update.{historyId}",
             async () =>
@@ -30,6 +31,7 @@ internal class ProcessHistoryWriter(IProcessHistoryDbWriter dbWriter,
                 var nodeHistories = history.Data.NodeHistories.ToList();
                 var nodeIndex = nodeHistories.FindIndex(x => x.Node.Id == nodeId);
                 nodeHistories[nodeIndex].Result = result;
+                nodeHistories[nodeIndex].Status = status;
 
                 var data = JsonConvert.SerializeObject(new ProcessHistoryDataModel { NodeHistories = nodeHistories });
                 await dbWriter.UpdateDataAsync(historyId, data);

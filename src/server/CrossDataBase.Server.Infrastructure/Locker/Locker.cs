@@ -1,6 +1,8 @@
 ﻿using CrossDataBase.Server.Infrastructure.Abstractions.DependencyInjection;
 using CrossDataBase.Server.Infrastructure.Abstractions.Locker;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace CrossDataBase.Server.Infrastructure.Locker;
 
@@ -18,6 +20,10 @@ internal class Locker(
 
             await method.Invoke();
         }
+        catch (Exception ex)
+        {
+            logger.LogError(exception: ex, message: null);
+        }
         finally
         {
             Monitor.Exit(lockKey);
@@ -31,6 +37,11 @@ internal class Locker(
             Monitor.Enter(lockKey);
             var result = await method.Invoke();
             return result;
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(exception: ex, message: null);
+            return default;
         }
         finally
         {

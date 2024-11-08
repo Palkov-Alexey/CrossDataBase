@@ -10,5 +10,5 @@ public class NodeExecutionContext
     public long NodeId { get; set; }
     public NodeBase CurrentNode { get; set; }
     public INodeData Data { get; set; }
-    public INodeData Input { get; set; }
+    public Dictionary<string, INodeData> Inputs { get; set; }
 }
