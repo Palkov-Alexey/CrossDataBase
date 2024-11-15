@@ -1,5 +1,6 @@
 ﻿using CrossDataBase.Server.Business.Abstraction.Core.NodeContext;
 using CrossDataBase.Server.Business.Abstraction.Core.Results;
+using CrossDataBase.Server.Business.Abstraction.Nodes.Models;
 using CrossDataBase.Server.Business.Core.ProcessHistory;
 using CrossDataBase.Server.Enum;
 using Microsoft.Extensions.DependencyInjection;
@@ -7,9 +8,9 @@ using Microsoft.Extensions.DependencyInjection;
 namespace CrossDataBase.Server.Business.Core.Results;
 internal class OutcomeResult : ExecutionResult
 {
-    private INodeResult Output { get; }
+    private INodeData Output { get; }
 
-    public OutcomeResult(INodeResult output)
+    public OutcomeResult(INodeData output)
     {
         Output = output;
     }
