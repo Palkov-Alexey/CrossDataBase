@@ -10,4 +10,7 @@
   "webRoot": "D:\\git\\CrossDataBase\\src\\crossdatabase.client"
 }</LaunchJsonTarget>
   </PropertyGroup>
+  <PropertyGroup>
+    <IsLinterEnabled>True</IsLinterEnabled>
+  </PropertyGroup>
 </Project>
