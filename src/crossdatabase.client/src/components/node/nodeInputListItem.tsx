@@ -34,7 +34,7 @@ class NodeInputListItem extends Component<NodeInputListItemProps, IState> {
         this.setState({ hover: false });
     }
 
-    noop(e) {
+    noop(e: any) {
         e.stopPropagation();
         e.preventDefault();
     }

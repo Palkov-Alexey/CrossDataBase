@@ -40,6 +40,12 @@ internal class ProcessHistoryDbWriter : IProcessHistoryDbWriter
         return executor.FirstOrDefaultAsync<long>(queryObject);
     }
 
+    public async Task ReconnectAsync()
+    {
+        await executor.ReconnectAsync();
+        await Init();
+    }
+
     private async Task Init()
     {
         var sql = scriptReader.Get(this, Scripts.Init);

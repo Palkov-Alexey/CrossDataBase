@@ -8,7 +8,7 @@ type NodeInputListProps = {
 }
 
 class NodeInputList extends Component<NodeInputListProps> {
-	onMouseUp(i) {
+	onMouseUp(i: any) {
 		this.props.onCompleteConnector(i);
 	}
 	

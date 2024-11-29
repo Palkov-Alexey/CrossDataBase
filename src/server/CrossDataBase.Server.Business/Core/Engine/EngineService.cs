@@ -1,4 +1,5 @@
-﻿using CrossDataBase.Server.Business.Abstraction.Core.NodeContext;
+﻿using CrossDataBase.Server.Business.Abstraction.Core.Engine;
+using CrossDataBase.Server.Business.Abstraction.Core.NodeContext;
 using CrossDataBase.Server.Business.Abstraction.Core.Nodes;
 using CrossDataBase.Server.Business.Abstraction.Core.ProcessData;
 using CrossDataBase.Server.Business.Abstraction.Core.ProcessHistory;
@@ -10,7 +11,7 @@ using CrossDataBase.Server.Infrastructure.Abstractions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
-namespace CrossDataBase.Server.Business.Abstraction.Core.Engine;
+namespace CrossDataBase.Server.Business.Core.Engine;
 
 [InjectAsSingleton(typeof(IEngineService))]
 internal class EngineService(IProcessHistoryReader historyReader,
@@ -103,41 +104,13 @@ internal class EngineService(IProcessHistoryReader historyReader,
         }
     }
 
-    /*public async Task StartAsync(long processId, long historyId)
-    {
-        var process = await processDataReader.GetAsync(processId);
-
-        var connectors = process.Data.Connectors;
-
-        var startNodes = process.Data.Nodes
-            .Where(n => n.Fields.Inputs.Count == 0
-                        || connectors.All(c => c.ToNode != n.Id))
-            .ToArray();
-
-        var tasks = startNodes.Select(x =>
-        {
-            var node = GetComponent(x.Type);
-            var context = new NodeExecutionContext
-            {
-                ProcessId = processId,
-                HistoryId = historyId,
-                NodeId = x.Id,
-                CurrentNode = node,
-                Inputs = null,
-                Data = x.Data
-            };
-            return StartNodeAsync(context);
-        });
-
-        await Task.WhenAll(tasks);
-    }*/
-
     private async Task StartNodeAsync(NodeExecutionContext context)
     {
         var node = context.CurrentNode;
 
         try
         {
+
             var result = await node.ExecuteAsync(context, context.Data, context.Inputs);
             await result.ExecuteAsync(serviceProvider, context);
         }
@@ -146,11 +119,9 @@ internal class EngineService(IProcessHistoryReader historyReader,
 
     private NodeBase GetComponent(NodeType type)
     {
-        var node = type.ToString();
-
-        return serviceProvider.GetServices(typeof(NodeBase))
+        return serviceProvider.GetServices<NodeBase>()
             .Cast<NodeBase>()
-            .Where(x => string.Equals(x.GetType().GetCustomAttribute<NodeAttribute>()?.Name, node))
+            .Where(x => string.Equals(x.GetType().GetCustomAttribute<NodeAttribute>()?.Name, type))
             .FirstOrDefault();
     }
 }

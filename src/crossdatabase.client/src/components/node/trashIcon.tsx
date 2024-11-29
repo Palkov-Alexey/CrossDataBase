@@ -1,4 +1,4 @@
-import { Component } from "react";
+import { Component, MouseEvent } from "react";
 import { Position } from "./types/Position";
 
 type TrashIconProp = {
@@ -11,7 +11,7 @@ class TrashIcon extends Component<TrashIconProp> {
       super(props)
     }
 
-    handleClick(e: any) {
+    handleClick(e: MouseEvent) {
       if (this.props.onClick) {
         this.props.onClick(e)
       }

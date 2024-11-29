@@ -16,4 +16,10 @@ internal class MemoryExecutor : ExecutorBase, IMemoryExecutor
         connection = new SqliteConnection(ConnectionString);
         connection.Open();
     }
+
+    public async Task ReconnectAsync()
+    {
+        await connection.CloseAsync();
+        await connection.OpenAsync();
+    }
 }

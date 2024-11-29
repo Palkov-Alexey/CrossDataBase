@@ -8,4 +8,5 @@ public interface IMemoryExecutor
     Task<IReadOnlyList<T>> QueryAsync<T>(QueryObject query);
 
     Task<T> FirstOrDefaultAsync<T>(QueryObject query);
+    Task ReconnectAsync();
 }

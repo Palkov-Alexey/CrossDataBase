@@ -4,8 +4,11 @@ import { NodeData, Connectors } from "../types/NodeType";
 import { Position } from "../types/Position";
 
 class NodeStore {
-    @observable accessor data;
-    @observable accessor maxValue = 0;
+    @observable accessor data: NodeData = {
+        nodes: [],
+        connectors: []
+    };
+    @observable accessor maxValue: number = 0;
 
     @computed get isLoading() {
         return !this.data; 
@@ -20,14 +23,14 @@ class NodeStore {
 
     @action
     onNodeMove = (index: number, pos: Position) => {
-        this.data.nodes[index].x += pos.x;
-        this.data.nodes[index].y += pos.y;
+        this.data.nodes[index].PosX += pos.x;
+        this.data.nodes[index].PosY += pos.y;
     };
 
     @action
     onNodeStop = (index: number, pos: Position) => {
-        this.data.nodes[index].x = pos.x;
-        this.data.nodes[index].y = pos.y;
+        this.data.nodes[index].PosX = pos.x;
+        this.data.nodes[index].PosY = pos.y;
     };
 
     @action
@@ -46,11 +49,7 @@ class NodeStore {
     @action
     getNodebyId = (id: number) => {
         const node = this.data.nodes.filter(n => n.id === id)[0];
-
-        if (node.name === `Timer`) {
-            console.log(node);
-        }
-
+        
         return node;
     }    
 }

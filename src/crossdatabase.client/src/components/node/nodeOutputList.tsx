@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, MouseEvent } from "react";
 import NodeOutputListItem from "./nodeOutputListItem";
 import { ConnectionPoint } from "./types/NodeType";
 
@@ -8,7 +8,7 @@ type NodeOutputListProps = {
 }
 
 class NodeOutputList extends Component<NodeOutputListProps> {
-    onMouseDown(i: any) {
+    onMouseDown(i: MouseEvent) {
         this.props.onStartConnector(i);
     }
 

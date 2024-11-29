@@ -1,6 +1,6 @@
+using CrossDataBase.Server;
 using CrossDataBase.Server.DataAccess.Abstraction.Core.ProcessData;
 using CrossDataBase.Server.DataAccess.Abstraction.Core.ProcessHistory;
-using CrossDataBase.Server.DataAccess.Core.Migrations;
 using CrossDataBase.Server.Infrastructure.DependencyInjection;
 
 MigrateBuilder.Migration();

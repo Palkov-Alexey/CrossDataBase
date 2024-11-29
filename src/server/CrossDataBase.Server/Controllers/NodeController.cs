@@ -21,40 +21,40 @@ public class NodeController(ILogger<NodeController> logger) : ControllerBase
                 {
                     Id = 1,
                     Name = "Server",
-                    x = 89,
-                    y = 82,
+                    PosX = 89,
+                    PosY = 82,
                     Fields = new Fields{ Outputs = [new(){Name = "Server"}] }
                 },
                 new()
                 {
                     Id = 2,
                     Name = "Script",
-                    x = 452,
-                    y = 92,
+                    PosX = 452,
+                    PosY = 92,
                     Fields = new Fields{ Inputs = [new(){Name = "Server"}], Outputs = [new(){Name = "Res"}] }
                 },
                 new()
                 {
                     Id = 3,
                     Name = "Server",
-                    x = 89,
-                    y = 390,
+                    PosX = 89,
+                    PosY = 390,
                     Fields = new Fields{ Outputs = [new(){Name = "Server"}] }
                 },
                 new()
                 {
                     Id = 4,
                     Name = "Script",
-                    x = 452,
-                    y = 390,
+                    PosX = 452,
+                    PosY = 390,
                     Fields = new Fields{ Inputs = [new(){Name = "Server"}], Outputs = [new(){Name = "Res"}] }
                 },
                 new()
                 {
                     Id = 5,
                     Name = "Join",
-                    x = 1070,
-                    y = 250,
+                    PosX = 1070,
+                    PosY = 250,
                     Fields = new Fields{ Inputs = [new(){Name = "Sql1"}, new() {Name = "Sql2"}], Outputs = [new(){Name = "Res"}] }
                 }
             ],

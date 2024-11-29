@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, MouseEvent } from "react";
 import { ConnectionPoint } from "./types/NodeType";
 
 type NodeOutputListItemProps = {
@@ -12,14 +12,14 @@ interface IState {
 }
 
 class NodeOutputListItem extends Component<NodeOutputListItemProps, IState> {
-    onMouseDown(e) {
+    onMouseDown(e: MouseEvent) {
         e.stopPropagation();
         e.preventDefault();
 
         this.props.onMouseDown(this.props.index);
     }
 
-    noop(e) {
+    noop(e: MouseEvent) {
         e.stopPropagation();
         e.preventDefault();
     }

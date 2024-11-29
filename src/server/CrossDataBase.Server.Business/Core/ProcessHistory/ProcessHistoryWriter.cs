@@ -37,4 +37,9 @@ internal class ProcessHistoryWriter(IProcessHistoryDbWriter dbWriter,
                 await dbWriter.UpdateDataAsync(historyId, data);
             });
     }
+
+    public async Task ReconnectAsync()
+    {
+        await dbWriter.ReconnectAsync();
+    }
 }

@@ -13,9 +13,11 @@ public class NodeElement
 
     public string Name { get; set; }
 
-    public int x { get; set; }
+    public int PosX { get; set; }
 
-    public int y { get; set; }
+    public int PosY { get; set; }
+
+    public object Data { get; set; }
 
     public Fields Fields { get; set; }
 }

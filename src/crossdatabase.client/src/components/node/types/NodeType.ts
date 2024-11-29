@@ -6,8 +6,8 @@ export type NodeData = {
 export type NodeElement = {
     id: number;
     name: string;
-    x: number;
-    y: number;
+    PosX: number;
+    PosY: number;
     fields: Fields;
 }
 

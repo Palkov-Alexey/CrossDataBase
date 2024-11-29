@@ -1,7 +1,7 @@
 ﻿using FluentMigrator.Runner;
 using System.Reflection;
 
-namespace CrossDataBase.Server.DataAccess.Core.Migrations;
+namespace CrossDataBase.Server;
 
 public static class MigrateBuilder
 {
