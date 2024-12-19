@@ -10,6 +10,12 @@ RUN apt-get update
 RUN apt-get install curl
 RUN curl -sL https://deb.nodesource.com/setup_22.x | bash
 RUN apt-get -y install nodejs
+
+RUN apt-get remove krb5-config krb5-user
+RUN apt -y upgrade libkrb5-3
+RUN apt-get install -y krb5-config
+RUN apt-get install -y krb5-user
+RUN apt-get install -y krb5-pkinit
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY /src .
@@ -23,4 +29,10 @@ RUN dotnet publish "./CrossDataBase.Server.csproj" -c $BUILD_CONFIGURATION -o /a
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+COPY /src/server/CrossDataBase.Server/krb5.conf /etc/krb5.conf
+
+RUN apk add --no-cache \
+        krb5-config \
+        krb5-user \
+        krb5-pkinit
 ENTRYPOINT ["dotnet", "CrossDataBase.Server.dll"]

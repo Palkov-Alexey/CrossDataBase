@@ -2,6 +2,7 @@ using CrossDataBase.Server;
 using CrossDataBase.Server.DataAccess.Abstraction.Core.ProcessData;
 using CrossDataBase.Server.DataAccess.Abstraction.Core.ProcessHistory;
 using CrossDataBase.Server.Infrastructure.DependencyInjection;
+using ElectronNET.API;
 
 MigrateBuilder.Migration();
 
@@ -25,6 +26,10 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.RegisterByDIAttribute("CrossDataBase.Server.*");
 
+// Electron.NET
+builder.WebHost.UseElectron(args);
+builder.Services.AddElectron();
+
 var app = builder.Build();
 
 app.UseDefaultFiles();
@@ -42,4 +47,9 @@ app.MapFallbackToFile("/index.html");
 
 app.Services.GetService<IProcessHistoryDbWriter>();
 
-app.Run();
+//app.Run();
+await app.StartAsync();
+
+await Electron.WindowManager.CreateWindowAsync();
+
+app.WaitForShutdown();

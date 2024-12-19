@@ -17,7 +17,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <DotNetCliToolReference Include="ElectronNET.CLI" Version="0.0.9" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Dapper" Version="2.1.35" />
+    <PackageReference Include="ElectronNET.API" Version="23.6.2" />
     <PackageReference Include="FluentMigrator" Version="6.2.0" />
     <PackageReference Include="FluentMigrator.Runner.Core" Version="6.2.0" />
     <PackageReference Include="FluentMigrator.Runner.SQLite" Version="6.2.0" />

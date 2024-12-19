@@ -11,7 +11,7 @@ public static class MigrateBuilder
     {
         var path = new Uri(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)).LocalPath;
         var assemblyNames = Directory
-            .GetFiles(path, $@"*.dll", SearchOption.TopDirectoryOnly)
+            .GetFiles(path, "*.dll", SearchOption.TopDirectoryOnly)
             .Select(f =>
                 f.Replace(path, string.Empty)
                  .Replace(".dll", string.Empty)

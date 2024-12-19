@@ -5,7 +5,6 @@ using System.Text;
 namespace CrossDataBase.Server.Business.Core.DataBase;
 internal class MsSqlExecutor : CoreExecutorBase
 {
-    private readonly string connectionString = "Data Source={0}{1};Initial Catalog={2}";
     protected override SQLServerType DbType => SQLServerType.MsSQL;
 
     protected override Task<object> QueryAsync(ServerModel server, string query)
@@ -21,7 +20,7 @@ internal class MsSqlExecutor : CoreExecutorBase
         return null;
     }
 
-    private string ConnectionStringBuilder(ServerModel server)
+    private static string ConnectionStringBuilder(ServerModel server)
     {
         var builder = new StringBuilder($"Data Source={server.Host}");
         if (!string.IsNullOrEmpty(server.Instance))
