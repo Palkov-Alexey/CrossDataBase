@@ -3,6 +3,7 @@ using CrossDataBase.Server.DataAccess.Abstraction.Core.ProcessData;
 using CrossDataBase.Server.DataAccess.Abstraction.Core.ProcessHistory;
 using CrossDataBase.Server.Infrastructure.DependencyInjection;
 using ElectronNET.API;
+using ElectronNET.API.Entities;
 
 MigrateBuilder.Migration();
 
@@ -50,6 +51,21 @@ app.Services.GetService<IProcessHistoryDbWriter>();
 //app.Run();
 await app.StartAsync();
 
-await Electron.WindowManager.CreateWindowAsync();
-
 app.WaitForShutdown();
+
+
+
+//AddDevelopmentTests();
+
+var browserWindow = await Electron.WindowManager.CreateWindowAsync(new BrowserWindowOptions
+{
+    Width = 1152,
+    Height = 940,
+    Show = false
+});
+
+await browserWindow.WebContents.Session.ClearCacheAsync();
+
+browserWindow.OnReadyToShow += () => browserWindow.Show();
+//browserWindow.SetTitle(Configuration["DemoTitleInSettings"]);
+

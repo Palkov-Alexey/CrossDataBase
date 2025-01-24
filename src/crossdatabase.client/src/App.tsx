@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import ReactNodeGraph from './components/node/index'
 import './node.css'
 
