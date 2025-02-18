@@ -1,4 +1,4 @@
-import { defineConfig, externalizeDepsPlugin, defineViteConfig } from "electron-vite";
+import { defineConfig, externalizeDepsPlugin } from "electron-vite";
 import { fileURLToPath, URL } from 'node:url';
 import react from '@vitejs/plugin-react';
 import { env } from 'process';
@@ -14,11 +14,6 @@ export default defineConfig({
         build: {
             lib: {
                 entry: `./electron/main/index.ts`
-            },
-            rollupOptions: {
-                output: {
-                    format: `es`
-                }
             }
         }
     },
@@ -27,11 +22,6 @@ export default defineConfig({
         build: {
             lib: {
                 entry: `./electron/preload/index.ts`
-            },
-            rollupOptions: {
-                output: {
-                    format: `es`
-                }
             }
         }
     },
@@ -41,12 +31,12 @@ export default defineConfig({
                 plugins: [["@babel/plugin-proposal-decorators", { "version": "2023-11" }]]
             },
         })],
-        resolve: {
-            alias: {
-                '@': fileURLToPath(new URL('./src', import.meta.url)),
-                '@renderer': resolve('src/')
-            }
-        },
+        // resolve: {
+        //     alias: {
+        //         '@': fileURLToPath(new URL('./src', import.meta.url)),
+        //         '@renderer': resolve('src/')
+        //     }
+        // },
         server: {
             proxy: {
                 '^/api/.*': {
@@ -56,13 +46,14 @@ export default defineConfig({
             }
             //port: 5173
         },
+        root: `src`,
         build: {
+            outDir: `src`,
             rollupOptions: {
                 input: {
-                    index: resolve(__dirname, `index.html`)
+                    index: `index.html`
                 }
             }
         }
     }
-
 })

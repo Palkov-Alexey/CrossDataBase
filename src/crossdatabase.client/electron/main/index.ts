@@ -10,7 +10,7 @@ function createWindow(): void {
         autoHideMenuBar: true,
         ...(process.platform === 'linux' ? {} : {}),
         webPreferences: {
-            preload: join(__dirname, '../preload/index.mjs'),
+            preload: join(__dirname, '../preload/index.js'),
             sandbox: false
         }
     })
@@ -26,11 +26,11 @@ function createWindow(): void {
 
     // HMR for renderer base on electron-vite cli.
     // Load the remote URL for development or the local html file for production.
-    if(is.dev){
-        mainWindow.loadURL('http://localhost:5173');
-    }
-    // if (is.dev && process.env['ELECTRON_RENDERER_URL']) {
-    //     mainWindow.loadURL(process.env['ELECTRON_RENDERER_URL'])
+    // if(is.dev){
+    //     mainWindow.loadURL('http://localhost:5173');
+    // }
+    if (is.dev && process.env['ELECTRON_RENDERER_URL']) {
+        mainWindow.loadURL(process.env['ELECTRON_RENDERER_URL'])}
      else {
         mainWindow.loadFile(join(__dirname, 'index.html'))
     }
