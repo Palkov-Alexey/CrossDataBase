@@ -2,6 +2,7 @@
   "name": "crossdatabase.client",
   "version": "0.1.0",
   "main": "./out/main/index.js",
+  "type": "module",
   "scripts": {
     "start": "vite preview",
     "dev1": "electron-vite dev",
