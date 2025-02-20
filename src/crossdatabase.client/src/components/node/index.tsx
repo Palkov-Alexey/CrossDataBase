@@ -110,7 +110,7 @@ class index extends Component<any, IState> {
 
         if (dragging) {
             let sourceNode = this.store.getNodebyId(this.state.source[0]);
-            let connectorStart = computeOutOffsetByIndex(sourceNode.PosX, sourceNode.PosY, this.state.source[1]);
+            let connectorStart = computeOutOffsetByIndex(sourceNode.posX, sourceNode.posY, this.state.source[1]);
             let connectorEnd = { x: this.state.mousePos.x, y: this.state.mousePos.y };
 
             newConnector = <Spline
@@ -135,7 +135,7 @@ class index extends Component<any, IState> {
                         title={node.name}
                         inputs={node.fields.inputs}
                         outputs={node.fields.outputs}
-                        pos={{ x: node.PosX, y: node.PosY }}
+                        pos={{ x: node.posX, y: node.posY }}
                         key={node.id}
 
                         //onNodeStart={(nid) => this.handleNodeStart(nid)}
@@ -158,8 +158,8 @@ class index extends Component<any, IState> {
                         let fromNode = this.store.getNodebyId(connector.fromNode);
                         let toNode = this.store.getNodebyId(connector.toNode);
 
-                        let splinestart = computeOutOffsetByIndex(fromNode.PosX, fromNode.PosY, this.computePinIndexfromLabel(fromNode.fields.outputs, connector.from));
-                        let splineend = computeInOffsetByIndex(toNode.PosX, toNode.PosY, this.computePinIndexfromLabel(toNode.fields.inputs, connector.to));
+                        let splinestart = computeOutOffsetByIndex(fromNode.posX, fromNode.posY, this.computePinIndexfromLabel(fromNode.fields.outputs, connector.from));
+                        let splineend = computeInOffsetByIndex(toNode.posX, toNode.posY, this.computePinIndexfromLabel(toNode.fields.inputs, connector.to));
 
                         return <Spline
                             start={splinestart}

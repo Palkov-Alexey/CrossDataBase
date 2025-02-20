@@ -23,14 +23,14 @@ class NodeStore {
 
     @action
     onNodeMove = (index: number, pos: Position) => {
-        this.data.nodes[index].PosX += pos.x;
-        this.data.nodes[index].PosY += pos.y;
+        this.data.nodes[index].posX += pos.x;
+        this.data.nodes[index].posY += pos.y;
     };
 
     @action
     onNodeStop = (index: number, pos: Position) => {
-        this.data.nodes[index].PosX = pos.x;
-        this.data.nodes[index].PosY = pos.y;
+        this.data.nodes[index].posX = pos.x;
+        this.data.nodes[index].posY = pos.y;
     };
 
     @action

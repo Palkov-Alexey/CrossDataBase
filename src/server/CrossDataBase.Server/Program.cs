@@ -62,9 +62,5 @@ try
 catch (Exception ex)
 {
     logger.LogError(JsonConvert.SerializeObject(ex));
-}
-finally
-{
     Environment.Exit(0);
 }
-
