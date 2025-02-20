@@ -1,6 +1,7 @@
 import { electronApp, is, optimizer } from "@electron-toolkit/utils";
 import { app, BrowserWindow, ipcMain, shell } from "electron";
 import { join } from "path";
+import icon from '../../public/vite.svg?asset';
 
 function createWindow(): void {
     const mainWindow = new BrowserWindow({
@@ -8,7 +9,7 @@ function createWindow(): void {
         height: 670,
         show: false,
         autoHideMenuBar: true,
-        ...(process.platform === 'linux' ? {} : {}),
+        ...(process.platform === 'linux' ? {icon} : {icon}),
         webPreferences: {
             preload: join(__dirname, '../preload/index.js'),
             sandbox: false
@@ -26,13 +27,10 @@ function createWindow(): void {
 
     // HMR for renderer base on electron-vite cli.
     // Load the remote URL for development or the local html file for production.
-    // if(is.dev){
-    //     mainWindow.loadURL('http://localhost:5173');
-    // }
     if (is.dev && process.env['ELECTRON_RENDERER_URL']) {
         mainWindow.loadURL(process.env['ELECTRON_RENDERER_URL'])}
      else {
-        mainWindow.loadFile(join(__dirname, 'index.html'))
+        mainWindow.loadFile(join(__dirname, '../../dist/index.html'))
     }
 }
 

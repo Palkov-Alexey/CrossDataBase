@@ -11,7 +11,7 @@ public static class MigrateBuilder
     {
         var path = new Uri(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)).LocalPath;
         var assemblyNames = Directory
-            .GetFiles(path, "*.dll", SearchOption.TopDirectoryOnly)
+            .GetFiles(path, "CrossDataBase.*.dll", SearchOption.TopDirectoryOnly)
             .Select(f =>
                 f.Replace(path, string.Empty)
                  .Replace(".dll", string.Empty)
@@ -22,7 +22,7 @@ public static class MigrateBuilder
             .AddFluentMigratorCore()
             .ConfigureRunner(c => c.AddSQLite()
                 .WithGlobalConnectionString(System.Configuration.ConfigurationManager.ConnectionStrings["SQLite"].ConnectionString)
-                .ScanIn(assemblyNames.Select(Assembly.Load).ToArray())
+                .ScanIn([.. assemblyNames.Select(Assembly.Load)])
                 .For
                 .EmbeddedResources()
                 .For
