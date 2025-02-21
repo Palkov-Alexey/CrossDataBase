@@ -6,7 +6,7 @@
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>..\..\..</DockerfileContext>
     <SpaRoot>..\..\crossdatabase.client</SpaRoot>
-    <SpaProxyLaunchCommand>npm run dev</SpaProxyLaunchCommand>
+    <!-- <SpaProxyLaunchCommand>npm run dev</SpaProxyLaunchCommand> -->
     <SpaProxyServerUrl>https://localhost:5173</SpaProxyServerUrl>
     <DockerfileRunArguments>-p 7290:8080</DockerfileRunArguments>
   </PropertyGroup>
@@ -49,11 +49,6 @@
   <ItemGroup>
     <Content Update="electron.manifest.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Update="ElectronHostHook\**\*.*">
-      <CopyToPublishDirectory>Never</CopyToPublishDirectory>
     </Content>
   </ItemGroup>
 </Project>
