@@ -10,31 +10,37 @@ var logger = LoggerFactory
 
 try
 {
+    var isElectron = args.Any(a => a.Contains("ELECTRON", StringComparison.CurrentCultureIgnoreCase));
     MigrateBuilder.Migration();
 
     var builder = WebApplication.CreateBuilder(args);
 
     // Add services to the container.
-
     builder.Services.AddControllers();
-
-    // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-    // builder.Services.AddEndpointsApiExplorer();
-    // builder.Services.AddSwaggerGen();
-    //builder.Services.AddSwaggerGen(options =>
-    //{
-    //    options.SwaggerDoc("v1", new OpenApiInfo
-    //    {
-    //        Version = "v1",
-
-    //    })
-    //});
 
     // builder.Services.RegisterByDIAttribute("CrossDataBase.Server.*");
 
     // Electron.NET
-    builder.WebHost.UseElectron(args);
-    builder.Services.AddElectron();
+    if (isElectron)
+    {
+        builder.WebHost.UseElectron(args);
+        builder.Services.AddElectron();
+    }
+    else
+    {
+        // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+        builder.Services.AddEndpointsApiExplorer();
+        builder.Services.AddSwaggerGen();
+        // builder.Services.AddSwaggerGen(options =>
+        // {
+        //     options.SwaggerDoc("v1", new OpenApiInfo
+        //     {
+        //         Version = "v1",
+
+        //     })
+
+        // });
+    }
 
     var app = builder.Build();
 
@@ -42,8 +48,11 @@ try
     app.UseStaticFiles();
 
     // Configure the HTTP request pipeline.
-    // app.UseSwagger();
-    // app.UseSwaggerUI();
+    if (!isElectron)
+    {
+        app.UseSwagger();
+        app.UseSwaggerUI();
+    }
 
     app.UseAuthorization();
 
@@ -53,11 +62,18 @@ try
 
     // app.Services.GetService<IProcessHistoryDbWriter>();
 
-    //app.Run();
-    await app.StartAsync();
-    await Electron.WindowManager.CreateWindowAsync();
+    if (HybridSupport.IsElectronActive)
+    {
+        await app.StartAsync();
+        await Electron.WindowManager.CreateWindowAsync();
 
-    app.WaitForShutdown();
+        app.WaitForShutdown();
+    }
+    else
+    {
+        app.Run();
+        app.Start();
+    }
 }
 catch (Exception ex)
 {
