@@ -18,7 +18,7 @@ try
     // Add services to the container.
     builder.Services.AddControllers();
 
-    // builder.Services.RegisterByDIAttribute("CrossDataBase.Server.*");
+    builder.Services.RegisterByDIAttribute("CrossDataBase.Server.*");
 
     // Electron.NET
     if (isElectron)

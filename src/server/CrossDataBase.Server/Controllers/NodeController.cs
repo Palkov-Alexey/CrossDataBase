@@ -1,3 +1,6 @@
+using CrossDataBase.Server.Business.Abstraction.Common;
+using CrossDataBase.Server.Business.Abstraction.Core.Nodes;
+using CrossDataBase.Server.Enum;
 using CrossDataBase.Server.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -6,7 +9,9 @@ namespace CrossDataBase.Server.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class NodeController(ILogger<NodeController> logger) : ControllerBase
+public class NodeController(ILogger<NodeController> logger,
+    INodeModelGetter nodeModelGetter,
+    INodeResolver nodeResolver) : ControllerBase
 {
 
     [HttpGet]
@@ -70,4 +75,14 @@ public class NodeController(ILogger<NodeController> logger) : ControllerBase
         logger.LogInformation(message: JsonConvert.SerializeObject(data));
         return Ok(data);
     }
+
+    [HttpGet("GetNodeData")]
+    [ProducesResponseType(200)]
+    public async Task<IActionResult> GetNodeDataAsync(NodeType type, long nodeId)
+    {
+        var t = nodeResolver.Resolve(type);
+        return Ok();
+    }
+
+    
 }

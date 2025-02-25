@@ -3,6 +3,6 @@ using CrossDataBase.Server.Business.Core.Nodes;
 using CrossDataBase.Server.Business.Nodes.Models;
 
 namespace CrossDataBase.Server.Business.Nodes;
-public class OutputNode : Node<OutputInputModel>
+/*public class OutputNode : Node<OutputInputModel>
 {
-}
+}*/

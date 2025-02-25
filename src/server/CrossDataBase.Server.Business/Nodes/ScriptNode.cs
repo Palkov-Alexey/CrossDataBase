@@ -17,7 +17,7 @@ public class ScriptNode() : Node<Dictionary<string, INodeData>, ScriptDataModel,
     {
         if (input == null)
         {
-            throw new ArgumentNullException("input");
+            throw new ArgumentNullException(nameof(input));
         }
 
         var server = (ServerModel)input["Server"];
