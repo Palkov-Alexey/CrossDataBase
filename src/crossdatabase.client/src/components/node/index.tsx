@@ -96,6 +96,21 @@ class index extends Component<any, IState> {
         return pins.findIndex(p => p.name === pinLabel);
     }
 
+    rightClick(x:number, y:number, button:number) {
+        let nodeFrames = ;
+        if (button === 2)
+        
+            return;
+    }
+
+    handleNodeSelect = nid => {
+        console.log(`node selected:`, nid);
+    }
+
+    handleNodeDeselect = nid => {
+        console.log(`node deselected:`, nid);
+    }
+
     render() {
         var {isLoading} = this.store;
         if(isLoading){
@@ -127,7 +142,7 @@ class index extends Component<any, IState> {
         let splineIndex = 0;
 
         return (
-            <div className={dragging ? 'dragging' : ''} >
+            <div className={dragging ? 'dragging' : ''} onClick={ (e: MouseEvent) => this.rightClick(e.x, e.y, e.button)}>
                 {nodes.map((node) => {
                     return <Node
                         index={i++}
@@ -145,8 +160,8 @@ class index extends Component<any, IState> {
                         onStartConnector={(nid: number, outputIndex: number) => this.handleStartConnector(nid, outputIndex)}
                         onCompleteConnector={(nid: number, inputIndex: number) => this.handleCompleteConnector(nid, inputIndex)}
 
-                        //onNodeSelect={(nid) => { this.handleNodeSelect(nid) }}
-                        //onNodeDeselect={(nid) => { this.handleNodeDeselect(nid) }}
+                        onNodeSelect={(nid) => { this.handleNodeSelect(nid) }}
+                        onNodeDeselect={(nid) => { this.handleNodeDeselect(nid) }}
                     />
                 })}
 

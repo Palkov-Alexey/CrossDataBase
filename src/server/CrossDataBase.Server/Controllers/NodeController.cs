@@ -18,7 +18,7 @@ public class NodeController(ILogger<NodeController> logger,
     [ProducesResponseType(200, Type = typeof(NodeData))]
     public IActionResult Get()
     {
-        var data = new NodeData
+        /*var data = new NodeData
         {
             Nodes =
             [
@@ -72,8 +72,8 @@ public class NodeController(ILogger<NodeController> logger,
             ]
         };
 
-        logger.LogInformation(message: JsonConvert.SerializeObject(data));
-        return Ok(data);
+        logger.LogInformation(message: JsonConvert.SerializeObject(data));*/
+        return Ok(null);
     }
 
     [HttpGet("GetNodeData")]

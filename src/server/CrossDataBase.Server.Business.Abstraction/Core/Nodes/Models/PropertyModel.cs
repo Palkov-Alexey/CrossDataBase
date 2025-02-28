@@ -4,10 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CrossDataBase.Server.Business.Abstraction.Core.Nodes
+namespace CrossDataBase.Server.Business.Abstraction.Core.Nodes.Models;
+public class PropertyModel
 {
-    internal class NodeService
-    {
-        
-    }
+
 }
