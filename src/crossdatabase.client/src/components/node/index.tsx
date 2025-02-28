@@ -7,7 +7,7 @@ import NodeStore from './store/NodeStore';
 import { ConnectionPoint } from './types/NodeType';
 import { Position } from './types/Position';
 import { observer } from 'mobx-react';
-
+import ContextMenu from './components/contextMenu';
 interface IState {
     source: any[];
     dragging: boolean;
@@ -17,7 +17,13 @@ interface IState {
 @observer
 class index extends Component<any, IState> {
     store: NodeStore;
-    ref!: any
+    ref!: any;
+    isClicked: boolean = false;
+    isNodeSelected: boolean = false;
+    menuPos = {
+        top: 0,
+        left: 0
+    }
 
     constructor(props: any) {
         super(props);
@@ -34,17 +40,26 @@ class index extends Component<any, IState> {
 
         this.onMouseMove = this.onMouseMove.bind(this);
         this.onMouseUp = this.onMouseUp.bind(this);
+
+        this.handleClick = this.handleClick.bind(this);
+    }
+
+    handleClick(){
+        console.log(`LC`);
+        this.setClicked(false);
     }
 
     async componentDidMount() {
         await this.store.getData();
         document.addEventListener('mousemove', this.onMouseMove);
         document.addEventListener('mouseup', this.onMouseUp);
+        document.addEventListener(`click`, this.handleClick);
     }
 
     componentWillUnmount() {
         document.removeEventListener('mousemove', this.onMouseMove);
         document.removeEventListener('mouseup', this.onMouseUp);
+        document.removeEventListener(`click`, this.handleClick);
     }
 
     // componentWillReceiveProps(nextProps: NodeStore) {
@@ -59,9 +74,7 @@ class index extends Component<any, IState> {
     onMouseMove(e: any) {
         e.stopPropagation();
         e.preventDefault();
-        console.log(this.ref.current)
         const svg= this.ref.current.ref.current;
-        console.log(svg)
 
         //Get svg element position to substract offset top and left 
         const svgRect = svg.getBoundingClientRect();
@@ -80,8 +93,6 @@ class index extends Component<any, IState> {
 
     handleCompleteConnector(nid: number, inputIndex: number) {
         if (this.state.dragging) {
-            console.log(this.state.source)
-
             let fromNode = this.store.getNodebyId(this.state.source[0]);
             let fromPinName = fromNode.fields.outputs[this.state.source[1]].name;
             let toNode = this.store.getNodebyId(nid);
@@ -94,6 +105,26 @@ class index extends Component<any, IState> {
 
     computePinIndexfromLabel(pins: ConnectionPoint[], pinLabel: string) {
         return pins.findIndex(p => p.name === pinLabel);
+    }
+
+    setClicked(isClicked: boolean){
+        if(this.isNodeSelected) return;
+        this.isClicked = isClicked;
+    }
+
+    setMenuPos(x: number, y: number){
+        this.menuPos.top = y;
+        this.menuPos.left = x;
+    }
+
+    handleNodeSelect(nid: any) {
+        this.isNodeSelected = true;
+        this.handleClick();
+    }
+
+    handleNodeDeselect(nid: any) {
+        this.isNodeSelected = false;
+        this.handleClick();
     }
 
     render() {
@@ -127,7 +158,15 @@ class index extends Component<any, IState> {
         let splineIndex = 0;
 
         return (
-            <div className={dragging ? 'dragging' : ''} >
+            <div className={dragging ? 'dragging' : ''}
+                onContextMenu={(e) => {
+                    e.preventDefault(); 
+                    this.setClicked(true);
+                    this.setMenuPos(e.pageX, e.pageY);
+                }} >
+                {this.isClicked && (
+                    <ContextMenu isNode={false} top={this.menuPos.top} left={this.menuPos.left} onMouseLeave={() => this.handleClick()}/>
+                )}
                 {nodes.map((node) => {
                     return <Node
                         index={i++}
@@ -145,8 +184,8 @@ class index extends Component<any, IState> {
                         onStartConnector={(nid: number, outputIndex: number) => this.handleStartConnector(nid, outputIndex)}
                         onCompleteConnector={(nid: number, inputIndex: number) => this.handleCompleteConnector(nid, inputIndex)}
 
-                        //onNodeSelect={(nid) => { this.handleNodeSelect(nid) }}
-                        //onNodeDeselect={(nid) => { this.handleNodeDeselect(nid) }}
+                        onNodeSelect={(nid) => { this.handleNodeSelect(nid) }}
+                        onNodeDeselect={(nid) => { this.handleNodeDeselect(nid) }}
                     />
                 })}
 
@@ -178,6 +217,8 @@ class index extends Component<any, IState> {
             </div>
         );
     }
+    
+    
 }
 
 export default index;

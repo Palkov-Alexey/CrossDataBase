@@ -5,6 +5,7 @@ import NodeInputList from "./nodeInputList";
 import NodeOutputList from "./nodeOutputList";
 import { ConnectionPoint } from "./types/NodeType";
 import { Position } from "./types/Position";
+import ContextMenu from "./components/contextMenu";
 
 type NodeProps = {
     onNodeSelect: (...args: any[]) => void;
@@ -27,6 +28,11 @@ interface IState {
 }
 
 class Node extends Component<NodeProps, IState> {
+    isClicked: boolean = false;
+    menuPos = {
+        top: 0,
+        left: 0
+    }
 
     constructor(props: NodeProps) {
         super(props);
@@ -76,13 +82,32 @@ class Node extends Component<NodeProps, IState> {
         this.setState({ selected: false });
     }
 
+    setClicked(isClicked: boolean) {
+        this.isClicked = isClicked;
+    }
+
+    setMenuPos(x: number, y: number) {
+        this.menuPos.top = y;
+        this.menuPos.left = x;
+    }
+
+    onMouseLeave(){
+        this.isClicked = false;
+    }
+
     render() {
-        let {selected} = this.state;
+        let { selected } = this.state;
 
         let nodeClass = 'node' + (selected ? ' selected' : '');
 
         return (
-            <div onDoubleClick={() => { this.handleClick() }}>
+            <div onDoubleClick={() => { this.handleClick() }}
+                onContextMenu={(e) => {
+                    e.preventDefault();
+                    this.handleClick();
+                    this.setClicked(true);
+                    this.setMenuPos(e.pageX, e.pageY);
+                }}      >
                 <Draggable
                     defaultPosition={{ x: this.props.pos.x, y: this.props.pos.y }}
                     handle=".node-header"
@@ -98,8 +123,12 @@ class Node extends Component<NodeProps, IState> {
                             <NodeInputList items={this.props.inputs} onCompleteConnector={(index: number) => this.onCompleteConnector(index)} />
                             <NodeOutputList items={this.props.outputs} onStartConnector={(index: number) => this.onStartConnector(index)} />
                         </div>
+
                     </section>
                 </Draggable>
+                {this.isClicked && (
+                    <ContextMenu isNode={true} top={this.menuPos.top} left={this.menuPos.left} onMouseLeave={() => this.onMouseLeave()}/>
+                )}
             </div>
         );
     }

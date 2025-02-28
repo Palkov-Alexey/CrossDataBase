@@ -18,7 +18,9 @@ class SVGComponent extends Component<SVGComponentProps> {
   }
 
   render() {
-    return <svg style={{ position: 'absolute', zIndex: 9000 }} {...this.props} ref={this.ref}>{this.props.children}</svg>;
+    let children = this.props.children;
+
+    return <svg style={{ position: 'absolute', zIndex: 9000 }} {...this.props} ref={this.ref}>{children}</svg>;
   }
 }
 
