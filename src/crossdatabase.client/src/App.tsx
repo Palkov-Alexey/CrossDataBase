@@ -1,6 +1,6 @@
 import { Component, Fragment } from 'react';
-import ReactNodeGraph from './components/node/index'
-import './node.css'
+import ReactNodeGraph from './components/node/index';
+import './node.css';
 
 class App extends Component {
     constructor(props: any) {

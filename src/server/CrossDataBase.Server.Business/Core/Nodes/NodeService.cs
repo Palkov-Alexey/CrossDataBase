@@ -11,6 +11,6 @@ internal class NodeService(INodeResolver nodeResolver) : INodeService
     {
         var nodeData = nodeResolver.Resolve(type);
 
-
+        return null;
     }
 }

@@ -1,15 +1,14 @@
 import { Component, RefObject, createRef } from 'react';
-import { ReactNodeLike } from 'prop-types'
 
 type SVGComponentProps = {
   height: string;
   width: string;
-  ref: string;
-  children: ReactNodeLike[];
+  ref: RefObject<SVGSVGElement>;
+  children: any[];
 }
 
 class SVGComponent extends Component<SVGComponentProps> {
-  ref: RefObject<any>
+  ref: RefObject<SVGSVGElement>
 
   constructor(props: SVGComponentProps) {
     super(props)
@@ -18,9 +17,9 @@ class SVGComponent extends Component<SVGComponentProps> {
   }
 
   render() {
-    let children = this.props.children;
+    let { children } = this.props;
 
-    return <svg style={{ position: 'absolute', zIndex: 9000 }} {...this.props} ref={this.ref}>{children}</svg>;
+    return <svg style={{ position: 'absolute', zIndex: 1 }} {...this.props} ref={this.ref}>{children}</svg>;
   }
 }
 

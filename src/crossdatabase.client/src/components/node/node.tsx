@@ -10,7 +10,7 @@ import ContextMenu from "./components/contextMenu";
 type NodeProps = {
     onNodeSelect: (...args: any[]) => void;
     onNodeDeselect: (...args: any[]) => void,
-    onNodeStart: (...args: any[]) => void,
+    //onNodeStart: (...args: any[]) => void,
     onNodeStop: (...args: any[]) => void,
     onNodeMove: (...args: any[]) => void,
     onStartConnector: (...args: any[]) => void,
@@ -24,11 +24,12 @@ type NodeProps = {
 }
 
 interface IState {
-    selected: boolean
+    selected: boolean;
+    isClicked: boolean;
 }
 
+
 class Node extends Component<NodeProps, IState> {
-    isClicked: boolean = false;
     menuPos = {
         top: 0,
         left: 0
@@ -37,13 +38,14 @@ class Node extends Component<NodeProps, IState> {
     constructor(props: NodeProps) {
         super(props);
         this.state = {
-            selected: false
+            selected: false,
+            isClicked: false
         }
     }
 
-    handleDragStart(event: DraggableEvent, ui: DraggableData) {
-        this.props.onNodeStart(this.props.nid, ui);
-    }
+    // handleDragStart(event: DraggableEvent, ui: DraggableData) {
+    //     this.props.onNodeStart(this.props.nid, ui);
+    // }
 
     handleDragStop(event: DraggableEvent, ui: DraggableData) {
         const position = { x: ui.lastX, y: ui.lastY }
@@ -53,10 +55,6 @@ class Node extends Component<NodeProps, IState> {
     handleDrag = (event: DraggableEvent, ui: DraggableData) => {
         const position = { x: ui.deltaX, y: ui.deltaY }
         this.props.onNodeMove(this.props.index, position);
-    }
-
-    shouldComponentUpdate(nextProps: NodeProps, nextState: IState,) {
-        return this.state.selected !== nextState.selected;
     }
 
     onStartConnector(index: number) {
@@ -82,8 +80,8 @@ class Node extends Component<NodeProps, IState> {
         this.setState({ selected: false });
     }
 
-    setClicked(isClicked: boolean) {
-        this.isClicked = isClicked;
+    setClicked (isClicked: boolean) {
+        this.setState({ isClicked });
     }
 
     setMenuPos(x: number, y: number) {
@@ -91,12 +89,13 @@ class Node extends Component<NodeProps, IState> {
         this.menuPos.left = x;
     }
 
-    onMouseLeave(){
-        this.isClicked = false;
+    onMouseLeave() {
+        this.setClicked(false);
     }
 
     render() {
-        let { selected } = this.state;
+        const { title, inputs, outputs, pos: { x: posX, y: posY } } = this.props;
+        let { selected, isClicked } = this.state;
 
         let nodeClass = 'node' + (selected ? ' selected' : '');
 
@@ -109,31 +108,29 @@ class Node extends Component<NodeProps, IState> {
                     this.setMenuPos(e.pageX, e.pageY);
                 }}      >
                 <Draggable
-                    defaultPosition={{ x: this.props.pos.x, y: this.props.pos.y }}
+                    defaultPosition={{ x: posX, y: posY }}
                     handle=".node-header"
                     scale={1}
                     //onStart={(event, ui) => this.handleDragStart(event, ui)}
                     onStop={(event, ui) => this.handleDragStop(event, ui)}
                     onDrag={(event, ui) => this.handleDrag(event, ui)}>
-                    <section className={nodeClass} style={{ zIndex: 10000 }}>
+                    <section className={nodeClass} style={{ zIndex: 2 }}>
                         <header className="node-header">
-                            <span className="node-title">{this.props.title}</span>
+                            <span className="node-title">{title}</span>
                         </header>
                         <div className="node-content">
-                            <NodeInputList items={this.props.inputs} onCompleteConnector={(index: number) => this.onCompleteConnector(index)} />
-                            <NodeOutputList items={this.props.outputs} onStartConnector={(index: number) => this.onStartConnector(index)} />
+                            <NodeInputList items={inputs} onCompleteConnector={(index: number) => this.onCompleteConnector(index)} />
+                            <NodeOutputList items={outputs} onStartConnector={(index: number) => this.onStartConnector(index)} />
                         </div>
 
                     </section>
                 </Draggable>
-                {this.isClicked && (
-                    <ContextMenu isNode={true} top={this.menuPos.top} left={this.menuPos.left} onMouseLeave={() => this.onMouseLeave()}/>
+                {isClicked && (
+                    <ContextMenu isNode={true} top={this.menuPos.top} left={this.menuPos.left} onMouseLeave={() => this.onMouseLeave()} />
                 )}
             </div>
         );
     }
 }
-
-
 
 export default onClickOutside(Node);

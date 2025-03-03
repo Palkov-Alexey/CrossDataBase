@@ -8,17 +8,18 @@ import { ConnectionPoint } from './types/NodeType';
 import { Position } from './types/Position';
 import { observer } from 'mobx-react';
 import ContextMenu from './components/contextMenu';
+
 interface IState {
     source: any[];
     dragging: boolean;
-    mousePos: Position
+    mousePos: Position;
+    isClicked: boolean;
 }
 
 @observer
-class index extends Component<any, IState> {
+class index extends Component<any,IState> {
     store: NodeStore;
     ref!: any;
-    isClicked: boolean = false;
     isNodeSelected: boolean = false;
     menuPos = {
         top: 0,
@@ -33,7 +34,8 @@ class index extends Component<any, IState> {
         this.state = {
             source: [],
             dragging: false,
-            mousePos: { x: 0, y: 0 }
+            mousePos: { x: 0, y: 0 },
+            isClicked: false
         }
 
         this.ref = createRef()
@@ -44,7 +46,7 @@ class index extends Component<any, IState> {
         this.handleClick = this.handleClick.bind(this);
     }
 
-    handleClick(){
+    handleClick() {
         console.log(`LC`);
         this.setClicked(false);
     }
@@ -74,7 +76,7 @@ class index extends Component<any, IState> {
     onMouseMove(e: any) {
         e.stopPropagation();
         e.preventDefault();
-        const svg= this.ref.current.ref.current;
+        const svg = this.ref.current.ref.current;
 
         //Get svg element position to substract offset top and left 
         const svgRect = svg.getBoundingClientRect();
@@ -87,8 +89,8 @@ class index extends Component<any, IState> {
         });
     }
 
-    handleStartConnector(nid: number, outputIndex: number){
-        this.setState({dragging: true, source:[nid, outputIndex]});
+    handleStartConnector(nid: number, outputIndex: number) {
+        this.setState({ dragging: true, source: [nid, outputIndex] });
     }
 
     handleCompleteConnector(nid: number, inputIndex: number) {
@@ -107,12 +109,12 @@ class index extends Component<any, IState> {
         return pins.findIndex(p => p.name === pinLabel);
     }
 
-    setClicked(isClicked: boolean){
-        if(this.isNodeSelected) return;
-        this.isClicked = isClicked;
+    setClicked(isClicked: boolean) {
+        if (this.isNodeSelected) return;
+        this.setState({ isClicked: isClicked });
     }
 
-    setMenuPos(x: number, y: number){
+    setMenuPos(x: number, y: number) {
         this.menuPos.top = y;
         this.menuPos.left = x;
     }
@@ -128,8 +130,10 @@ class index extends Component<any, IState> {
     }
 
     render() {
-        var {isLoading} = this.store;
-        if(isLoading){
+        var { isLoading } = this.store;
+        var { isClicked } = this.state;
+
+        if (isLoading) {
             return <div /*className={style.emptyPage}><Loader width={150} className={style.loader}*/ />;
         }
 
@@ -152,7 +156,7 @@ class index extends Component<any, IState> {
                     y: 0
                 }} onRemove={function (...args: any[]) {
                     throw new Error('Function not implemented.');
-                } }            />
+                }} />
         }
 
         let splineIndex = 0;
@@ -160,12 +164,12 @@ class index extends Component<any, IState> {
         return (
             <div className={dragging ? 'dragging' : ''}
                 onContextMenu={(e) => {
-                    e.preventDefault(); 
+                    e.preventDefault();
                     this.setClicked(true);
                     this.setMenuPos(e.pageX, e.pageY);
                 }} >
-                {this.isClicked && (
-                    <ContextMenu isNode={false} top={this.menuPos.top} left={this.menuPos.left} onMouseLeave={() => this.handleClick()}/>
+                {isClicked && (
+                    <ContextMenu isNode={false} top={this.menuPos.top} left={this.menuPos.left} onMouseLeave={() => this.handleClick()} />
                 )}
                 {nodes.map((node) => {
                     return <Node
@@ -217,8 +221,8 @@ class index extends Component<any, IState> {
             </div>
         );
     }
-    
-    
+
+
 }
 
 export default index;
