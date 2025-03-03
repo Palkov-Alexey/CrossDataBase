@@ -1,5 +1,5 @@
 import { observable, action, computed } from "mobx";
-import dataService from "../services/dataService";
+import dataService from "../services/DataService";
 import { NodeData, Connectors } from "../types/NodeType";
 import { Position } from "../types/Position";
 

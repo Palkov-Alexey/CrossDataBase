@@ -23,11 +23,12 @@ class ContextMenu extends Component<MenuProps> {
     render() {
         let text = this.props.isNode ? `Test Node` : `Test`;
 
-        return <div className={cn( {[style.top]: `${this.props.top}px`, [style.left]: `${this.props.left}px`}, style.menu)}
+        return <div className={ style.menu }
+            style={{top: `${this.props.top}px`, left: `${this.props.left}px`}}
             onMouseLeave={() => this.onMouseLeave()}>
-            <ul>
-                <li>{text} 1</li>
-                <li>{text} 2</li>
+            <ul className={ style.ul }>
+                <li className={ style.li }>{text} 1</li>
+                <li className={ style.li }>{text} 2</li>
             </ul>
         </div>
     }
