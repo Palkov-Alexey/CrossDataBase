@@ -1,5 +1,4 @@
 import { Component, MouseEvent } from "react";
-import { ConnectionPoint } from "./types/NodeType";
 
 type NodeInputListItemProps = {
     onMouseUp: (...args: any[]) => void;

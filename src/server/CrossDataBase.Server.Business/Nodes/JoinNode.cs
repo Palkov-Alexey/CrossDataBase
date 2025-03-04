@@ -1,5 +1,6 @@
 ﻿using CrossDataBase.Server.Business.Abstraction.Core.NodeContext;
 using CrossDataBase.Server.Business.Abstraction.Core.Results;
+using CrossDataBase.Server.Business.Abstraction.Nodes.Models;
 using CrossDataBase.Server.Business.Core.Attributes;
 using CrossDataBase.Server.Business.Core.Nodes;
 using CrossDataBase.Server.Business.Nodes.Models;
@@ -8,12 +9,12 @@ using CrossDataBase.Server.Infrastructure.Abstractions.DependencyInjection;
 
 namespace CrossDataBase.Server.Business.Nodes;
 
-//[InjectAsSingleton(typeof(JoinNode))]
-//[Node(NodeType.Join)]
-//public class JoinNode : Node<JoinInputModel, JoinDataModel, JoinOutputModel>
-//{
-//    protected override Task<ExecutionResult> OnExecuteAsync(NodeExecutionContext context, JoinDataModel data, JoinInputModel input = null)
-//    {
-//        return base.OnExecuteAsync(context, data, input);
-//    }
-//}
+[InjectAsSingleton(typeof(JoinNode))]
+[Node(NodeType.Join)]
+public class JoinNode : Node<JoinInputModel, JoinDataModel, JoinOutputModel>
+{
+    protected override Task<ExecutionResult> OnExecuteAsync(NodeExecutionContext context, JoinDataModel data, JoinInputModel input)
+    {
+        return base.OnExecuteAsync(context, data, input);
+    }
+}

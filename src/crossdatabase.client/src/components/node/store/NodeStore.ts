@@ -1,6 +1,6 @@
 import { observable, action, computed } from "mobx";
 import dataService from "../services/dataService";
-import { NodeData, Connector, NodeElement } from "../types/NodeType";
+import { NodeData, Connector, NodeElement } from "../types/NodeData";
 import { Position } from "../types/Position";
 import { MenuItem } from "../../common/contextMenu/types/MenuTypes";
 import { NodeInfo } from "../types/NodeInfo";
@@ -14,17 +14,17 @@ class NodeStore {
     @observable accessor maxValue: number = 0;
     @observable accessor menuItems: MenuItem[] = [];
 
-    @computed get isLoading(): boolean {
-        return !this.data;
-    }
+    @observable accessor isLoading: boolean = false;
 
     @action
     getData = async (): Promise<void> => {
-        this.data = await dataService.getNode();
+        //this.data = await dataService.getNode();
         const infos = await dataService.getInfo();
 
-        this.maxValue = Math.max(...this.data.connectors.map(c => c.id));
-        this.maxNodeId = Math.max(...this.data.nodes.map(n => n.id))
+        if (this.data.nodes) {
+            this.maxValue = Math.max(...this.data.connectors.map(c => c.id));
+            this.maxNodeId = Math.max(...this.data.nodes.map(n => n.id));
+        }
 
         infos.map(i => this.menuItems.push({
             id: i.type,
@@ -47,8 +47,10 @@ class NodeStore {
 
     @action
     onNewConnector = async (fromNode: number, from: string, toNode: number, to: string): Promise<void> => {
-        let connection: Connector = { id: ++this.maxValue, fromNode, from, toNode, to };
-        this.data.connectors.push(connection);
+        let connectors = this.data.connectors.filter(c => c.toNode !== toNode);
+        connectors.push({ id: ++this.maxValue, fromNode, from, toNode, to });
+
+        this.data.connectors = connectors;
     }
 
     @action

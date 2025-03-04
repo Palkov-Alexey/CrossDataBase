@@ -9,7 +9,7 @@ namespace CrossDataBase.Server.Business.Nodes;
 
 [InjectAsSingleton(typeof(ServerNode))]
 [Node(NodeType.Server)]
-public class ServerNode : Node<ServerModel, ServerNode.ServerOutputModel>
+public class ServerNode : NodeDataOut<ServerModel, ServerNode.ServerOutputModel>
 {
     protected override ExecutionResult OnExecute(ServerModel serverData)
     {

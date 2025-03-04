@@ -1,6 +1,5 @@
 import { Component } from "react";
 import NodeOutputListItem from "./nodeOutputListItem";
-import { ConnectionPoint } from "./types/NodeType";
 
 type NodeOutputListProps = {
     onStartConnector: (index: number) => void;

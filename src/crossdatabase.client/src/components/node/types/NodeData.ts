@@ -23,7 +23,3 @@ export type Fields = {
     inputs: string[];
     outputs: string[];
 }
-
-export type ConnectionPoint = {
-    name: string;
-}

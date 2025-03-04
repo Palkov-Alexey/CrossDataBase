@@ -119,12 +119,12 @@ body {
 }
 
 .nodeInputWrapper {
-	width : 65%;
+	width : auto;
 	float: left;
 }
 
 .nodeOutputWrapper {
-	width : 35%;
+	width : auto;
 	float: right;
 	text-align: right;
 }

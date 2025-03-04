@@ -3,7 +3,7 @@ import Draggable, { DraggableData, DraggableEvent } from "react-draggable";
 import onClickOutside from 'react-onclickoutside';
 import NodeInputList from "./nodeInputList";
 import NodeOutputList from "./nodeOutputList";
-import { ConnectionPoint } from "./types/NodeType";
+import { ConnectionPoint } from "./types/NodeData";
 import { Position } from "./types/Position";
 import ContextMenu from "../common/contextMenu";
 import { MenuItem } from "../common/contextMenu/types/MenuTypes";

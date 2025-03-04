@@ -4,7 +4,6 @@ import Spline from './spline';
 import Node from './node';
 import SVGComponent from './SVGComponent';
 import NodeStore from './store/NodeStore';
-import { ConnectionPoint } from './types/NodeType';
 import { Position } from './types/Position';
 import { observer } from 'mobx-react';
 import ContextMenu from '../common/contextMenu';
@@ -62,11 +61,6 @@ class index extends Component<any, IState> {
         document.removeEventListener('mouseup', this.onMouseUp);
         document.removeEventListener(`click`, this.handleClick);
     }
-
-    // componentWillReceiveProps(nextProps: NodeStore) {
-    //     this.store.data = nextProps.data;
-    //     //this.setState({ data: nextProps.data });
-    // }
 
     onMouseUp(e: any): void {
         this.setState({ dragging: false });

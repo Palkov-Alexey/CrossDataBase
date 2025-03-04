@@ -5,8 +5,8 @@ namespace CrossDataBase.Server.Business.Nodes.Models;
 public class JoinInputModel : INodeData
 {
     [NodeProperty("Sql1")]
-    public ScriptOutputModel ScriptResult1 { get; set; }
+    public ScriptOutputModel Sql1 { get; set; }
 
     [NodeProperty("Sql2")]
-    public ScriptOutputModel ScriptResult2 { get; set; }
+    public ScriptOutputModel Sql2 { get; set; }
 }
