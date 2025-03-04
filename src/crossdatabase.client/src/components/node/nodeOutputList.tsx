@@ -1,18 +1,18 @@
-import React, { Component, MouseEvent } from "react";
+import { Component } from "react";
 import NodeOutputListItem from "./nodeOutputListItem";
 import { ConnectionPoint } from "./types/NodeType";
 
 type NodeOutputListProps = {
-    onStartConnector: (...args: any[]) => void;
-    items: ConnectionPoint[];
+    onStartConnector: (index: number) => void;
+    items: string[];
 }
 
 class NodeOutputList extends Component<NodeOutputListProps> {
-    onMouseDown(i: MouseEvent) {
+    onMouseDown(i: number): void {
         this.props.onStartConnector(i);
     }
 
-    render() {
+    render(): JSX.Element | null {
         let i = 0;
 
         if(!this.props.items){

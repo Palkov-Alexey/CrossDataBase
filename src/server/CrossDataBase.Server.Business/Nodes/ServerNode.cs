@@ -18,6 +18,7 @@ public class ServerNode : Node<ServerModel, ServerNode.ServerOutputModel>
 
     public class ServerOutputModel : INodeData
     {
+        [NodeProperty("Server")]
         public ServerModel Server { get; set; }
     }
 }

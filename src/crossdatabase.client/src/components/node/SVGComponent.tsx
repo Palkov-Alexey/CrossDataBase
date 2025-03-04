@@ -16,7 +16,7 @@ class SVGComponent extends Component<SVGComponentProps> {
     this.ref = createRef()
   }
 
-  render() {
+  render(): JSX.Element {
     let { children } = this.props;
 
     return <svg style={{ position: 'absolute', zIndex: 1 }} {...this.props} ref={this.ref}>{children}</svg>;

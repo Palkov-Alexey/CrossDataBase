@@ -1,6 +1,6 @@
 export type NodeData = {
     nodes: NodeElement[];
-    connectors: Connectors[];
+    connectors: Connector[];
 }
 
 export type NodeElement = {
@@ -11,7 +11,7 @@ export type NodeElement = {
     fields: Fields;
 }
 
-export type Connectors = {
+export type Connector = {
     id: number;
     fromNode: number;
     from: string;
@@ -20,10 +20,10 @@ export type Connectors = {
 }
 
 export type Fields = {
-    inputs: ConnectionPoint[]
-    outputs: ConnectionPoint[]
+    inputs: string[];
+    outputs: string[];
 }
 
 export type ConnectionPoint = {
-    name: string
+    name: string;
 }

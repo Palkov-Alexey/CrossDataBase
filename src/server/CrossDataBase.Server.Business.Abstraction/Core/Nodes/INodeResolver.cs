@@ -10,4 +10,5 @@ namespace CrossDataBase.Server.Business.Abstraction.Core.Nodes;
 public interface INodeResolver
 {
     NodeBase Resolve(NodeType type);
+    IReadOnlyCollection<NodeBase> Resolve();
 }

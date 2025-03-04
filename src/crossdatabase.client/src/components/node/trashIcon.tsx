@@ -2,8 +2,8 @@ import { Component, MouseEvent } from "react";
 import { Position } from "./types/Position";
 
 type TrashIconProp = {
-  onClick: (...args: any[]) => void,
-  position: Position
+  onClick: (...args: any[]) => void;
+  position: Position;
 }
 
 class TrashIcon extends Component<TrashIconProp> {
@@ -11,13 +11,13 @@ class TrashIcon extends Component<TrashIconProp> {
       super(props)
     }
 
-    handleClick(e: MouseEvent) {
+    handleClick(e: MouseEvent): void {
       if (this.props.onClick) {
         this.props.onClick(e)
       }
     }
 
-    render() {
+    render(): JSX.Element {
         let {position} = this.props
         return (
             <g className="trash-icon" fill="none" stroke="none" strokeWidth="1"
@@ -32,7 +32,5 @@ class TrashIcon extends Component<TrashIconProp> {
         );
     }
 }
-
-
 
 export default TrashIcon

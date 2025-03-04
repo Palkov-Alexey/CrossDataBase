@@ -57,11 +57,7 @@ class App extends Component {
     //     console.log(`node deselected:`, nid);
     // }
 
-    handleRightClick = () => {
-
-    }
-
-    render() {
+    render(): JSX.Element {
         return <Fragment>
             <ReactNodeGraph />
         </Fragment>;

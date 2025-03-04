@@ -11,7 +11,7 @@ namespace CrossDataBase.Server.Controllers;
 [Route("api/[controller]")]
 public class NodeController(ILogger<NodeController> logger,
     INodeModelGetter nodeModelGetter,
-    INodeResolver nodeResolver) : ControllerBase
+    INodeService nodeService) : ControllerBase
 {
 
     [HttpGet]
@@ -28,7 +28,7 @@ public class NodeController(ILogger<NodeController> logger,
                     Name = "Server",
                     PosX = 89,
                     PosY = 82,
-                    Fields = new Fields{ Outputs = [new(){Name = "Server"}] }
+                    Fields = new Fields{ Outputs = ["Server"] }
                 },
                 new()
                 {
@@ -36,7 +36,7 @@ public class NodeController(ILogger<NodeController> logger,
                     Name = "Script",
                     PosX = 452,
                     PosY = 92,
-                    Fields = new Fields{ Inputs = [new(){Name = "Server"}], Outputs = [new(){Name = "Res"}] }
+                    Fields = new Fields{ Inputs = ["Server"], Outputs = ["Res"] }
                 },
                 new()
                 {
@@ -44,7 +44,7 @@ public class NodeController(ILogger<NodeController> logger,
                     Name = "Server",
                     PosX = 89,
                     PosY = 390,
-                    Fields = new Fields{ Outputs = [new(){Name = "Server"}] }
+                    Fields = new Fields{ Outputs = ["Server"] }
                 },
                 new()
                 {
@@ -52,7 +52,7 @@ public class NodeController(ILogger<NodeController> logger,
                     Name = "Script",
                     PosX = 452,
                     PosY = 390,
-                    Fields = new Fields{ Inputs = [new(){Name = "Server"}], Outputs = [new(){Name = "Res"}] }
+                    Fields = new Fields{ Inputs = ["Server"], Outputs = ["Res"] }
                 },
                 new()
                 {
@@ -60,7 +60,7 @@ public class NodeController(ILogger<NodeController> logger,
                     Name = "Join",
                     PosX = 1070,
                     PosY = 250,
-                    Fields = new Fields{ Inputs = [new(){Name = "Sql1"}, new() {Name = "Sql2"}], Outputs = [new(){Name = "Res"}] }
+                    Fields = new Fields{ Inputs = ["Sql1", "Sql2"], Outputs = ["Res"] }
                 }
             ],
             Connectors =
@@ -76,13 +76,20 @@ public class NodeController(ILogger<NodeController> logger,
         return Ok(data);
     }
 
-    [HttpGet("GetNodeData")]
+    [HttpGet("GetNodeList")]
+    [ProducesResponseType(200)]
+    public IActionResult GetNodeList()
+    {
+        return Ok(nodeService.GetNodeInfo());
+    }
+
+    /*[HttpGet("GetNodeData")]
     [ProducesResponseType(200)]
     public async Task<IActionResult> GetNodeDataAsync(NodeType type, long nodeId)
     {
         var t = nodeResolver.Resolve(type);
         return Ok();
-    }
+    }*/
 
     
 }

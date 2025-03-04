@@ -14,9 +14,9 @@
 .li {
     list-style-type: none;
     text-align: center;
-    cursor: default;
+    cursor: pointer;
 }
 
-.li:hover{
-    background-color: hsl(0, 0%, 15%);
+.li:hover {
+    background-color: hsl(226, 100%, 50%);
 }

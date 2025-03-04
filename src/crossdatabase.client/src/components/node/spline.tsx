@@ -7,7 +7,7 @@ type SplineProps = {
   mousePos: { x: number, y: number };
   onClick?: (...args: any[]) => any;
   onClickOutside?: (...args: any[]) => any;
-  onRemove: (...args: any[]) => any;
+  onRemove: () => any;
   start: { x: number, y: number };
   end: { x: number, y: number };
 }
@@ -26,7 +26,7 @@ class Spline extends Component<SplineProps, IState> {
     }
   }
 
-  handleClick(e: MouseEvent) {
+  handleClick(e: MouseEvent): void {
     this.setState({
       selected: !this.state.selected,
       position: this.props.mousePos
@@ -37,7 +37,7 @@ class Spline extends Component<SplineProps, IState> {
     }
   }
 
-  handleClickOutside(e: MouseEvent) {
+  handleClickOutside(e: MouseEvent): void {
     this.setState({ selected: false });
 
     if (this.props.onClickOutside) {
@@ -45,15 +45,15 @@ class Spline extends Component<SplineProps, IState> {
     }
   }
 
-  handleRemove(e: MouseEvent) {
+  handleRemove(e: MouseEvent): void {
     this.setState({ selected: false });
 
     if (this.props.onRemove) {
-      this.props.onRemove(e);
+      this.props.onRemove();
     }
   }
 
-  render() {
+  render(): JSX.Element {
     let { selected, position } = this.state;
 
     let { start, end } = this.props;

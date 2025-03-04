@@ -1,10 +1,10 @@
-import React, { Component } from "react";
+import { Component, MouseEvent } from "react";
 import { ConnectionPoint } from "./types/NodeType";
 
 type NodeInputListItemProps = {
-    onMouseUp: (...args: any[]) => void,
-    index: number,
-    item: ConnectionPoint
+    onMouseUp: (...args: any[]) => void;
+    index: number;
+    item: string;
 }
 
 interface IState {
@@ -19,28 +19,28 @@ class NodeInputListItem extends Component<NodeInputListItemProps, IState> {
         }
     }
 
-    onMouseUp(e: any) {
+    onMouseUp(e: MouseEvent): void {
         e.stopPropagation();
         e.preventDefault();
 
         this.props.onMouseUp(this.props.index);
     }
 
-    onMouseOver() {
+    onMouseOver(): void {
         this.setState({ hover: true });
     }
 
-    onMouseOut() {
+    onMouseOut(): void {
         this.setState({ hover: false });
     }
 
-    noop(e: any) {
+    noop(e: MouseEvent): void {
         e.stopPropagation();
         e.preventDefault();
     }
 
-    render() {
-        let { name } = this.props.item;
+    render(): JSX.Element {
+        let { item } = this.props;
         let { hover } = this.state;
 
         return (
@@ -50,13 +50,11 @@ class NodeInputListItem extends Component<NodeInputListItemProps, IState> {
                         onMouseOver={() => { this.onMouseOver() }}
                         onMouseOut={() => { this.onMouseOut() }}
                     ></i>
-                    {name}
+                    {item}
                 </a>
             </li>
         );
     }
 }
-
-
 
 export default NodeInputListItem

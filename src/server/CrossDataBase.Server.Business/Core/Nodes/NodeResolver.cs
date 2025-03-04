@@ -1,4 +1,5 @@
 ﻿using CrossDataBase.Server.Business.Abstraction.Core.Nodes;
+using CrossDataBase.Server.Business.Abstraction.Core.Nodes.Models;
 using CrossDataBase.Server.Business.Core.Attributes;
 using CrossDataBase.Server.Enum;
 using CrossDataBase.Server.Infrastructure.Abstractions.DependencyInjection;
@@ -20,6 +21,13 @@ public class NodeResolver(IServiceProvider serviceProvider) : INodeResolver
             .Select(x => RuntimeHelpers.GetUninitializedObject(x) as NodeBase)
             .Where(x => x is not null)
             .ToDictionary(x => x.GetType().GetCustomAttribute<NodeAttribute>().Name, x => x.GetType());
+    }
+
+    public IReadOnlyCollection<NodeBase> Resolve()
+    {
+        return NodeTypes.Select(x => serviceProvider.GetService(x.Value) is NodeBase node ? node : null)
+            .Where(x => x is not null)
+            .ToList();
     }
 
     public NodeBase Resolve(NodeType type)

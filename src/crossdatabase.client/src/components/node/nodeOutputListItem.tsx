@@ -1,10 +1,10 @@
-import React, { Component, MouseEvent } from "react";
+import { Component, MouseEvent } from "react";
 import { ConnectionPoint } from "./types/NodeType";
 
 type NodeOutputListItemProps = {
-    onMouseDown: (...args: any[]) => void,
-    index: number,
-    item: ConnectionPoint
+    onMouseDown: (...args: any[]) => void;
+    index: number;
+    item: string;
 }
 
 interface IState {
@@ -12,22 +12,22 @@ interface IState {
 }
 
 class NodeOutputListItem extends Component<NodeOutputListItemProps, IState> {
-    onMouseDown(e: MouseEvent) {
+    onMouseDown(e: MouseEvent): void {
         e.stopPropagation();
         e.preventDefault();
 
         this.props.onMouseDown(this.props.index);
     }
 
-    noop(e: MouseEvent) {
+    noop(e: MouseEvent): void {
         e.stopPropagation();
         e.preventDefault();
     }
 
-    render() {
+    render(): JSX.Element {
         return (
             <li onMouseDown={(e) => this.onMouseDown(e)}>
-                <a href="#" onClick={(e) => this.noop(e)}>{this.props.item.name} <i className="fa fa-circle-o"></i></a>
+                <a href="#" onClick={(e) => this.noop(e)}>{this.props.item} <i className="fa fa-circle-o"></i></a>
             </li>
         );
     }

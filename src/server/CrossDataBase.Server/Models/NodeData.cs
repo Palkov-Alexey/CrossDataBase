@@ -24,9 +24,9 @@ public class NodeElement
 
 public class Fields
 {
-    public ConnectionPoint[] Inputs { get; set; }
+    public string[] Inputs { get; set; }
 
-    public ConnectionPoint[] Outputs { get; set; }
+    public string[] Outputs { get; set; }
 }
 
 public class ConnectionPoint

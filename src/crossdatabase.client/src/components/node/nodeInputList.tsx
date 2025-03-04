@@ -1,21 +1,20 @@
-import { Component } from "react";
+import { Component, MouseEvent } from "react";
 import NodeInputListItem from "./nodeInputListItem";
-import { ConnectionPoint } from "./types/NodeType";
 
 type NodeInputListProps = {
-    onCompleteConnector: (...args: any[]) => void;
-    items: ConnectionPoint[]
+	onCompleteConnector: (...args: any[]) => void;
+	items: string[];
 }
 
 class NodeInputList extends Component<NodeInputListProps> {
-	onMouseUp(i: any) {
+	onMouseUp(i: MouseEvent): void {
 		this.props.onCompleteConnector(i);
 	}
-	
-	render() {
+
+	render(): JSX.Element | null {
 		let i = 0;
 
-		if(!this.props.items){
+		if (!this.props.items) {
 			return null;
 		}
 
@@ -24,7 +23,7 @@ class NodeInputList extends Component<NodeInputListProps> {
 				<ul className="nodeInputList">
 					{this.props.items.map((item) => {
 						return (
-							<NodeInputListItem onMouseUp={(i)=>this.onMouseUp(i)} key={i} index={i++} item={item} />
+							<NodeInputListItem onMouseUp={(e) => this.onMouseUp(e)} key={i} index={i++} item={item} />
 						)
 					})}
 				</ul>
@@ -32,7 +31,5 @@ class NodeInputList extends Component<NodeInputListProps> {
 		);
 	}
 }
-
-
 
 export default NodeInputList
