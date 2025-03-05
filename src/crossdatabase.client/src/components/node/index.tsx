@@ -1,8 +1,8 @@
-import React, { Component, createRef } from 'react';
+import { Component, createRef, ReactNode } from 'react';
 import { computeOutOffsetByIndex, computeInOffsetByIndex } from './util';
-import Spline from './spline';
-import Node from './node';
-import SVGComponent from './SVGComponent';
+import Spline from './components/svg/component/spline/spline';
+import Node from './components/node/node';
+import SVGComponent from './components/svg/SVGComponent';
 import NodeStore from './store/NodeStore';
 import { Position } from './types/Position';
 import { observer } from 'mobx-react';
@@ -126,7 +126,7 @@ class index extends Component<any, IState> {
         this.store.onRemoveNode(nid);
     }
 
-    render(): JSX.Element {
+    render(): ReactNode {
         const { isLoading, menuItems } = this.store;
         const { isClicked } = this.state;
 
@@ -138,7 +138,7 @@ class index extends Component<any, IState> {
         let { mousePos, dragging } = this.state;
 
         let i = 0;
-        let newConnector!: React.JSX.Element;
+        let newConnector: ReactNode;
 
         if (dragging) {
             let sourceNode = this.store.getNodebyId(this.state.source[0]);

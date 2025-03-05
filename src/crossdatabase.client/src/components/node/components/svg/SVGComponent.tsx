@@ -1,4 +1,4 @@
-import { Component, RefObject, createRef } from 'react';
+import { Component, ReactNode, RefObject, createRef } from 'react';
 
 type SVGComponentProps = {
   height: string;
@@ -16,7 +16,7 @@ class SVGComponent extends Component<SVGComponentProps> {
     this.ref = createRef()
   }
 
-  render(): JSX.Element {
+  render(): ReactNode {
     let { children } = this.props;
 
     return <svg style={{ position: 'absolute', zIndex: 1 }} {...this.props} ref={this.ref}>{children}</svg>;

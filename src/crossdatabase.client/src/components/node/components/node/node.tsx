@@ -1,12 +1,11 @@
-import { Component } from "react";
+import { Component, ReactNode } from "react";
 import Draggable, { DraggableData, DraggableEvent } from "react-draggable";
 import onClickOutside from 'react-onclickoutside';
-import NodeInputList from "./nodeInputList";
-import NodeOutputList from "./nodeOutputList";
-import { ConnectionPoint } from "./types/NodeData";
-import { Position } from "./types/Position";
-import ContextMenu from "../common/contextMenu";
-import { MenuItem } from "../common/contextMenu/types/MenuTypes";
+import NodeInputList from "./components/inputs/nodeInputList";
+import NodeOutputList from "./components/outputs/nodeOutputList";
+import { Position } from "../../types/Position";
+import ContextMenu from "../../../common/contextMenu";
+import { MenuItem } from "../../../common/contextMenu/types/MenuTypes";
 
 type NodeProps = {
     onNodeSelect: () => void;
@@ -29,7 +28,6 @@ interface IState {
     selected: boolean;
     isClicked: boolean;
 }
-
 
 class Node extends Component<NodeProps, IState> {
     constructor(props: NodeProps) {
@@ -104,7 +102,7 @@ class Node extends Component<NodeProps, IState> {
         this.setClicked(false);
     }
 
-    render(): JSX.Element {
+    render(): ReactNode {
         const { title, inputs, outputs, pos: { x: posX, y: posY } } = this.props;
         let { selected, isClicked } = this.state;
 

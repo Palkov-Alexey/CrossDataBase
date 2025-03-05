@@ -1,4 +1,4 @@
-import { Component, MouseEvent } from "react";
+import { Component, MouseEvent, ReactNode } from "react";
 
 type NodeInputListItemProps = {
     onMouseUp: (...args: any[]) => void;
@@ -38,7 +38,7 @@ class NodeInputListItem extends Component<NodeInputListItemProps, IState> {
         e.preventDefault();
     }
 
-    render(): JSX.Element {
+    render(): ReactNode {
         let { item } = this.props;
         let { hover } = this.state;
 

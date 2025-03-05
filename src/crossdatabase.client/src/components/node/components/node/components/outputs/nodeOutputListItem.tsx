@@ -1,4 +1,4 @@
-import { Component, MouseEvent } from "react";
+import { Component, MouseEvent, ReactNode } from "react";
 
 type NodeOutputListItemProps = {
     onMouseDown: (...args: any[]) => void;
@@ -23,7 +23,7 @@ class NodeOutputListItem extends Component<NodeOutputListItemProps, IState> {
         e.preventDefault();
     }
 
-    render(): JSX.Element {
+    render(): ReactNode {
         return (
             <li onMouseDown={(e) => this.onMouseDown(e)}>
                 <a href="#" onClick={(e) => this.noop(e)}>{this.props.item} <i className="fa fa-circle-o"></i></a>

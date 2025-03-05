@@ -1,4 +1,4 @@
-import { Component, MouseEvent } from "react";
+import { Component, MouseEvent, ReactNode } from "react";
 import NodeInputListItem from "./nodeInputListItem";
 
 type NodeInputListProps = {
@@ -11,7 +11,7 @@ class NodeInputList extends Component<NodeInputListProps> {
 		this.props.onCompleteConnector(i);
 	}
 
-	render(): JSX.Element | null {
+	render(): ReactNode {
 		let i = 0;
 
 		if (!this.props.items) {

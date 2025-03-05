@@ -1,4 +1,4 @@
-import { Component, MouseEvent } from "react";
+import { Component, MouseEvent, ReactNode } from "react";
 import { Position } from "./types/Position";
 
 type TrashIconProp = {
@@ -17,7 +17,7 @@ class TrashIcon extends Component<TrashIconProp> {
       }
     }
 
-    render(): JSX.Element {
+    render(): ReactNode {
         let {position} = this.props
         return (
             <g className="trash-icon" fill="none" stroke="none" strokeWidth="1"

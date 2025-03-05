@@ -26,11 +26,16 @@ class NodeStore {
             this.maxNodeId = Math.max(...this.data.nodes.map(n => n.id));
         }
 
-        infos.map(i => this.menuItems.push({
+        this.setMenuItem(infos.map((i): MenuItem => ({
             id: i.type,
             name: i.name,
             action: (position: Position) => this.addNode(i, position)
-        }))
+        })));
+    }
+
+    @action
+    setMenuItem = (items: MenuItem[]): void => {
+        this.menuItems = items;
     }
 
     @action

@@ -1,4 +1,4 @@
-import { Component, Fragment } from 'react';
+import { Component, Fragment, ReactNode } from 'react';
 import ReactNodeGraph from './components/node/index';
 import './node.css';
 
@@ -57,7 +57,7 @@ class App extends Component {
     //     console.log(`node deselected:`, nid);
     // }
 
-    render(): JSX.Element {
+    render(): ReactNode {
         return <Fragment>
             <ReactNodeGraph />
         </Fragment>;

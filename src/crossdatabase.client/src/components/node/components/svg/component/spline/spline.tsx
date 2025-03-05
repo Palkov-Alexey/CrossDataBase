@@ -1,7 +1,7 @@
-import { Component, MouseEvent } from 'react';
+import { Component, MouseEvent, ReactNode } from 'react';
 import onClickOutside from 'react-onclickoutside';
-import TrashIcon from './trashIcon';
-import { Position } from './types/Position';
+import TrashIcon from '../../../../trashIcon';
+import { Position } from '../../../../types/Position';
 
 type SplineProps = {
   mousePos: { x: number, y: number };
@@ -53,7 +53,7 @@ class Spline extends Component<SplineProps, IState> {
     }
   }
 
-  render(): JSX.Element {
+  render(): ReactNode {
     let { selected, position } = this.state;
 
     let { start, end } = this.props;

@@ -1,4 +1,4 @@
-import { Component, MouseEvent } from "react";
+import { Component, MouseEvent, ReactNode } from "react";
 import style from './style.module.css';
 import { MenuItem } from "./types/MenuTypes";
 import { Position } from "../../node/types/Position";
@@ -25,14 +25,14 @@ class ContextMenu extends Component<MenuProps> {
         this.onMouseLeave();
     }
 
-    renderItem(item: MenuItem): JSX.Element {
+    renderItem(item: MenuItem): ReactNode {
         return <li className={style.li}
             onClick={(e) => {this.onClick(item, e)}}>
             {item.name}
         </li>;
     }
 
-    render(): JSX.Element {
+    render(): ReactNode {
         const { items } = this.props;
 
         return <div className={style.menu}

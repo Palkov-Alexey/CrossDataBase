@@ -1,4 +1,4 @@
-import { Component } from "react";
+import { Component, ReactNode } from "react";
 import NodeOutputListItem from "./nodeOutputListItem";
 
 type NodeOutputListProps = {
@@ -11,7 +11,7 @@ class NodeOutputList extends Component<NodeOutputListProps> {
         this.props.onStartConnector(i);
     }
 
-    render(): JSX.Element | null {
+    render(): ReactNode {
         let i = 0;
 
         if(!this.props.items){

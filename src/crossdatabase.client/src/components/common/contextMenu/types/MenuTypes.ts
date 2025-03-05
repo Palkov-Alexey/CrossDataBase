@@ -1,5 +1,5 @@
 export type MenuItem = {
     id: number;
     name: string;
-    action: (...args: any) => void
+    action: (...args: any) => void;
 }
