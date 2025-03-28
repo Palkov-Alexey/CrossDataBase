@@ -32,6 +32,16 @@ class Dialog extends Component<DialogProp, IState> {
         };
 
         this.ref = createRef();
+
+        this.handleClick = this.handleClick.bind(this);
+    }
+
+    componentDidMount(): void {
+        document.addEventListener(`click`, this.handleClick);
+    }
+
+    componentWillUnmount(): void {
+        document.addEventListener(`click`, this.handleClick);
     }
 
     getDialog = (): ReactNode => {
@@ -43,13 +53,21 @@ class Dialog extends Component<DialogProp, IState> {
         }
     };
 
+    handleClick(e: MouseEvent): void {
+        const { target } = e;
+
+        if (target instanceof Node && this.ref.current === target) {
+            this.props.onClose();
+        }
+    }
+
     render(): ReactNode {
         const { dialogType
         } = this.props;
 
         return createPortal(
-            <div className={style.dialog}>
-                <div className={style.dialogContent} ref={this.ref}>
+            <div className={style.dialog} ref={this.ref}>
+                <div className={style.dialogContent}>
                     <h3>{NodeType[dialogType]}</h3>
                     {this.getDialog()}
                     <div>

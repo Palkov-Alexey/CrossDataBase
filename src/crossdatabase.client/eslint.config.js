@@ -38,6 +38,7 @@ export default tslint.config({ ignores: [`dist`, `obj`, `out`, `.vscode`, `.idea
             'eqeqeq': `error`,
             'eol-last': `error`,
             'indent': [`error`, 4, { SwitchCase: 1 }],
+            'brace-style': [`error`, `1tbs`, { allowSingleLine: true }],
             '@stylistic/semi': `error`,
             '@stylistic/quotes': [`warn`, `backtick`, { allowTemplateLiterals: true }],
             '@stylistic/arrow-spacing': `error`,
