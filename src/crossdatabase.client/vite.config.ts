@@ -1,11 +1,10 @@
 import { fileURLToPath, URL } from 'node:url';
-
+// import fs from 'fs';
+// import path from 'path';
+// import child_process from 'child_process';
+import { env } from 'process';
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import fs from 'fs';
-import path from 'path';
-import child_process from 'child_process';
-import { env } from 'process';
 
 // const baseFolder =
 //     env.APPDATA !== undefined && env.APPDATA !== ''
@@ -31,19 +30,20 @@ import { env } from 'process';
 // }
 
 const target = //env.ASPNETCORE_HTTPS_PORT ? `https://localhost:${env.ASPNETCORE_HTTPS_PORT}` :
-    env.ASPNETCORE_URLS ? env.ASPNETCORE_URLS.split(';')[0] : 'http://localhost:7290';
+    env.ASPNETCORE_URLS ? env.ASPNETCORE_URLS.split(`;`)[0] : `http://localhost:7290`;
 
 // https://vitejs.dev/config/
 export default defineConfig({
     plugins: [react({
-        babel:{
-            plugins:[["@babel/plugin-proposal-decorators", {"version": "2023-11"}]]
+        babel: {
+            plugins: [[`@babel/plugin-proposal-decorators`, { "version": `2023-11` }]]
         },
     })
     ],
     resolve: {
         alias: {
-            '@': fileURLToPath(new URL('./src', import.meta.url))
+            '@': fileURLToPath(new URL(`./src`, import.meta.url)),
+            '@common': fileURLToPath(new URL(`./src/components/common`, import.meta.url)),
         }
     },
     server: {
@@ -58,4 +58,4 @@ export default defineConfig({
         //     cert: fs.readFileSync(certFilePath),
         // }
     }
-})
+});

@@ -1,16 +1,16 @@
 import { Component, MouseEvent, ReactNode } from 'react';
 import onClickOutside from 'react-onclickoutside';
 import TrashIcon from '../../../../trashIcon';
-import { Position } from '../../../../types/Position';
+import { Position } from '../../../../models/Position';
 
 type SplineProps = {
   mousePos: { x: number, y: number };
-  onClick?: (...args: any[]) => any;
-  onClickOutside?: (...args: any[]) => any;
-  onRemove: () => any;
+  onClick?: (e: MouseEvent) => void;
+  onClickOutside?: (e: MouseEvent) => void;
+  onRemove: () => void;
   start: { x: number, y: number };
   end: { x: number, y: number };
-}
+};
 
 interface IState {
   selected: boolean;
@@ -18,83 +18,83 @@ interface IState {
 }
 
 class Spline extends Component<SplineProps, IState> {
-  constructor(props: SplineProps) {
-    super(props)
-    this.state = {
-      selected: false,
-      position: { x: 0, y: 0 }
+    constructor(props: SplineProps) {
+        super(props);
+        this.state = {
+            selected: false,
+            position: { x: 0, y: 0 }
+        };
     }
-  }
 
-  handleClick(e: MouseEvent): void {
-    this.setState({
-      selected: !this.state.selected,
-      position: this.props.mousePos
-    });
+    handleClick(e: MouseEvent): void {
+        this.setState({
+            selected: !this.state.selected,
+            position: this.props.mousePos
+        });
 
-    if (this.props.onClick) {
-      this.props.onClick(e);
+        if (this.props.onClick) {
+            this.props.onClick(e);
+        }
     }
-  }
 
-  handleClickOutside(e: MouseEvent): void {
-    this.setState({ selected: false });
+    handleClickOutside(e: MouseEvent): void {
+        this.setState({ selected: false });
 
-    if (this.props.onClickOutside) {
-      this.props.onClickOutside(e);
+        if (this.props.onClickOutside) {
+            this.props.onClickOutside(e);
+        }
     }
-  }
 
-  handleRemove(e: MouseEvent): void {
-    this.setState({ selected: false });
+    handleRemove(e: MouseEvent): void {
+        this.setState({ selected: false });
 
-    if (this.props.onRemove) {
-      this.props.onRemove();
+        if (this.props.onRemove) {
+            this.props.onRemove();
+        }
     }
-  }
 
-  render(): ReactNode {
-    let { selected, position } = this.state;
+    render(): ReactNode {
+        const { selected, position } = this.state;
 
-    let { start, end } = this.props;
+        const { start, end } = this.props;
 
-    let dist = this.distance([start.x, start.y], [end.x, end.y]);
+        const dist = this.distance([start.x, start.y], [end.x, end.y]);
 
-    let pathString = this.bezierCurve(start.x,                  // start x
-      start.y,                  // start y
-      start.x + dist * 0.25,    // cp1 x
-      start.y,                  // cp1 y
-      end.x - dist * 0.75,     // cp2 x
-      end.y,                    // cp2 y
-      end.x,                   // end x
-      end.y);                   // end y
+        const pathString = this.bezierCurve(start.x,                  // start x
+            start.y,                  // start y
+            start.x + dist * 0.25,    // cp1 x
+            start.y,                  // cp1 y
+            end.x - dist * 0.75,     // cp2 x
+            end.y,                    // cp2 y
+            end.x,                   // end x
+            end.y);                   // end y
 
-    let className = 'connector' + (selected ? ' selected' : '');
+        const className = `connector` + (selected ? ` selected` : ``);
 
-    return (
-      <g>
-        <circle cx={start.x} cy={start.y} r="3" fill="#337ab7" />
-        <circle cx={end.x} cy={end.y} r="3" fill="#9191A8" />
-        <path className="connector-click-area" d={pathString} onClick={(e) => { this.handleClick(e) }} />
-        <path className={className} d={pathString} onClick={(e) => { this.handleClick(e) }} />
-        {selected ?
-          <TrashIcon position={position}
-            onClick={(e) => { this.handleRemove(e) }}
-          />
-          : null}
-      </g>
+        return (
+            <g>
+                <circle cx={start.x} cy={start.y} r="3" fill="#337ab7" />
+                <circle cx={end.x} cy={end.y} r="3" fill="#9191A8" />
+                <path className="connector-click-area" d={pathString} onClick={(e) => { this.handleClick(e); }} />
+                <path className={className} d={pathString} onClick={(e) => { this.handleClick(e); }} />
+                {selected ?
+                    <TrashIcon position={position}
+                        onClick={(e) => { this.handleRemove(e); }}
+                    />
+                    : null}
+            </g>
 
 
-    );
-  }
+        );
+    }
 
-  bezierCurve(a: number, b: number, cp1x: number, cp1y: number, cp2x: number, cp2y: number, x: number, y: number) {
-    return `M${a},${b} C${cp1x},${cp1y} ${cp2x},${cp2y}  ${x},${y}`;
-  }
+    bezierCurve(a: number, b: number, cp1x: number, cp1y: number, cp2x: number, cp2y: number, x: number, y: number): string {
+        return `M${a},${b} C${cp1x},${cp1y} ${cp2x},${cp2y}  ${x},${y}`;
+    }
 
-  distance(a: number[], b: number[]) {
-    return Math.sqrt((b[0] - a[0]) * (b[0] - a[0]) + (b[1] - a[1]) * (b[1] - a[1]));
-  }
+    distance(a: number[], b: number[]): number {
+        return Math.sqrt((b[0] - a[0]) * (b[0] - a[0]) + (b[1] - a[1]) * (b[1] - a[1]));
+    }
 }
 
 export default onClickOutside(Spline);

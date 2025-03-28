@@ -1,8 +1,8 @@
-import { Component, ReactNode } from "react";
+import { Component, ReactNode } from 'react';
 
 class ScriptDialog extends Component {
-    constructor(props: any){
-        super(props)
+    constructor(props: object) {
+        super(props);
     }
 
     render(): ReactNode {

@@ -211,7 +211,7 @@ body {
 .EndPoint { fill:none; stroke:#888888; stroke-width:2 }
 
 .pin-input {
-	    background: transparent;
+	background: transparent;
     padding: 5px;
     width: 50px;
     display: inline-block;

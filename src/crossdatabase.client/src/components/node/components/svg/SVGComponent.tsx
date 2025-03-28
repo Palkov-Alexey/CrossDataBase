@@ -3,24 +3,24 @@ import { Component, ReactNode, RefObject, createRef } from 'react';
 type SVGComponentProps = {
   height: string;
   width: string;
-  ref: RefObject<SVGSVGElement>;
-  children: any[];
-}
+  ref: RefObject<SVGComponent>;
+  children: ReactNode[];
+};
 
 class SVGComponent extends Component<SVGComponentProps> {
-  ref: RefObject<SVGSVGElement>
+    ref: RefObject<SVGSVGElement>;
 
-  constructor(props: SVGComponentProps) {
-    super(props)
+    constructor(props: SVGComponentProps) {
+        super(props);
 
-    this.ref = createRef()
-  }
+        this.ref = createRef();
+    }
 
-  render(): ReactNode {
-    let { children } = this.props;
+    render(): ReactNode {
+        const { children } = this.props;
 
-    return <svg style={{ position: 'absolute', zIndex: 1 }} {...this.props} ref={this.ref}>{children}</svg>;
-  }
+        return <svg style={{ position: `absolute`, zIndex: 1 }} {...this.props} ref={this.ref}>{children}</svg>;
+    }
 }
 
-export default SVGComponent
+export default SVGComponent;

@@ -1,10 +1,10 @@
-import { Component, MouseEvent, ReactNode } from "react";
+import { Component, MouseEvent, ReactNode } from 'react';
 
 type NodeInputListItemProps = {
     onMouseUp: (...args: any[]) => void;
     index: number;
     item: string;
-}
+};
 
 interface IState {
     hover: boolean;
@@ -15,7 +15,7 @@ class NodeInputListItem extends Component<NodeInputListItemProps, IState> {
         super(props);
         this.state = {
             hover: false
-        }
+        };
     }
 
     onMouseUp(e: MouseEvent): void {
@@ -39,15 +39,15 @@ class NodeInputListItem extends Component<NodeInputListItemProps, IState> {
     }
 
     render(): ReactNode {
-        let { item } = this.props;
-        let { hover } = this.state;
+        const { item } = this.props;
+        const { hover } = this.state;
 
         return (
             <li>
                 <a onClick={(e) => this.noop(e)} onMouseUp={(e) => this.onMouseUp(e)} href="#">
-                    <i className={hover ? 'fa fa-circle-o hover' : 'fa fa-circle-o'}
-                        onMouseOver={() => { this.onMouseOver() }}
-                        onMouseOut={() => { this.onMouseOut() }}
+                    <i className={hover ? `fa fa-circle-o hover` : `fa fa-circle-o`}
+                        onMouseOver={() => { this.onMouseOver(); }}
+                        onMouseOut={() => { this.onMouseOut(); }}
                     ></i>
                     {item}
                 </a>
@@ -56,4 +56,4 @@ class NodeInputListItem extends Component<NodeInputListItemProps, IState> {
     }
 }
 
-export default NodeInputListItem
+export default NodeInputListItem;

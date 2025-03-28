@@ -1,43 +1,46 @@
-import { Component, createRef, ReactNode } from 'react';
-import { computeOutOffsetByIndex, computeInOffsetByIndex } from './util';
-import Spline from './components/svg/component/spline/spline';
-import Node from './components/node/node';
-import SVGComponent from './components/svg/SVGComponent';
-import NodeStore from './store/NodeStore';
-import { Position } from './types/Position';
+import ContextMenu from '@common/contextMenu';
 import { observer } from 'mobx-react';
-import ContextMenu from '../common/contextMenu';
+import { Component, createRef, ReactNode, RefObject } from 'react';
+import Node from './components/node/node';
+import Spline from './components/svg/component/spline/spline';
+import SVGComponent from './components/svg/SVGComponent';
+import { Position } from './models/Position';
+import NodeStore from './store/NodeStore';
+import { computeOutOffsetByIndex, computeInOffsetByIndex } from './util';
 
 interface IState {
-    source: any[];
+    source: [ nid: number, outputIndex: number ];
     dragging: boolean;
     mousePos: Position;
     isClicked: boolean;
 }
 
 @observer
-class index extends Component<any, IState> {
+class index extends Component<object, IState> {
     store: NodeStore;
-    ref!: any;
+
+    ref: RefObject<SVGComponent>;
+
     isNodeSelected: boolean = false;
+
     menuPos = {
         top: 0,
         left: 0
-    }
+    };
 
-    constructor(props: any) {
+    constructor(props: object) {
         super(props);
 
         this.store = new NodeStore();
 
         this.state = {
-            source: [],
+            source: [0, 0],
             dragging: false,
             mousePos: { x: 0, y: 0 },
             isClicked: false
-        }
+        };
 
-        this.ref = createRef()
+        this.ref = createRef();
 
         this.onMouseMove = this.onMouseMove.bind(this);
         this.onMouseUp = this.onMouseUp.bind(this);
@@ -51,33 +54,33 @@ class index extends Component<any, IState> {
 
     async componentDidMount(): Promise<void> {
         await this.store.getData();
-        document.addEventListener('mousemove', this.onMouseMove);
-        document.addEventListener('mouseup', this.onMouseUp);
+        document.addEventListener(`mousemove`, this.onMouseMove);
+        document.addEventListener(`mouseup`, this.onMouseUp);
         document.addEventListener(`click`, this.handleClick);
     }
 
     componentWillUnmount(): void {
-        document.removeEventListener('mousemove', this.onMouseMove);
-        document.removeEventListener('mouseup', this.onMouseUp);
+        document.removeEventListener(`mousemove`, this.onMouseMove);
+        document.removeEventListener(`mouseup`, this.onMouseUp);
         document.removeEventListener(`click`, this.handleClick);
     }
 
-    onMouseUp(e: any): void {
+    onMouseUp(e: MouseEvent): void {
         this.setState({ dragging: false });
     }
 
-    onMouseMove(e: any): void {
+    onMouseMove(e: MouseEvent): void {
         e.stopPropagation();
         e.preventDefault();
-        const svg = this.ref.current.ref.current;
+        const svg = this.ref.current?.ref.current;
 
         //Get svg element position to substract offset top and left 
-        const svgRect = svg.getBoundingClientRect();
+        const svgRect = svg?.getBoundingClientRect();
 
         this.setState({
             mousePos: {
-                x: e.pageX - svgRect.left,
-                y: e.pageY - svgRect.top
+                x: e.pageX - (svgRect?.left ?? 0),
+                y: e.pageY - (svgRect?.top ?? 0)
             }
         });
     }
@@ -88,13 +91,14 @@ class index extends Component<any, IState> {
 
     handleCompleteConnector(nid: number, inputIndex: number): void {
         if (this.state.dragging) {
-            let fromNode = this.store.getNodebyId(this.state.source[0]);
-            let fromPinName = fromNode.fields.outputs[this.state.source[1]];
-            let toNode = this.store.getNodebyId(nid);
-            let toPinName = toNode.fields.inputs[inputIndex];
+            const fromNode = this.store.getNodebyId(this.state.source[0]);
+            const fromPinName = fromNode.fields.outputs[this.state.source[1]];
+            const toNode = this.store.getNodebyId(nid);
+            const toPinName = toNode.fields.inputs[inputIndex];
 
-            this.store.onNewConnector(fromNode.id, fromPinName, toNode.id, toPinName);
+            this.store.onNewConnector(fromNode.id, fromPinName, toNode.id, toPinName).then();
         }
+
         this.setState({ dragging: false });
     }
 
@@ -104,6 +108,7 @@ class index extends Component<any, IState> {
 
     setClicked(isClicked: boolean): void {
         if (this.isNodeSelected) return;
+
         this.setState({ isClicked: isClicked });
     }
 
@@ -134,16 +139,16 @@ class index extends Component<any, IState> {
             return <div /*className={style.emptyPage}><Loader width={150} className={style.loader}*/ />;
         }
 
-        let { nodes, connectors } = this.store.data;
-        let { mousePos, dragging } = this.state;
+        const { nodes, connectors } = this.store.data;
+        const { mousePos, dragging } = this.state;
 
         let i = 0;
         let newConnector: ReactNode;
 
         if (dragging) {
-            let sourceNode = this.store.getNodebyId(this.state.source[0]);
-            let connectorStart = computeOutOffsetByIndex(sourceNode.posX, sourceNode.posY, this.state.source[1]);
-            let connectorEnd = { x: this.state.mousePos.x, y: this.state.mousePos.y };
+            const sourceNode = this.store.getNodebyId(this.state.source[0]);
+            const connectorStart = computeOutOffsetByIndex(sourceNode.posX, sourceNode.posY, this.state.source[1]);
+            const connectorEnd = { x: this.state.mousePos.x, y: this.state.mousePos.y };
 
             newConnector = <Spline
                 start={connectorStart}
@@ -152,14 +157,14 @@ class index extends Component<any, IState> {
                     x: 0,
                     y: 0
                 }} onRemove={function () {
-                    throw new Error('Function not implemented.');
-                }} />
+                    throw new Error(`Function not implemented.`);
+                }} />;
         }
 
         let splineIndex = 0;
 
         return (
-            <div className={dragging ? 'dragging' : ''}
+            <div className={dragging ? `dragging` : ``}
                 onContextMenu={(e) => {
                     e.preventDefault();
                     this.setClicked(true);
@@ -194,7 +199,9 @@ class index extends Component<any, IState> {
                         onNodeDeselect={() => this.handleNodeDeselect(node.id)}
 
                         onRemoveNode={() => this.onRemoveNode(node.id)}
-                    />
+
+                        type={node.type}
+                    />;
                 })}
 
                 {/* render our connectors */}
@@ -202,21 +209,21 @@ class index extends Component<any, IState> {
                 <SVGComponent height="100%" width="100%" ref={this.ref} >
 
                     {connectors.map((connector) => {
-                        let fromNode = this.store.getNodebyId(connector.fromNode);
-                        let toNode = this.store.getNodebyId(connector.toNode);
+                        const fromNode = this.store.getNodebyId(connector.fromNode);
+                        const toNode = this.store.getNodebyId(connector.toNode);
 
-                        let splinestart = computeOutOffsetByIndex(fromNode.posX, fromNode.posY,
-                             this.computePinIndexfromLabel(fromNode.fields.outputs, connector.from));
-                        let splineend = computeInOffsetByIndex(toNode.posX, toNode.posY,
-                             this.computePinIndexfromLabel(toNode.fields.inputs, connector.to));
+                        const splineStart = computeOutOffsetByIndex(fromNode.posX, fromNode.posY,
+                            this.computePinIndexfromLabel(fromNode.fields.outputs, connector.from));
+                        const splineEnd = computeInOffsetByIndex(toNode.posX, toNode.posY,
+                            this.computePinIndexfromLabel(toNode.fields.inputs, connector.to));
 
                         return <Spline
-                            start={splinestart}
-                            end={splineend}
+                            start={splineStart}
+                            end={splineEnd}
                             key={splineIndex++}
                             mousePos={mousePos}
-                            onRemove={() => { this.store.onRemoveConnector(connector) }}
-                        />
+                            onRemove={() => { this.store.onRemoveConnector(connector); }}
+                        />;
                     })}
 
                     {/* this is our new connector that only appears on dragging */}

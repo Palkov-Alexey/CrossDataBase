@@ -1,10 +1,10 @@
-import { Component, MouseEvent, ReactNode } from "react";
+import { Component, MouseEvent, ReactNode } from 'react';
 
 type NodeOutputListItemProps = {
     onMouseDown: (...args: any[]) => void;
     index: number;
     item: string;
-}
+};
 
 interface IState {
     hover: boolean;
@@ -32,4 +32,4 @@ class NodeOutputListItem extends Component<NodeOutputListItemProps, IState> {
     }
 }
 
-export default NodeOutputListItem
+export default NodeOutputListItem;

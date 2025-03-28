@@ -1,0 +1,51 @@
+/* Имя класса колонки */
+@column-name: col;
+
+/* Количество колонок */
+@column-count: 24;
+
+/* Отступ колонки справа */
+@column-padding-right: 10px;
+
+.generate-column(@i: 1) when (@i =< @column-count) {
+    .@{column-name}_@{i} {
+        &:extend(.col);
+
+        width: ~"calc(@{i} / @{column-count} * (100% + @{column-padding-right}) - @{column-padding-right})";
+        box-sizing: initial;
+
+        &:last-child {
+            padding-right: 0;
+        }
+    }
+    .generate-column(@i + 1);
+}
+
+/* Общий wrapper */
+.wrapper {
+    padding: 0 40px;
+}
+
+.row() {
+    display: flex;
+    padding: 0;
+}
+
+/* Строка */
+.row {
+    .row();
+    margin: 0 0 20px 0;
+}
+
+.rowLarge {
+    .row();
+    margin: 0 0 40px 0;
+}
+
+/* Общие стили для колонок */
+.col {
+    padding: 0 @column-padding-right 0 0;
+}
+
+/* Генерация 24-рёх колонок */
+.generate-column();

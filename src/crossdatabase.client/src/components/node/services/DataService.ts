@@ -1,9 +1,9 @@
-import { NodeInfo } from "../types/NodeInfo";
+import { NodeInfo } from '../models/NodeInfo';
 
 const urls = {
     // getNode: `api/node`,
     getNodeList: `api/node/GetNodeList`
-}
+};
 
 export default {
     // async getNode(): Promise<NodeData> {
@@ -19,8 +19,7 @@ export default {
         const response = await fetch(urls.getNodeList, {
             method: `GET`
         });
-        const json = await response.json()
 
-        return json;
+        return await response.json().then(data =>  data.data );
     }
-}
+};

@@ -1,11 +1,13 @@
-import { Component, ReactNode } from "react";
-import Draggable, { DraggableData, DraggableEvent } from "react-draggable";
+import { MenuItem } from '@common/contextMenu/types/MenuTypes.ts';
+import { Component, ReactNode } from 'react';
+import Draggable, { DraggableData, DraggableEvent } from 'react-draggable';
 import onClickOutside from 'react-onclickoutside';
-import NodeInputList from "./components/inputs/nodeInputList";
-import NodeOutputList from "./components/outputs/nodeOutputList";
-import { Position } from "../../types/Position";
-import ContextMenu from "../../../common/contextMenu";
-import { MenuItem } from "../../../common/contextMenu/types/MenuTypes";
+import ContextMenu from '../../../common/contextMenu';
+import { NodeType } from '../../enums/nodeTypes.ts';
+import { Position } from '../../models/Position';
+import Dialog from './components/dialog';
+import NodeInputList from './components/inputs/nodeInputList';
+import NodeOutputList from './components/outputs/nodeOutputList';
 
 type NodeProps = {
     onNodeSelect: () => void;
@@ -22,11 +24,13 @@ type NodeProps = {
     index: number;
     inputs: string[];
     outputs: string[];
-}
+    type: NodeType;
+};
 
 interface IState {
     selected: boolean;
     isClicked: boolean;
+    dialogVisible: boolean;
 }
 
 class Node extends Component<NodeProps, IState> {
@@ -35,8 +39,9 @@ class Node extends Component<NodeProps, IState> {
 
         this.state = {
             selected: false,
-            isClicked: false
-        }
+            isClicked: false,
+            dialogVisible: false
+        };
     }
 
     menuPos = {
@@ -57,14 +62,14 @@ class Node extends Component<NodeProps, IState> {
     // }
 
     handleDragStop(event: DraggableEvent, ui: DraggableData): void {
-        const position = { x: ui.lastX, y: ui.lastY }
+        const position = { x: ui.lastX, y: ui.lastY };
         this.props.onNodeStop(this.props.index, position);
     }
 
     handleDrag = (event: DraggableEvent, ui: DraggableData): void => {
-        const position = { x: ui.deltaX, y: ui.deltaY }
+        const position = { x: ui.deltaX, y: ui.deltaY };
         this.props.onNodeMove(this.props.index, position);
-    }
+    };
 
     onStartConnector(index: number): void {
         this.props.onStartConnector(this.props.nid, index);
@@ -76,16 +81,19 @@ class Node extends Component<NodeProps, IState> {
 
     handleClick(): void {
         this.setState({ selected: true });
+
         if (this.props.onNodeSelect) {
             this.props.onNodeSelect();
         }
     }
 
     handleClickOutside(): void {
-        let { selected } = this.state;
+        const { selected } = this.state;
+
         if (this.props.onNodeDeselect && selected) {
             this.props.onNodeDeselect();
         }
+
         this.setState({ selected: false });
     }
 
@@ -101,15 +109,19 @@ class Node extends Component<NodeProps, IState> {
     onMouseLeave(): void {
         this.setClicked(false);
     }
+    
+    setDialogVisible(isVisible: boolean = false): void {
+        this.setState({ dialogVisible: isVisible });
+    }
 
     render(): ReactNode {
-        const { title, inputs, outputs, pos: { x: posX, y: posY } } = this.props;
-        let { selected, isClicked } = this.state;
+        const { title, inputs, outputs, pos: { x: posX, y: posY }, nid, type } = this.props;
+        const { selected, isClicked, dialogVisible } = this.state;
 
-        let nodeClass = 'node' + (selected ? ' selected' : '');
+        const nodeClass = `node` + (selected ? ` selected` : ``);
 
         return (
-            <div onDoubleClick={() => { this.handleClick() }}
+            <div onDoubleClick={() => { this.handleClick(); this.setDialogVisible(true); }}
                 onContextMenu={(e) => {
                     e.preventDefault();
                     this.handleClick();
@@ -141,6 +153,9 @@ class Node extends Component<NodeProps, IState> {
                         onMouseLeave={() => this.onMouseLeave()}
                         items={this.menuItems} />
                 )}
+                <div>
+                    {dialogVisible && <Dialog dialogType={type} nid={nid} visible={dialogVisible} width={`auto`} needCloseIcon={false} onClose={() => this.setDialogVisible()}/>}
+                </div>
             </div>
         );
     }

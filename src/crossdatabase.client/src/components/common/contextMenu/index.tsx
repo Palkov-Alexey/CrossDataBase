@@ -1,18 +1,18 @@
-import { Component, MouseEvent, ReactNode } from "react";
-import style from './style.module.css';
-import { MenuItem } from "./types/MenuTypes";
-import { Position } from "../../node/types/Position";
+import { Component, MouseEvent, ReactNode } from 'react';
+import { Position } from '../../node/models/Position';
+import { MenuItem } from './types/MenuTypes';
+import style from './style.module.less';
 
 type MenuProps = {
-    top: number,
-    left: number,
-    onMouseLeave: () => void,
+    top: number;
+    left: number;
+    onMouseLeave: () => void;
     items: MenuItem[]
-}
+};
 
 class ContextMenu extends Component<MenuProps> {
     constructor(props: MenuProps) {
-        super(props)
+        super(props);
     }
 
     onMouseLeave(): void {
@@ -20,14 +20,14 @@ class ContextMenu extends Component<MenuProps> {
     }
 
     onClick(item: MenuItem, e: MouseEvent): void {
-        const pos: Position = {x: e.pageX, y: e.pageY} 
+        const pos: Position = { x: e.pageX, y: e.pageY };
         item.action(pos);
         this.onMouseLeave();
     }
 
     renderItem(item: MenuItem): ReactNode {
         return <li className={style.li}
-            onClick={(e) => {this.onClick(item, e)}}>
+            onClick={(e) => { this.onClick(item, e); }}>
             {item.name}
         </li>;
     }
@@ -39,9 +39,9 @@ class ContextMenu extends Component<MenuProps> {
             style={{ top: `${this.props.top}px`, left: `${this.props.left}px` }}
             onMouseLeave={() => this.onMouseLeave()}>
             <ul className={style.ul}>
-                {items.sort(item => item.id).map(item => this.renderItem(item))}
+                {items.sort((a, b) => a.id - b.id).map(item => this.renderItem(item))}
             </ul>
-        </div>
+        </div>;
     }
 }
 

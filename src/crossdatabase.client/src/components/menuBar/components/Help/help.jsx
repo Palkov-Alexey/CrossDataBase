@@ -1,5 +1,5 @@
 import { Component } from "react";
-import DropdownButton from "../../../common/dropdownButton/dropdownButton";
+import DropdownButton from "../../../common/dropdownButton/dropdownButton.js";
 
 class Help extends Component {
     constructor() {

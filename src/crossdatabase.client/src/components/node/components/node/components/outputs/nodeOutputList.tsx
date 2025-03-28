@@ -1,10 +1,10 @@
-import { Component, ReactNode } from "react";
-import NodeOutputListItem from "./nodeOutputListItem";
+import { Component, ReactNode } from 'react';
+import NodeOutputListItem from './nodeOutputListItem';
 
 type NodeOutputListProps = {
     onStartConnector: (index: number) => void;
     items: string[];
-}
+};
 
 class NodeOutputList extends Component<NodeOutputListProps> {
     onMouseDown(i: number): void {
@@ -14,9 +14,9 @@ class NodeOutputList extends Component<NodeOutputListProps> {
     render(): ReactNode {
         let i = 0;
 
-        if(!this.props.items){
-			return null;
-		}
+        if (!this.props.items) {
+            return null;
+        }
 
         return (
             <div className="nodeOutputWrapper">
@@ -24,7 +24,7 @@ class NodeOutputList extends Component<NodeOutputListProps> {
                     {this.props.items.map((item) => {
                         return (
                             <NodeOutputListItem onMouseDown={(i) => this.onMouseDown(i)} key={i} index={i++} item={item} />
-                        )
+                        );
                     })}
                 </ul>
             </div>
@@ -32,4 +32,4 @@ class NodeOutputList extends Component<NodeOutputListProps> {
     }
 }
 
-export default NodeOutputList
+export default NodeOutputList;

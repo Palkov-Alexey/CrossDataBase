@@ -1,9 +1,7 @@
 using CrossDataBase.Server.Business.Abstraction.Common;
 using CrossDataBase.Server.Business.Abstraction.Core.Nodes;
-using CrossDataBase.Server.Enum;
-using CrossDataBase.Server.Models;
+using CrossDataBase.Server.Common;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 
 namespace CrossDataBase.Server.Controllers;
 
@@ -17,16 +15,13 @@ public class NodeController(ILogger<NodeController> logger,
     [ProducesResponseType(200)]
     public IActionResult GetNodeList()
     {
-        return Ok(nodeService.GetNodeInfo());
+        return new ApiDataResult(nodeService.GetNodeInfo());
     }
 
-    /*[HttpGet("GetNodeData")]
+    [HttpGet("GetNodeData/{nodeId:long}")]
     [ProducesResponseType(200)]
-    public async Task<IActionResult> GetNodeDataAsync(NodeType type, long nodeId)
+    public async Task<IActionResult> GetNodeDataAsync(long nodeId)
     {
-        var t = nodeResolver.Resolve(type);
-        return Ok();
-    }*/
-
-    
+        return new ApiDataResult();
+    }
 }

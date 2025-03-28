@@ -3,4 +3,4 @@ export type NodeInfo = {
     name: string;
     inputs: string[];
     outputs: string[];
-}
+};

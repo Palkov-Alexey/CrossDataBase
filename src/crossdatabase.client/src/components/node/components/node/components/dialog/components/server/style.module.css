@@ -1,4 +1,11 @@
-.grid {
-    display: grid;
-    grid-template-columns: repeat(10);
+.select {
+    width: auto;
+}
+
+.label {
+    display: block;
+}
+
+.row {
+    display: flex;
 }
