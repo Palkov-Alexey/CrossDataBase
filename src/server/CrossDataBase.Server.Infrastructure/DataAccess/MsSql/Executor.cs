@@ -1,7 +1,7 @@
 ﻿using CrossDataBase.Server.Infrastructure.Abstractions.DataAccess.MsSql;
 using CrossDataBase.Server.Infrastructure.Abstractions.DependencyInjection;
 using Dapper;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 
 namespace CrossDataBase.Server.Infrastructure.DataAccess.MsSql;
 [InjectAsSingleton(typeof(IExecutor))]

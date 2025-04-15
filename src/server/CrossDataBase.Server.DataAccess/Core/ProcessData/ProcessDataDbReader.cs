@@ -7,11 +7,11 @@ using CrossDataBase.Server.Infrastructure.Abstractions.DependencyInjection;
 
 namespace CrossDataBase.Server.DataAccess.Core.ProcessData;
 
-[InjectAsSingleton(typeof(IProcessDataDbReader))]
-internal class ProcessDataDbReader(ISQLiteExecutor executor,
+[InjectAsSingleton]
+internal class ProcessDataDbReader(IMemoryExecutor executor,
                 ISqlScriptReader scriptReader) : IProcessDataDbReader
 {
-    public Task<ProcessDbModel> GetAsync(long id)
+    public Task<ProcessDbModel> GetAsync(int id)
     {
         var sql = scriptReader.Get(this, Scripts.Get);
         var queryObject = new QueryObject(sql, new { Id = id });

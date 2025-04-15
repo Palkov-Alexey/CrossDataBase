@@ -1,6 +1,5 @@
 ﻿select 
 	id as Id,
-	name as Name,
-	Data as Data
+	name as Name
 from process
 where id= @Id

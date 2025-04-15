@@ -4,7 +4,7 @@
     "imageFile": ""
   },
   "name": "CrossDataBase.Server",
-  "author": "",
+  "author": "Palkov Aleksei",
   "singleInstance": false,
   "environment": "Production",
   "build": {

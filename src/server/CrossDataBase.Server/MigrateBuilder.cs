@@ -5,17 +5,17 @@ namespace CrossDataBase.Server;
 
 public static class MigrateBuilder
 {
-    private static readonly string dirSeparator = Path.DirectorySeparatorChar.ToString();
+    private static readonly string DirSeparator = Path.DirectorySeparatorChar.ToString();
 
     public static void Migration()
     {
-        var path = new Uri(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)).LocalPath;
+        var path = new Uri(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty).LocalPath;
         var assemblyNames = Directory
             .GetFiles(path, "CrossDataBase.*.dll", SearchOption.TopDirectoryOnly)
             .Select(f =>
                 f.Replace(path, string.Empty)
                  .Replace(".dll", string.Empty)
-                 .Replace(dirSeparator, string.Empty))
+                 .Replace(DirSeparator, string.Empty))
             .ToArray();
 
         var migrationProvider = new ServiceCollection()

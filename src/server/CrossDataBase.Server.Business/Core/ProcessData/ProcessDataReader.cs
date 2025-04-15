@@ -9,9 +9,8 @@ namespace CrossDataBase.Server.Business.Core.ProcessData;
 [InjectAsSingleton(typeof(IProcessDataReader))]
 internal class ProcessDataReader(IProcessDataDbReader dbReader) : IProcessDataReader
 {
-    public async Task<ProcessModel> GetAsync(long id)
+    public async Task<ProcessModel> GetAsync(int id)
     {
-
         var dbModel = await dbReader.GetAsync(id);
         return dbModel.Map();
     }

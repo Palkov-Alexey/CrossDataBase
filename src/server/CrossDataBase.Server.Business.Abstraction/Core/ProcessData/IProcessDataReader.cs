@@ -3,5 +3,5 @@
 namespace CrossDataBase.Server.Business.Abstraction.Core.ProcessData;
 public interface IProcessDataReader
 {
-    Task<ProcessModel> GetAsync(long id);
+    Task<ProcessModel> GetAsync(int id);
 }

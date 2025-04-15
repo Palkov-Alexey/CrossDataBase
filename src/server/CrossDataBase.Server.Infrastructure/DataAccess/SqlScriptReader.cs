@@ -3,7 +3,7 @@ using CrossDataBase.Server.Infrastructure.Abstractions.DataAccess.Models;
 using CrossDataBase.Server.Infrastructure.Abstractions.DependencyInjection;
 using System.Collections.Concurrent;
 using System.Reflection;
-using YouTrackTsStatistic.Data.Infrastructure.Exceptions;
+using CrossDataBase.Server.Infrastructure.Exceptions;
 
 namespace CrossDataBase.Server.Infrastructure.DataAccess;
 

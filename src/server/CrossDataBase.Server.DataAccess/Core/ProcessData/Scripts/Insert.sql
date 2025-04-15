@@ -1,3 +1,3 @@
-﻿insert into process (name, data)
-values (@Name, @Data)
+﻿insert into process (name)
+values (@Name)
 returning id;

@@ -9,31 +9,28 @@ internal abstract class ExecutorBase
 
     public async Task ExecuteAsync(QueryObject query)
     {
-        using var connection = new SqliteConnection(ConnectionString);
+        await using var connection = new SqliteConnection(ConnectionString);
         await connection.OpenAsync();
         await connection.ExecuteAsync(query.Sql, query.QueryParams);
         await connection.CloseAsync();
-        connection.Dispose();
     }
 
-    public async Task<IReadOnlyList<T>> QueryAsync<T>(QueryObject query)
+    public async Task<IReadOnlyCollection<T>> QueryAsync<T>(QueryObject query)
     {
-        using var connection = new SqliteConnection(ConnectionString);
+        await using var connection = new SqliteConnection(ConnectionString);
         await connection.OpenAsync();
         var result = await connection.QueryAsync<T>(query.Sql, query.QueryParams);
         await connection.CloseAsync();
-        connection.Dispose();
         
         return result.ToList();
     }
 
     public async Task<T> FirstOrDefaultAsync<T>(QueryObject query)
     {
-        using var connection = new SqliteConnection(ConnectionString);
+        await using var connection = new SqliteConnection(ConnectionString);
         await connection.OpenAsync();
         var result = await connection.QueryAsync<T>(query.Sql, query.QueryParams);
         await connection.CloseAsync();
-        connection.Dispose();
 
         return result.FirstOrDefault();
     }

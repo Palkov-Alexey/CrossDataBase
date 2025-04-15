@@ -2,8 +2,8 @@
 
 internal static class Scripts
 {
-    internal static string Init = "Core.Memory.Scripts.Init.sql";
-    internal static string GetByProcessId = "Core.Memory.Scripts.GetByProcessId.sql";
-    internal static string Insert = "Core.Memory.Scripts.Insert.sql";
-    internal static string UpdateData = "Core.Memory.Scripts.UpdateData.sql";
+    internal const string Init = "Core.ProcessHistory.Scripts.Init.sql";
+    internal const string GetByProcessId = "Core.ProcessHistory.Scripts.GetByProcessId.sql";
+    internal const string Insert = "Core.ProcessHistory.Scripts.Insert.sql";
+    internal const string UpdateData = "Core.ProcessHistory.Scripts.UpdateData.sql";
 }

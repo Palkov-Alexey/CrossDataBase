@@ -57,7 +57,7 @@ internal class DIInstaller(IServiceCollection services)
             result = result
                 .SelectMany(x => type.GetInterfaces()
                     .Where(i => i.Namespace.StartsWith("CrossDataBase.Server"))
-                    .Select(service => (Service: service, x.Implementation, x.Lifetime)))
+                    .Select(service => x with { Service = service }))
                 .ToArray();
         }
 

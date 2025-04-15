@@ -2,12 +2,12 @@
 
 namespace CrossDataBase.Server.DataAccess.Core.Migrations;
 
-[Migration(20240828161631)]
-public sealed class Mg20240828161631_Init : Migration
+[Migration(1)]
+public sealed class Mg1_Init : Migration
 {
     public override void Up()
     {
-        Execute.EmbeddedScript("Mg20240828161631_Init.sql");
+        Execute.EmbeddedScript("Mg1_Init.sql");
     }
 
     public override void Down() { }

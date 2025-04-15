@@ -7,7 +7,7 @@ using CrossDataBase.Server.Infrastructure.Abstractions.DependencyInjection;
 
 namespace CrossDataBase.Server.DataAccess.Core.ProcessHistory;
 
-[InjectAsSingleton(typeof(IProcessHistoryDbReader))]
+[InjectAsSingleton]
 internal class ProcessHistoryDbReader(IMemoryExecutor executor,
     ISqlScriptReader scriptReader) : IProcessHistoryDbReader
 {

@@ -16,24 +16,23 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Core\Connectors\Scripts\Delete.sql" />
+    <EmbeddedResource Include="Core\Connectors\Scripts\Get.sql" />
+    <EmbeddedResource Include="Core\Connectors\Scripts\GetList.sql" />
+    <EmbeddedResource Include="Core\Connectors\Scripts\Insert.sql" />
+    <EmbeddedResource Include="Core\Connectors\Scripts\Update.sql" />
+    <EmbeddedResource Include="Core\Nodes\Scripts\Delete.sql" />
+    <EmbeddedResource Include="Core\Nodes\Scripts\Get.sql" />
+    <EmbeddedResource Include="Core\Nodes\Scripts\GetList.sql" />
+    <EmbeddedResource Include="Core\Nodes\Scripts\Insert.sql" />
+    <EmbeddedResource Include="Core\Nodes\Scripts\Update.sql" />
     <EmbeddedResource Include="Core\ProcessData\Scripts\Insert.sql" />
     <EmbeddedResource Include="Core\ProcessData\Scripts\Get.sql" />
-    <EmbeddedResource Include="Core\ProcessHistory\Scripts\UpdateData.sql">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </EmbeddedResource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="Core\ProcessHistory\Scripts\GetByProcessId.sql">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Core\ProcessHistory\Scripts\Init.sql">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Core\Migrations\Scripts\Mg20240828161631_Init.sql">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </EmbeddedResource>
+    <EmbeddedResource Include="Core\ProcessHistory\Scripts\UpdateData.sql"/>
+    <EmbeddedResource Include="Core\ProcessHistory\Scripts\GetByProcessId.sql"/>
+    <EmbeddedResource Include="Core\ProcessHistory\Scripts\Init.sql"/>
     <EmbeddedResource Include="Core\ProcessHistory\Scripts\Insert.sql" />
+    <EmbeddedResource Include="Core\Migrations\Scripts\Mg1_Init.sql" />
   </ItemGroup>
 
     <ItemGroup>

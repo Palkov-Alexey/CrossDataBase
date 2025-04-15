@@ -1,4 +1,6 @@
-﻿namespace CrossDataBase.Server.Models;
+﻿using CrossDataBase.Server.Enum;
+
+namespace CrossDataBase.Server.Models;
 
 public class NodeData
 {
@@ -13,13 +15,13 @@ public class NodeElement
 
     public string Name { get; set; }
 
+    public NodeType Type { get; set; }
+
     public int PosX { get; set; }
 
     public int PosY { get; set; }
 
     public object Data { get; set; }
-
-    public Fields Fields { get; set; }
 }
 
 public class Fields
@@ -27,11 +29,6 @@ public class Fields
     public string[] Inputs { get; set; }
 
     public string[] Outputs { get; set; }
-}
-
-public class ConnectionPoint
-{
-    public string Name { get; set; }
 }
 
 public class Connector

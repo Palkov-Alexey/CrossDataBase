@@ -19,7 +19,7 @@ internal class EngineService(IProcessHistoryReader historyReader,
     IProcessDataReader processDataReader,
     IServiceProvider serviceProvider) : IEngineService
 {
-    public async Task RunAsync(long processId)
+    public async Task RunAsync(int processId)
     {
         var process = await processDataReader.GetAsync(processId);
         var historyId = await historyWriter.InsertAsync(new()

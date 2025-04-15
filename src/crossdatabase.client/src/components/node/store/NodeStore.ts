@@ -11,6 +11,8 @@ class NodeStore {
         connectors: []
     };
 
+    @observable accessor processId: number = 0;
+
     @observable accessor maxNodeId: number = 0;
 
     @observable accessor maxValue: number = 0;
@@ -21,6 +23,7 @@ class NodeStore {
 
     @action
         getData = async (): Promise<void> => {
+            this.processId = await dataService.getProcessId();
             const infos = await dataService.getInfo();
 
             if (this.data.nodes) {
@@ -75,14 +78,22 @@ class NodeStore {
         };
 
     @action
-        addNode = (info: NodeInfo, position: Position): void => {
-            this.data.nodes.push({
-                id: ++this.maxNodeId, name: info.name, posX: position.x, posY: position.y, type: info.type,
+        addNode = async (info: NodeInfo, position: Position): Promise<void> => {
+            const node: NodeElement = {
+                id: 0,
+                name: info.name,
+                posX: position.x,
+                posY: position.y,
+                type: info.type,
                 fields: {
                     inputs: info.inputs,
                     outputs: info.outputs
                 }
-            });
+            };
+
+            node.id = await dataService.createNode(this.processId, node);
+
+            this.data.nodes.push(node);
         };
 
     @action
