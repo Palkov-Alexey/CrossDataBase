@@ -10,6 +10,14 @@
     <SpaProxyServerUrl>https://localhost:5173</SpaProxyServerUrl>
     <DockerfileRunArguments>-p 7290:8080</DockerfileRunArguments>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DocumentationFile>bin\Debug\CrossDataBase.Server.xml</DocumentationFile>
+    <NoWarn>1591;1701;1702</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DocumentationFile>bin\Release\CrossDataBase.Server.xml</DocumentationFile>
+    <NoWarn>1591;1701;1702</NoWarn>
+  </PropertyGroup>
   <ItemGroup>
     <None Remove="app.db" />
   </ItemGroup>

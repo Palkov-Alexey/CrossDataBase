@@ -1,5 +1,4 @@
-pragma
-auto_vacuum = 1;
+pragma auto_vacuum = 1;
 
 create table process_history
 (

@@ -16,26 +16,23 @@ public class NodeController(
     INodeWriter nodeWriter) : ControllerBase
 {
     /// <summary>
-    /// 
+    /// Get node settings
     /// </summary>
-    /// <returns></returns>
-    [HttpGet("GetNodeList")]
+    [HttpGet("GetNodeSettings")]
     [ProducesResponseType(200)]
     [SwaggerOperation(Tags = ["Node"])]
-    public IActionResult GetNodeList()
+    public IActionResult GetNodeSettingsAsync()
     {
         return new ApiDataResult(nodeService.GetNodeInfo());
     }
 
     /// <summary>
-    /// 
+    /// Get node data
     /// </summary>
-    /// <param name="nodeId"></param>
-    /// <returns></returns>
     [HttpGet("GetNodeData/{nodeId:long}")]
     [ProducesResponseType(200)]
     [SwaggerOperation(Tags = ["Node"])]
-    public async Task<IActionResult> GetNodeDataAsync(int nodeId)
+    public async Task<IActionResult> GetNodeDataAsync(int processId, int nodeId)
     {
         return new ApiDataResult();
     }
@@ -43,13 +40,10 @@ public class NodeController(
     /// <summary>
     /// Create element
     /// </summary>
-    /// <param name="processId"></param>
-    /// <param name="node"></param>
-    /// <returns></returns>
     [HttpPost]
     [ProducesResponseType(typeof(int), 200)]
     [SwaggerOperation(Tags = ["Node"])]
-    public async Task<IActionResult> CreateAsync(int processId, NodeElement node)
+    public async Task<IActionResult> CreateAsync(int processId, Node node)
     {
         var result = await nodeWriter.CreateAsync(processId, node.Map());
         return new ApiDataResult(result);
@@ -58,13 +52,10 @@ public class NodeController(
     /// <summary>
     /// Update element
     /// </summary>
-    /// <param name="processId"></param>
-    /// <param name="node"></param>
-    /// <returns></returns>
     [HttpPut]
     [ProducesResponseType(typeof(int), 200)]
     [SwaggerOperation(Tags = ["Node"])]
-    public async Task<IActionResult> UpdateAsync(int processId, NodeElement node)
+    public async Task<IActionResult> UpdateAsync(int processId, Node node)
     {
         await nodeWriter.UpdateAsync(processId, node.Map());
         return Ok();
@@ -73,9 +64,6 @@ public class NodeController(
     /// <summary>
     /// Delete element
     /// </summary>
-    /// <param name="processId"></param>
-    /// <param name="nodeId"></param>
-    /// <returns></returns>
     [HttpDelete]
     [ProducesResponseType(200)]
     [SwaggerOperation(Tags = ["Node"])]

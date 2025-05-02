@@ -6,7 +6,7 @@ namespace CrossDataBase.Server.Mapper;
 
 internal static class NodeMapper
 {
-    public static NodeModel Map(this NodeElement node) => new()
+    public static NodeModel Map(this Node node) => new()
     {
         Id = node.Id,
         Type = node.Type,
@@ -15,7 +15,7 @@ internal static class NodeMapper
         Data = node.Data
     };
     
-    public static NodeElement Map(this NodeModel node) => new()
+    public static Node Map(this NodeModel node) => new()
     {
         Id = node.Id,
         Type = node.Type,

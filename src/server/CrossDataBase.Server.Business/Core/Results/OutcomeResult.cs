@@ -6,14 +6,9 @@ using CrossDataBase.Server.Enum;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace CrossDataBase.Server.Business.Core.Results;
-internal class OutcomeResult : ExecutionResult
+internal class OutcomeResult(INodeData output) : ExecutionResult
 {
-    private INodeData Output { get; }
-
-    public OutcomeResult(INodeData output)
-    {
-        Output = output;
-    }
+    private INodeData Output { get; } = output;
 
     public override async Task ExecuteAsync(IServiceProvider serviceProvider, NodeExecutionContext context)
     {

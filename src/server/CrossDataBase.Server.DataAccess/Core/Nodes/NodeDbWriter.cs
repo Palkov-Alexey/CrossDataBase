@@ -26,6 +26,22 @@ internal class NodeDbWriter(IMemoryExecutor executor,
         return executor.FirstOrDefaultAsync<int>(queryObject);
     }
     
+    public Task InsertAsync(int processId, IReadOnlyCollection<NodeDbModel> models)
+    {
+        var sql = scriptReader.Get(this, Scripts.Insert);
+        var queryParams = models.Select(x => new
+        {
+            ProcessId = processId,
+            x.Type,
+            x.PosX,
+            x.PosY,
+            x.Data
+        });
+        var queryObject = new QueryObject(sql, queryParams);
+
+        return executor.ExecuteAsync(queryObject);
+    }
+    
     public Task UpdateAsync(int processId, NodeDbModel model)
     {
         var sql = scriptReader.Get(this, Scripts.Delete);

@@ -13,7 +13,7 @@ internal class ConnectorDbReader(IMemoryExecutor executor,
 {
     public Task<ConnectorDbModel> GetAsync(int processId, int nodeId)
     {
-        var sql = scriptReader.Get(this, Scripts.GetList);
+        var sql = scriptReader.Get(this, Scripts.Get);
         var queryObject = new QueryObject(sql, new { ProcessId = processId, NodeId = nodeId });
         
         return executor.FirstOrDefaultAsync<ConnectorDbModel>(queryObject);

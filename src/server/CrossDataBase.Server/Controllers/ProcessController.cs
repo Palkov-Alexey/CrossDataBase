@@ -1,8 +1,10 @@
-using CrossDataBase.Server.Business.Abstraction.Common;
 using CrossDataBase.Server.Business.Abstraction.Core.Nodes;
 using CrossDataBase.Server.Business.Abstraction.Core.ProcessData;
 using CrossDataBase.Server.Common;
+using CrossDataBase.Server.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace CrossDataBase.Server.Controllers;
@@ -13,50 +15,55 @@ public class ProcessController(IProcessService processService,
     INodeService nodeService) : ControllerBase
 {
     /// <summary>
-    /// 
+    /// Get process or create default
     /// </summary>
-    /// <returns></returns>
     [HttpGet]
     [ProducesResponseType(typeof(int), 200)]
     [SwaggerOperation(Tags = ["Process"])]
-    public async Task<IActionResult> GetAsync()
+    public async Task<IActionResult> GetAsync(int? processId)
     {
-        var result = await processService.GetOnCreateAsync(null);
+        var result = await processService.GetOnCreateAsync(processId);
         return new ApiDataResult(result);
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="nodeId"></param>
-    /// <returns></returns>
-    [HttpPost]
-    [ProducesResponseType(typeof(int), 200)]
-    [SwaggerOperation(Tags = ["Process"])]
-    public async Task<IActionResult> GetNodeDataAsync(long nodeId)
-    {
-        return new ApiDataResult();
     }
 
     /// <summary>
     /// Open process from json file
     /// </summary>
-    /// <param name="processJson"></param>
-    /// <returns></returns>
     [HttpPost("OpenFromFile")]
-    public async Task<IActionResult> OpenFromFileAsync(string processJson)
+    [ProducesResponseType(typeof(int), 200)]
+    [SwaggerOperation(Tags = ["Process"])]
+    public async Task<IActionResult> OpenFromFileAsync(IFormFile file)
     {
+        if (file.ContentType != "application/json" || file.Length == 0)
+        {
+            return UnprocessableEntity(new ModelStateDictionary());
+        }
+
+        using var streamReader = new StreamReader(file.OpenReadStream());
+        var json = await streamReader.ReadToEndAsync();
+        var data = JsonConvert.DeserializeObject<Process>(json);
+        
         return Ok();
     }
     
     /// <summary>
     /// Download process
     /// </summary>
-    /// <param name="processId"></param>
-    /// <returns></returns>
     [HttpGet("Download")]
+    [ProducesResponseType(typeof(File), 200)]
+    [SwaggerOperation(Tags = ["Process"])]
     public async Task<IActionResult> DownloadAsync(int processId)
     {
         return File([], "application/json", "Test.json");
+    }
+    
+    /// <summary>
+    /// Run process
+    /// </summary>
+    [HttpGet("Run")]
+    [SwaggerOperation(Tags = ["Process"])]
+    public async Task<IActionResult> RunAsync(int processId)
+    {
+        return new ApiDataResult();
     }
 }

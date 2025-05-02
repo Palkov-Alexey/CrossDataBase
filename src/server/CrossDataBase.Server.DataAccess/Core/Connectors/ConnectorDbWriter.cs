@@ -4,6 +4,7 @@ using CrossDataBase.Server.Infrastructure.Abstractions.DataAccess;
 using CrossDataBase.Server.Infrastructure.Abstractions.DataAccess.Models;
 using CrossDataBase.Server.Infrastructure.Abstractions.DataAccess.SQLite;
 using CrossDataBase.Server.Infrastructure.Abstractions.DependencyInjection;
+using CrossDataBase.Server.Infrastructure.DataAccess.SQLite;
 
 namespace CrossDataBase.Server.DataAccess.Core.Connectors;
 
@@ -24,6 +25,22 @@ internal class ConnectorDbWriter(IMemoryExecutor executor,
         });
 
         return executor.FirstOrDefaultAsync<int>(queryObject);
+    }
+    
+    public Task InsertAsync(int processId, IReadOnlyCollection<ConnectorDbModel> models)
+    {
+        var sql = scriptReader.Get(this, Scripts.Insert);
+        var queryParams = models.Select(x => new
+        {
+            ProcessId = processId,
+            x.FromNode,
+            x.From,
+            x.ToNode,
+            x.To
+        });
+        var queryObject = new QueryObject(sql, queryParams);
+
+        return executor.ExecuteAsync(queryObject);
     }
     
     public Task UpdateAsync(int processId, ConnectorDbModel model)

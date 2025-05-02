@@ -1,4 +1,5 @@
 ﻿using System.Data;
+using CrossDataBase.Server.Infrastructure.Abstractions.DataAccess.SQLite.Models;
 
 namespace CrossDataBase.Server.Infrastructure.Abstractions.DataAccess.Models;
 
@@ -19,6 +20,6 @@ public class QueryObject
     public string Sql { get; private set; }
 
     public object QueryParams { get; private set; }
-
+    
     public CommandType? CommandType { get; private set; }
 }

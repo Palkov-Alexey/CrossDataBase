@@ -1,4 +1,5 @@
-﻿using CrossDataBase.Server.Infrastructure.Abstractions.DataAccess.Models;
+﻿using System.Collections;
+using CrossDataBase.Server.Infrastructure.Abstractions.DataAccess.Models;
 using Dapper;
 using Microsoft.Data.Sqlite;
 
@@ -11,7 +12,18 @@ internal abstract class ExecutorBase
     {
         await using var connection = new SqliteConnection(ConnectionString);
         await connection.OpenAsync();
-        await connection.ExecuteAsync(query.Sql, query.QueryParams);
+        if (query.QueryParams.GetType() == typeof(IEnumerable))
+        {
+            foreach (var queryParam in (IEnumerable) query.QueryParams)
+            {
+                await connection.ExecuteAsync(query.Sql, queryParam);
+            }
+        }
+        else
+        {
+            await connection.ExecuteAsync(query.Sql, query.QueryParams);
+        }
+
         await connection.CloseAsync();
     }
 
@@ -19,7 +31,20 @@ internal abstract class ExecutorBase
     {
         await using var connection = new SqliteConnection(ConnectionString);
         await connection.OpenAsync();
-        var result = await connection.QueryAsync<T>(query.Sql, query.QueryParams);
+        
+        var result = new List<T>();
+        if (query.QueryParams.GetType() == typeof(IEnumerable))
+        {
+            foreach (var queryParam in (IEnumerable) query.QueryParams)
+            {
+                result.AddRange(await connection.QueryAsync<T>(query.Sql, queryParam));
+            }
+        }
+        else
+        {
+            result.AddRange(await connection.QueryAsync<T>(query.Sql, query.QueryParams));
+        }
+
         await connection.CloseAsync();
         
         return result.ToList();
@@ -27,6 +52,11 @@ internal abstract class ExecutorBase
 
     public async Task<T> FirstOrDefaultAsync<T>(QueryObject query)
     {
+        if (query.QueryParams.GetType() == typeof(IEnumerable))
+        {
+            throw new ArgumentException("Incorrect query type");
+        }
+        
         await using var connection = new SqliteConnection(ConnectionString);
         await connection.OpenAsync();
         var result = await connection.QueryAsync<T>(query.Sql, query.QueryParams);

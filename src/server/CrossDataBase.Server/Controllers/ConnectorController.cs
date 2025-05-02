@@ -1,6 +1,7 @@
-using CrossDataBase.Server.Business.Abstraction.Common;
-using CrossDataBase.Server.Business.Abstraction.Core.Nodes;
+using CrossDataBase.Server.Business.Abstraction.Core.Connectors;
 using CrossDataBase.Server.Common;
+using CrossDataBase.Server.Mapper;
+using CrossDataBase.Server.Models;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -8,31 +9,55 @@ namespace CrossDataBase.Server.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class ConnectorController(INodeModelGetter nodeModelGetter,
-    INodeService nodeService) : ControllerBase
+public class ConnectorController(
+    IConnectorReader connectorReader,
+    IConnectorWriter connectorWriter) : ControllerBase
 {
     /// <summary>
-    /// 
+    /// Get connectors
     /// </summary>
-    /// <returns></returns>
     [HttpGet]
     [ProducesResponseType(200)]
     [SwaggerOperation(Tags = ["Connector"])]
-    public IActionResult GetNodeList()
+    public async Task<IActionResult> GetAsync(int processId)
     {
-        return new ApiDataResult(nodeService.GetNodeInfo());
+        var result = await connectorReader.GetAsync(processId);
+        return new ApiDataResult(result.Map());
     }
 
     /// <summary>
-    /// 
+    /// Create connector
     /// </summary>
-    /// <param name="nodeId"></param>
-    /// <returns></returns>
-    [HttpGet("GetNodeData/{nodeId:long}")]
+    [HttpPost]
     [ProducesResponseType(200)]
     [SwaggerOperation(Tags = ["Connector"])]
-    public async Task<IActionResult> GetNodeDataAsync(long nodeId)
+    public async Task<IActionResult> CreateAsync(int processId, Connector connector)
     {
+        var result = await connectorWriter.CreateAsync(processId, connector.Map());
+        return new ApiDataResult(result);
+    }
+
+    /// <summary>
+    /// Update conncector
+    /// </summary>
+    [HttpPut]
+    [ProducesResponseType(200)]
+    [SwaggerOperation(Tags = ["Connector"])]
+    public async Task<IActionResult> UpdateAsync(int processId, Connector connector)
+    {
+        await connectorWriter.UpdateAsync(processId, connector.Map());
+        return Ok();
+    }
+
+    /// <summary>
+    /// Delete connector
+    /// </summary>
+    [HttpDelete]
+    [ProducesResponseType(200)]
+    [SwaggerOperation(Tags = ["Connector"])]
+    public async Task<IActionResult> DeleteAsync(int processId, int connectorId)
+    {
+        await connectorWriter.DeleteAsync(processId, connectorId);
         return new ApiDataResult();
     }
 }

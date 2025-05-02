@@ -5,7 +5,6 @@ using ElectronNET.API;
 
 var isElectron = args.Any(a => a.Contains("ELECTRON", StringComparison.CurrentCultureIgnoreCase));
 
-// не в текущей реализации
 MigrateBuilder.Migration();
 
 var builder = WebApplication.CreateBuilder(args);
@@ -26,16 +25,14 @@ else
 {
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
     builder.Services.AddEndpointsApiExplorer();
-    builder.Services.AddSwaggerGen();
-    // builder.Services.AddSwaggerGen(options =>
-    // {
-    //     options.SwaggerDoc("v1", new OpenApiInfo
-    //     {
-    //         Version = "v1",
-
-    //     })
-
-    // });
+    builder.Services.AddSwaggerGen(options =>
+    {
+        var basePath = AppContext.BaseDirectory;
+        var xmlPath = Path.Combine(basePath, "CrossDataBase.Server.xml");
+        
+        options.IncludeXmlComments(xmlPath);
+        options.SchemaFilter<EnumTypesSchemaFilter>(xmlPath);
+    });
 }
 
 var app = builder.Build();
