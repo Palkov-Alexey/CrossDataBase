@@ -50,9 +50,11 @@ class NodeStore {
         };
 
     @action
-        onNodeStop = (index: number, pos: Position): void => {
+        onNodeStop = async (index: number, pos: Position): Promise<void> => {
             this.data.nodes[index].posX = pos.x;
             this.data.nodes[index].posY = pos.y;
+
+            await this.onUpdateNode(this.data.nodes[index]);
         };
 
     @action
@@ -101,6 +103,10 @@ class NodeStore {
             this.data.nodes = this.data.nodes.filter(n => n.id !== nid);
             this.data.connectors = this.data.connectors.filter(c => c.fromNode !== nid && c.toNode !== nid);
         };
+
+    onUpdateNode = async (node: NodeElement):Promise<void> => {
+        await dataService.updateNode(this.processId, node);
+    }
 }
 
 export default NodeStore;

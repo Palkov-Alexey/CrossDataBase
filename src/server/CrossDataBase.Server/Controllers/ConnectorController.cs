@@ -38,7 +38,7 @@ public class ConnectorController(
     }
 
     /// <summary>
-    /// Update conncector
+    /// Update connector
     /// </summary>
     [HttpPut]
     [ProducesResponseType(200)]

@@ -44,5 +44,17 @@ export default {
         });
 
         return await response.json().then(data =>  data.data );
+    },
+
+    async updateNode(processId: number, node: NodeElement): Promise<number> {
+        const response = await fetch(`${urls.node}?processId=${processId}`, {
+            method: `PUT`,
+            body: JSON.stringify(node),
+            headers: {
+                "Content-Type": `application/json`
+            }
+        });
+
+        return await response.json().then(data =>  data.data );
     }
 };
