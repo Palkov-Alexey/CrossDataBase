@@ -52,8 +52,7 @@ export type DraggableCoreDefaultProps = {
     scale: number,
 };
 
-export type DraggableCoreProps = {
-    ...DraggableCoreDefaultProps: DraggableCoreDefaultProps,
+export type DraggableCoreProps = DraggableCoreDefaultProps & {
     cancel: string,
     children: ReactElement<any>,
     offsetParent: HTMLElement,
@@ -458,7 +457,7 @@ export default class DraggableCore extends React.Component<DraggableCoreProps> {
         return this.handleDragStop(e);
     };
 
-    render(): React.Element<any> {
+    render(): Element<any> {
         // Reuse the child provided
         // This makes it flexible to use whatever element is wanted (div, ul, etc)
         return React.cloneElement(React.Children.only(this.props.children), {

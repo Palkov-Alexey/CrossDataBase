@@ -1,17 +1,17 @@
 // @flow
 // @credits https://gist.github.com/rogozhnikoff/a43cfed27c41e4e68cdc
-export function findInArray(array: Array<any> | TouchList, callback: Function): any {
+export function findInArray(array: Array<object> | TouchList, callback: (...param: any[]) => boolean): object | undefined {
     for (let i = 0, length = array.length; i < length; i++) {
         if (callback.apply(callback, [array[i], i, array])) return array[i];
     }
 }
 
-export function isFunction(func: any): boolean {
+export function isFunction(func: () => void): boolean {
     // $FlowIgnore[method-unbinding]
     return typeof func === 'function' || Object.prototype.toString.call(func) === '[object Function]';
 }
 
-export function isNum(num: any): boolean {
+export function isNum(num?: number): boolean {
     return typeof num === 'number' && !isNaN(num);
 }
 

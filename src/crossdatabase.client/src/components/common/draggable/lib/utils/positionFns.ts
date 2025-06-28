@@ -1,32 +1,39 @@
 // @flow
-import {isNum, int} from './shims';
-import {getTouch, innerWidth, innerHeight, offsetXYFromParent, outerWidth, outerHeight} from './domFns';
-
 import type Draggable from '../Draggable';
-import type {Bounds, ControlPosition, DraggableData, MouseTouchEvent} from './types';
-import type DraggableCore from '../DraggableCore';
+import type DraggableCore from '../DraggableCore.tsx';
+import { getTouch, innerWidth, innerHeight, offsetXYFromParent, outerWidth, outerHeight } from './domFns';
+import { isNum, int } from './shims';
+import type { Bounds, ControlPosition, DraggableData, MouseTouchEvent } from './types';
 
 export function getBoundPosition(draggable: Draggable, x: number, y: number): [number, number] {
     // If no bounds, short-circuit and move on
     if (!draggable.props.bounds) return [x, y];
 
     // Clone new bounds
-    let {bounds} = draggable.props;
-    bounds = typeof bounds === 'string' ? bounds : cloneBounds(bounds);
+    let { bounds } = draggable.props;
+    bounds = typeof bounds === `string` ? bounds : cloneBounds(bounds);
     const node = findDOMNode(draggable);
 
-    if (typeof bounds === 'string') {
-        const {ownerDocument} = node;
+    if (typeof bounds === `string`) {
+        const { ownerDocument } = node;
         const ownerWindow = ownerDocument.defaultView;
+
+        if (ownerWindow === null) {
+            return [0, 0];
+        }
+
         let boundNode;
-        if (bounds === 'parent') {
+
+        if (bounds === `parent`) {
             boundNode = node.parentNode;
         } else {
             boundNode = ownerDocument.querySelector(bounds);
         }
+
         if (!(boundNode instanceof ownerWindow.HTMLElement)) {
-            throw new Error('Bounds selector "' + bounds + '" could not find an element.');
+            throw new Error(`Bounds selector "` + bounds + `" could not find an element.`);
         }
+
         const boundNodeEl: HTMLElement = boundNode; // for Flow, can't seem to refine correctly
         const nodeStyle = ownerWindow.getComputedStyle(node);
         const boundNodeStyle = ownerWindow.getComputedStyle(boundNodeEl);
@@ -42,12 +49,14 @@ export function getBoundPosition(draggable: Draggable, x: number, y: number): [n
     }
 
     // Keep x and y below right and bottom limits...
-    if (isNum(bounds.right)) x = Math.min(x, bounds.right);
-    if (isNum(bounds.bottom)) y = Math.min(y, bounds.bottom);
+    if (isNum(bounds.right)) x = Math.min(x, bounds.right ?? 0);
+
+    if (isNum(bounds.bottom)) y = Math.min(y, bounds.bottom ?? 0);
 
     // But above left and top limits.
-    if (isNum(bounds.left)) x = Math.max(x, bounds.left);
-    if (isNum(bounds.top)) y = Math.max(y, bounds.top);
+    if (isNum(bounds.left)) x = Math.max(x, bounds.left ?? 0);
+
+    if (isNum(bounds.top)) y = Math.max(y, bounds.top ?? 0);
 
     return [x, y];
 }
@@ -55,24 +64,28 @@ export function getBoundPosition(draggable: Draggable, x: number, y: number): [n
 export function snapToGrid(grid: [number, number], pendingX: number, pendingY: number): [number, number] {
     const x = Math.round(pendingX / grid[0]) * grid[0];
     const y = Math.round(pendingY / grid[1]) * grid[1];
+
     return [x, y];
 }
 
 export function canDragX(draggable: Draggable): boolean {
-    return draggable.props.axis === 'both' || draggable.props.axis === 'x';
+    return draggable.props.axis === `both` || draggable.props.axis === `x`;
 }
 
 export function canDragY(draggable: Draggable): boolean {
-    return draggable.props.axis === 'both' || draggable.props.axis === 'y';
+    return draggable.props.axis === `both` || draggable.props.axis === `y`;
 }
 
 // Get {x, y} positions from event.
-export function getControlPosition(e: MouseTouchEvent, touchIdentifier: ?number, draggableCore: DraggableCore): ?ControlPosition {
-    const touchObj = typeof touchIdentifier === 'number' ? getTouch(e, touchIdentifier) : null;
-    if (typeof touchIdentifier === 'number' && !touchObj) return null; // not the right touch
+export function getControlPosition(e: MouseTouchEvent, touchIdentifier: number | null, draggableCore: DraggableCore): ControlPosition | null {
+    const touchObj = typeof touchIdentifier === `number` ? getTouch(e, touchIdentifier) : null;
+
+    if (typeof touchIdentifier === `number` && !touchObj) return null; // not the right touch
+
     const node = findDOMNode(draggableCore);
     // User can provide an offsetParent if desired.
     const offsetParent = draggableCore.props.offsetParent || node.offsetParent || node.ownerDocument.body;
+
     return offsetXYFromParent(touchObj || e, offsetParent, draggableCore.props.scale);
 }
 
@@ -103,6 +116,7 @@ export function createCoreData(draggable: DraggableCore, x: number, y: number): 
 // Create an data exposed by <Draggable>'s events
 export function createDraggableData(draggable: Draggable, coreData: DraggableData): DraggableData {
     const scale = draggable.props.scale;
+
     return {
         node: coreData.node,
         x: draggable.state.x + (coreData.deltaX / scale),
@@ -126,9 +140,11 @@ function cloneBounds(bounds: Bounds): Bounds {
 
 function findDOMNode(draggable: Draggable | DraggableCore): HTMLElement {
     const node = draggable.findDOMNode();
+
     if (!node) {
-        throw new Error('<DraggableCore>: Unmounted during event!');
+        throw new Error(`<DraggableCore>: Unmounted during event!`);
     }
+
     // $FlowIgnore we can't assert on HTMLElement due to tests... FIXME
     return node;
 }

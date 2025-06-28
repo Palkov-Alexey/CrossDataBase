@@ -1,5 +1,6 @@
 // @flow
 const prefixes = ['Moz', 'Webkit', 'O', 'ms'];
+
 export function getPrefix(prop: string='transform'): string {
     // Ensure we're running in an environment where there is actually a global
     // `window` obj
@@ -8,6 +9,7 @@ export function getPrefix(prop: string='transform'): string {
     // If we're in a pseudo-browser server-side environment, this access
     // path may not exist, so bail out if it doesn't.
     const style = window.document?.documentElement?.style;
+
     if (!style) return '';
 
     if (prop in style) return '';
@@ -30,6 +32,7 @@ export function browserPrefixToStyle(prop: string, prefix: string): string {
 function kebabToTitleCase(str: string): string {
     let out = '';
     let shouldCapitalize = true;
+
     for (let i = 0; i < str.length; i++) {
         if (shouldCapitalize) {
             out += str[i].toUpperCase();
@@ -40,10 +43,11 @@ function kebabToTitleCase(str: string): string {
             out += str[i];
         }
     }
+
     return out;
 }
 
 // Default export is the prefix itself, like 'Moz', 'Webkit', etc
 // Note that you may have to re-test for certain things; for instance, Chrome 50
 // can handle unprefixed `transform`, but not unprefixed `user-select`
-export default (getPrefix(): string);
+export default (getPrefix());

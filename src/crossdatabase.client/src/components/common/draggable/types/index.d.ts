@@ -22,7 +22,7 @@ declare module 'react-draggable' {
     export type DraggableEvent = React.MouseEvent<HTMLElement | SVGElement>
         | React.TouchEvent<HTMLElement | SVGElement>
         | MouseEvent
-        | TouchEvent
+        | TouchEvent;
 
     export type DraggableEventHandler = (
         e: DraggableEvent,
@@ -58,11 +58,11 @@ declare module 'react-draggable' {
         scale: number
     }
 
-    export default class Draggable extends React.Component<Partial<DraggableProps>, {}> {
-        static defaultProps : DraggableProps;
+    export default class Draggable extends React.Component<Partial<DraggableProps>, object> {
+        static defaultProps: DraggableProps;
     }
 
-    export class DraggableCore extends React.Component<Partial<DraggableCoreProps>, {}> {
-        static defaultProps : DraggableCoreProps;
+    export class DraggableCore extends React.Component<Partial<DraggableCoreProps>, object> {
+        static defaultProps: DraggableCoreProps;
     }
 }

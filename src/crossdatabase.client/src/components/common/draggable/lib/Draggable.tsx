@@ -1,16 +1,15 @@
 // @flow
-import * as React from 'react';
-import PropTypes from 'prop-types';
-import ReactDOM from 'react-dom';
 import clsx from 'clsx';
-import {createCSSTransform, createSVGTransform} from './utils/domFns';
-import {canDragX, canDragY, createDraggableData, getBoundPosition} from './utils/positionFns';
-import {dontSetMe} from './utils/shims';
-import DraggableCore from './DraggableCore';
-import type {ControlPosition, PositionOffsetControlPosition, DraggableCoreProps, DraggableCoreDefaultProps} from './DraggableCore';
+import PropTypes from 'prop-types';
+import * as React from 'react';
+import ReactDOM from 'react-dom';
+import DraggableCore from './DraggableCore.tsx';
+import type { ControlPosition, PositionOffsetControlPosition, DraggableCoreProps, DraggableCoreDefaultProps } from './DraggableCore.tsx';
+import { createCSSTransform, createSVGTransform } from './utils/domFns';
 import log from './utils/log';
-import type {Bounds, DraggableEventHandler} from './utils/types';
-import type {Element as ReactElement} from 'react';
+import { canDragX, canDragY, createDraggableData, getBoundPosition } from './utils/positionFns';
+import { dontSetMe } from './utils/shims';
+import type { Bounds, DraggableEventHandler } from './utils/types';
 
 type DraggableState = {
     dragging: boolean,
@@ -18,12 +17,11 @@ type DraggableState = {
     x: number, y: number,
     slackX: number, slackY: number,
     isElementSVG: boolean,
-    prevPropsPosition: ?ControlPosition,
+    prevPropsPosition?: ControlPosition,
 };
 
-export type DraggableDefaultProps = {
-    ...DraggableCoreDefaultProps,
-    axis: 'both' | 'x' | 'y' | 'none',
+export type DraggableDefaultProps = DraggableCoreDefaultProps & {
+    axis: `both` | `x` | `y` | `none`,
     bounds: Bounds | string | false,
     defaultClassName: string,
     defaultClassNameDragging: string,
@@ -32,9 +30,7 @@ export type DraggableDefaultProps = {
     scale: number,
 };
 
-export type DraggableProps = {
-    ...DraggableCoreProps,
-    ...DraggableDefaultProps,
+export type DraggableProps = DraggableCoreProps & DraggableDefaultProps & {
     positionOffset: PositionOffsetControlPosition,
     position: ControlPosition,
 };
@@ -45,7 +41,7 @@ export type DraggableProps = {
 
 class Draggable extends React.Component<DraggableProps, DraggableState> {
 
-    static displayName: ?string = 'Draggable';
+    static displayName: string | null = `Draggable`;
 
     static propTypes: DraggableProps = {
         // Accepts all props <DraggableCore> accepts.
@@ -64,7 +60,7 @@ class Draggable extends React.Component<DraggableProps, DraggableState> {
          *
          * Defaults to 'both'.
          */
-        axis: PropTypes.oneOf(['both', 'x', 'y', 'none']),
+        axis: PropTypes.oneOf([`both`, `x`, `y`, `none`]),
 
         /**
          * `bounds` determines the range of movement available to the element.
@@ -168,18 +164,18 @@ class Draggable extends React.Component<DraggableProps, DraggableState> {
 
     static defaultProps: DraggableDefaultProps = {
         ...DraggableCore.defaultProps,
-        axis: 'both',
+        axis: `both`,
         bounds: false,
-        defaultClassName: 'react-draggable',
-        defaultClassNameDragging: 'react-draggable-dragging',
-        defaultClassNameDragged: 'react-draggable-dragged',
-        defaultPosition: {x: 0, y: 0},
+        defaultClassName: `react-draggable`,
+        defaultClassNameDragging: `react-draggable-dragging`,
+        defaultClassNameDragged: `react-draggable-dragged`,
+        defaultPosition: { x: 0, y: 0 },
         scale: 1
     };
 
     // React 16.3+
     // Arity (props, state)
-    static getDerivedStateFromProps({position}: DraggableProps, {prevPropsPosition}: DraggableState): ?Partial<DraggableState> {
+    static getDerivedStateFromProps({ position }: DraggableProps, { prevPropsPosition }: DraggableState): ?Partial<DraggableState> {
         // Set x/y if a new position is provided in props that is different than the previous.
         if (
             position &&
@@ -187,13 +183,15 @@ class Draggable extends React.Component<DraggableProps, DraggableState> {
                 position.x !== prevPropsPosition.x || position.y !== prevPropsPosition.y
             )
         ) {
-            log('Draggable: getDerivedStateFromProps %j', {position, prevPropsPosition});
+            log(`Draggable: getDerivedStateFromProps %j`, { position, prevPropsPosition });
+
             return {
                 x: position.x,
                 y: position.y,
-                prevPropsPosition: {...position}
+                prevPropsPosition: { ...position }
             };
         }
+
         return null;
     }
 
@@ -211,7 +209,7 @@ class Draggable extends React.Component<DraggableProps, DraggableState> {
             x: props.position ? props.position.x : props.defaultPosition.x,
             y: props.position ? props.position.y : props.defaultPosition.y,
 
-            prevPropsPosition: {...props.position},
+            prevPropsPosition: { ...props.position },
 
             // Used for compensating for out-of-bounds drags
             slackX: 0, slackY: 0,
@@ -221,46 +219,48 @@ class Draggable extends React.Component<DraggableProps, DraggableState> {
         };
 
         if (props.position && !(props.onDrag || props.onStop)) {
-            // eslint-disable-next-line no-console
-            console.warn('A `position` was applied to this <Draggable>, without drag handlers. This will make this ' +
-                'component effectively undraggable. Please attach `onDrag` or `onStop` handlers so you can adjust the ' +
-                '`position` of this element.');
+
+            console.warn(`A \`position\` was applied to this <Draggable>, without drag handlers. This will make this ` +
+                `component effectively undraggable. Please attach \`onDrag\` or \`onStop\` handlers so you can adjust the ` +
+                `\`position\` of this element.`);
         }
     }
 
     componentDidMount() {
         // Check to see if the element passed is an instanceof SVGElement
-        if(typeof window.SVGElement !== 'undefined' && this.findDOMNode() instanceof window.SVGElement) {
-            this.setState({isElementSVG: true});
+        if (typeof window.SVGElement !== `undefined` && this.findDOMNode() instanceof window.SVGElement) {
+            this.setState({ isElementSVG: true });
         }
     }
 
     componentWillUnmount() {
         if (this.state.dragging) {
-            this.setState({dragging: false}); // prevents invariant if unmounted while dragging
+            this.setState({ dragging: false }); // prevents invariant if unmounted while dragging
         }
     }
 
     // React Strict Mode compatibility: if `nodeRef` is passed, we will use it instead of trying to find
     // the underlying DOM node ourselves. See the README for more information.
-    findDOMNode(): ?HTMLElement {
+    findDOMNode(): HTMLElement {
         return this.props?.nodeRef?.current ?? ReactDOM.findDOMNode(this);
     }
 
     onDragStart: DraggableEventHandler = (e, coreData) => {
-        log('Draggable: onDragStart: %j', coreData);
+        log(`Draggable: onDragStart: %j`, coreData);
 
         // Short-circuit if user's callback killed it.
         const shouldStart = this.props.onStart(e, createDraggableData(this, coreData));
+
         // Kills start event on core as well, so move handlers are never bound.
         if (shouldStart === false) return false;
 
-        this.setState({dragging: true, dragged: true});
+        this.setState({ dragging: true, dragged: true });
     };
 
     onDrag: DraggableEventHandler = (e, coreData) => {
         if (!this.state.dragging) return false;
-        log('Draggable: onDrag: %j', coreData);
+
+        log(`Draggable: onDrag: %j`, coreData);
 
         const uiData = createDraggableData(this, coreData);
 
@@ -274,7 +274,7 @@ class Draggable extends React.Component<DraggableProps, DraggableState> {
         // Keep within bounds.
         if (this.props.bounds) {
             // Save original x and y.
-            const {x, y} = newState;
+            const { x, y } = newState;
 
             // Add slack to the values used to calculate bound position. This will ensure that if
             // we start removing slack, the element won't react to it right away until it's been
@@ -300,6 +300,7 @@ class Draggable extends React.Component<DraggableProps, DraggableState> {
 
         // Short-circuit if user's callback killed it.
         const shouldUpdate = this.props.onDrag(e, uiData);
+
         if (shouldUpdate === false) return false;
 
         this.setState(newState);
@@ -310,9 +311,10 @@ class Draggable extends React.Component<DraggableProps, DraggableState> {
 
         // Short-circuit if user's callback killed it.
         const shouldContinue = this.props.onStop(e, createDraggableData(this, coreData));
+
         if (shouldContinue === false) return false;
 
-        log('Draggable: onDragStop: %j', coreData);
+        log(`Draggable: onDragStop: %j`, coreData);
 
         const newState: Partial<DraggableState> = {
             dragging: false,
@@ -323,8 +325,9 @@ class Draggable extends React.Component<DraggableProps, DraggableState> {
         // If this is a controlled component, the result of this operation will be to
         // revert back to the old position. We expect a handler on `onDragStop`, at the least.
         const controlled = Boolean(this.props.position);
+
         if (controlled) {
-            const {x, y} = this.props.position;
+            const { x, y } = this.props.position;
             newState.x = x;
             newState.y = y;
         }
@@ -379,7 +382,7 @@ class Draggable extends React.Component<DraggableProps, DraggableState> {
         }
 
         // Mark with class while dragging
-        const className = clsx((children.props.className || ''), defaultClassName, {
+        const className = clsx((children.props.className || ``), defaultClassName, {
             [defaultClassNameDragging]: this.state.dragging,
             [defaultClassNameDragged]: this.state.dragged
         });
@@ -388,14 +391,14 @@ class Draggable extends React.Component<DraggableProps, DraggableState> {
         // This makes it flexible to use whatever element is wanted (div, ul, etc)
         return (
             <DraggableCore {...draggableCoreProps} onStart={this.onDragStart} onDrag={this.onDrag} onStop={this.onDragStop}>
-            {React.cloneElement(React.Children.only(children), {
+                {React.cloneElement(React.Children.only(children), {
                     className: className,
-                    style: {...children.props.style, ...style},
+                    style: { ...children.props.style, ...style },
                     transform: svgTransform
                 })}
             </DraggableCore>
-    );
+        );
     }
 }
 
-export {Draggable as default, DraggableCore};
+export { Draggable as default, DraggableCore };

@@ -1,6 +1,6 @@
 // @flow
 
-// eslint-disable-next-line no-use-before-define
+
 export type DraggableEventHandler = (e: MouseEvent, data: DraggableData) => void | false;
 
 export type DraggableData = {
@@ -13,8 +13,11 @@ export type DraggableData = {
 export type Bounds = {
     left?: number, top?: number, right?: number, bottom?: number
 };
-export type ControlPosition = {x: number, y: number};
-export type PositionOffsetControlPosition = {x: number|string, y: number|string};
+
+export type ControlPosition = { x: number, y: number };
+
+export type PositionOffsetControlPosition = { x: number | string, y: number | string };
+
 export type EventHandler<T> = (e: T) => void | false;
 
 // Missing in Flow
@@ -23,10 +26,16 @@ export class SVGElement extends HTMLElement {
 
 // Missing targetTouches
 export class TouchEvent2 extends TouchEvent {
-    // @ts-ignore
     changedTouches: TouchList;
-    // @ts-ignore
+
     targetTouches: TouchList;
+
+    constructor(type: string, changedTouches: TouchList, targetTouches: TouchList) {
+        super(type);
+
+        this.changedTouches = changedTouches;
+        this.targetTouches = targetTouches;
+    }
 }
 
 export type MouseTouchEvent = MouseEvent & TouchEvent2;
