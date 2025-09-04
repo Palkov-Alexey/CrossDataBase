@@ -1,0 +1,24 @@
+﻿using CrossDataBase.Server.Business.Abstraction.Core.Results;
+using CrossDataBase.Server.Business.Abstraction.Nodes.Models;
+using CrossDataBase.Server.Business.Core.Attributes;
+using CrossDataBase.Server.Business.Core.Nodes;
+using CrossDataBase.Server.Enum;
+using CrossDataBase.Server.Infrastructure.Abstractions.DependencyInjection;
+
+namespace CrossDataBase.Server.Business.Nodes;
+
+[InjectAsSingleton(typeof(ServerNode))]
+[Node(NodeType.Server)]
+public class ServerNode : NodeDataOut<ServerModel, ServerNode.ServerOutputModel>
+{
+    protected override ExecutionResult OnExecute(ServerModel serverData)
+    {
+        return Done(new ServerOutputModel { Server = serverData });
+    }
+
+    public class ServerOutputModel : INodeData
+    {
+        [NodeProperty("Server")]
+        public ServerModel Server { get; set; }
+    }
+}

@@ -1,0 +1,54 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Core\ProcessHistory\Scripts\GetByProcessId.sql" />
+    <None Remove="Core\ProcessHistory\Scripts\Init.sql" />
+    <None Remove="Core\ProcessData\Scripts\Get.sql" />
+    <None Remove="Core\ProcessData\Scripts\Init.sql" />
+    <None Remove="Core\ProcessData\Scripts\Insert.sql" />
+    <None Remove="Core\ProcessHistory\Scripts\Insert.sql" />
+    <None Remove="Core\ProcessHistory\Scripts\UpdateData.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Core\Connectors\Scripts\Delete.sql" />
+    <EmbeddedResource Include="Core\Connectors\Scripts\Get.sql" />
+    <EmbeddedResource Include="Core\Connectors\Scripts\GetList.sql" />
+    <EmbeddedResource Include="Core\Connectors\Scripts\Insert.sql" />
+    <EmbeddedResource Include="Core\Connectors\Scripts\Update.sql" />
+    <EmbeddedResource Include="Core\Nodes\Scripts\Delete.sql" />
+    <EmbeddedResource Include="Core\Nodes\Scripts\Get.sql" />
+    <EmbeddedResource Include="Core\Nodes\Scripts\GetList.sql" />
+    <EmbeddedResource Include="Core\Nodes\Scripts\Insert.sql" />
+    <EmbeddedResource Include="Core\Nodes\Scripts\Update.sql" />
+    <EmbeddedResource Include="Core\ProcessData\Scripts\Insert.sql" />
+    <EmbeddedResource Include="Core\ProcessData\Scripts\Get.sql" />
+    <EmbeddedResource Include="Core\ProcessHistory\Scripts\UpdateData.sql"/>
+    <EmbeddedResource Include="Core\ProcessHistory\Scripts\GetByProcessId.sql"/>
+    <EmbeddedResource Include="Core\ProcessHistory\Scripts\Init.sql"/>
+    <EmbeddedResource Include="Core\ProcessHistory\Scripts\Insert.sql" />
+    <EmbeddedResource Include="Core\Migrations\Scripts\Mg1_Init.sql" />
+  </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\CrossDataBase.Server.DataAccess.Abstraction\CrossDataBase.Server.DataAccess.Abstraction.csproj" />
+        <ProjectReference Include="..\CrossDataBase.Server.Enum\CrossDataBase.Server.Enum.csproj" />
+        <ProjectReference Include="..\CrossDataBase.Server.Infrastructure\CrossDataBase.Server.Infrastructure.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="PostgresSQL\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="FluentMigrator" Version="7.1.0" />
+      <PackageReference Include="FluentMigrator.Runner.SQLite" Version="6.2.0" />
+      <PackageReference Include="System.Configuration.ConfigurationManager" Version="9.0.0" />
+    </ItemGroup>
+
+</Project>

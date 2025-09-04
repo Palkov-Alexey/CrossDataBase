@@ -1,0 +1,18 @@
+.dialog {
+    background: hsla(0, 0%, 100%, 0.4);
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 5;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dialogContent{
+    background-color: hsl(0, 0%, 100%);
+    padding: 15px;
+    display: block;
+}
